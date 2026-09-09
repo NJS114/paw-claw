@@ -12,6 +12,7 @@ const jobs = [
   { family: 'nobles', source: 'chatgpt-image-7-sept.-2026-15_07_01.webp', ids: ['nob-001','nob-002','nob-003','nob-004','nob-005','nob-006','nob-007','nob-008'] },
   { family: 'robots', source: 'chatgpt-image-7-sept.-2026-15_03_26.webp', ids: ['rob-001','rob-002','rob-003','rob-004','rob-005','rob-006','rob-007','rob-008'] },
   { family: 'nature', source: 'chatgpt-image-7-sept.-2026-15_04_34.webp', ids: ['nat-001','nat-002','nat-003','nat-004','nat-005','nat-006','nat-007','nat-008'] },
+  { family: 'guérisseurs', source: 'chatgpt-image-7-sept.-2026-15_03_15.webp', ids: ['hea-001','hea-002','hea-003','hea-004','hea-005','hea-006','hea-007','hea-008'] },
   { family: 'créatures', source: 'chatgpt-image-7-sept.-2026-15_03_11.webp', ids: ['cre-001','cre-002','cre-003','cre-004','cre-005','cre-006','cre-007','cre-008'] }
 ];
 
