@@ -1,0 +1,97 @@
+export type AssetKind = 'board' | 'card-sheet' | 'card-art' | 'booster' | 'ui' | 'special-card' | 'card-back';
+
+export type GeneratedAsset = {
+  source: string;
+  family?: string;
+  kind: AssetKind;
+  note?: string;
+};
+
+export const generatedAssets: GeneratedAsset[] = [
+  { source: 'ChatGPT Image 6 sept. 2026, 01_35_40.png', kind: 'board', note: 'Plateau de combat rouge/bleu paysage' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_12.png', family: 'Créatures', kind: 'card-sheet', note: '8 cartes costumes communes' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_51.png', family: 'Guérisseurs', kind: 'card-sheet', note: '2 légendaires' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_31.png', family: 'Ombres', kind: 'card-sheet', note: '8 héros Ombres' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_04_34.png', family: 'Nature', kind: 'card-sheet', note: 'Planche complète Nature' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_35_18.png', family: 'Guérisseurs', kind: 'card-sheet', note: '4 légendaires Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_54.png', family: 'Guérisseurs', kind: 'card-sheet', note: '3 épiques Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_35.png', family: 'Magiciens', kind: 'card-sheet', note: '8 héros Magiciens' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_21.png', family: 'Créatures', kind: 'card-sheet', note: '4 épiques Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_04_50.png', family: 'Ombres', kind: 'card-sheet', note: 'Énergies, zones, objets et événements' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_15.png', family: 'Guérisseurs', kind: 'card-sheet', note: '8 héros Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_39.png', family: 'Créatures', kind: 'card-art', note: '4 illustrations créatures sans interface' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_04_45.png', family: 'Créatures', kind: 'card-sheet', note: 'Collection complète Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_20.png', family: 'Créatures', kind: 'card-sheet', note: '6 rares Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_06_54.png', family: 'Nature', kind: 'card-sheet', note: '4 épiques Nature' },
+  { source: 'ChatGPT Image 7 sept. 2026, 23_46_35.png', kind: 'special-card', note: 'Chat bicéphale et Cerbère écarlate, cartes Horreur' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_07_01.png', family: 'Nobles', kind: 'card-sheet', note: 'Collection complète Nobles' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_11.png', family: 'Créatures', kind: 'card-sheet', note: '8 héros Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_00.png', family: 'Créatures', kind: 'special-card', note: 'Cerbère légendaire' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_07_23.png', family: 'Guérisseurs', kind: 'card-sheet', note: '4 légendaires Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_47.png', family: 'Ombres', kind: 'card-sheet', note: 'Collection complète Ombres' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_32.png', family: 'Magiciens', kind: 'card-sheet', note: '8 héros Magiciens' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_10.png', family: 'Créatures', kind: 'card-sheet', note: '6 rares Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_12.png', kind: 'card-back', note: 'Dos de carte Paw & Claw' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_35.png', family: 'Créatures', kind: 'card-art', note: '4 illustrations Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_35_27.png', family: 'Guérisseurs', kind: 'card-sheet', note: '4 légendaires Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_12_07.png', kind: 'special-card', note: 'Horreur rouge premium' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_04_56.png', family: 'Ombres', kind: 'card-sheet', note: 'Planche objets/événements Ombres' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_33.png', family: 'Pirates', kind: 'booster', note: 'Booster Pirates recto/verso' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_52.png', kind: 'booster', note: 'Présentation boîte et boosters' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_24.png', family: 'Guérisseurs', kind: 'booster', note: 'Booster Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_20_05.png', family: 'Guérisseurs', kind: 'card-sheet', note: '2 légendaires Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_57_17.png', kind: 'special-card', note: 'Le Souverain Félin / Le Conquérant, premium rouge' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_43.png', family: 'Nobles', kind: 'card-sheet', note: 'Collection complète Nobles' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_19.png', family: 'Créatures', kind: 'card-sheet', note: '8 héros Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_04.png', family: 'Créatures', kind: 'card-sheet', note: '8 héros Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_37.png', family: 'Nobles', kind: 'card-sheet', note: '8 héros Nobles' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_26.png', family: 'Robots', kind: 'card-sheet', note: '8 héros Robots' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_42.png', family: 'Guérisseurs', kind: 'card-sheet', note: '7 communes Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_37.png', family: 'Guérisseurs', kind: 'card-sheet', note: '6 rares Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_01_47.png', family: 'Robots', kind: 'card-sheet', note: 'Collection complète Robots' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_06.png', family: 'Créatures', kind: 'card-art', note: '8 illustrations costumes' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_07_08.png', family: 'Robots', kind: 'card-sheet', note: 'Collection complète Robots' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_24.png', family: 'Créatures', kind: 'card-art', note: '4 illustrations Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_47.png', family: 'Guérisseurs', kind: 'card-sheet', note: '6 rares Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_46.png', family: 'Nobles', kind: 'card-sheet', note: 'Collection complète Nobles' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_41.png', family: 'Nobles', kind: 'card-sheet', note: '8 héros Nobles' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_05_53.png', family: 'Nature', kind: 'special-card', note: 'Selkirk Rex Druide Ancestral et Leonberg Gardien des Sanctuaires' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_32.png', family: 'Guérisseurs', kind: 'card-sheet', note: '7 communes Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_24.png', family: 'Créatures', kind: 'card-art', note: '6 illustrations rares Créatures' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_15_51.png', kind: 'ui', note: 'Planche des 10 familles Paw & Claw' },
+  { source: 'ChatGPT Image 5 sept. 2026, 20_20_59.png', family: 'Créatures', kind: 'card-art', note: '8 illustrations costumes' },
+  { source: 'ChatGPT Image 5 sept. 2026, 16_14_14.png', family: 'Créatures', kind: 'booster', note: 'Booster Créatures recto/verso' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_05.png', family: 'Créatures', kind: 'special-card', note: 'Dragon Céleste légendaire' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_48.png', family: 'Nature', kind: 'card-art', note: 'Illustrations légendaires Nature' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_06.png', family: 'Créatures', kind: 'card-sheet', note: 'Collection complète Créatures + utilitaires' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_15_56.png', family: 'Créatures', kind: 'card-sheet', note: '8 héros Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_03_51.png', family: 'Ombres', kind: 'card-sheet', note: 'Collection complète Ombres' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_26.png', family: 'Ombres', kind: 'card-sheet', note: '8 héros Ombres' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_04_17.png', kind: 'card-back', note: 'Dos de carte Paw & Claw' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_42.png', family: 'Créatures', kind: 'card-art', note: '4 illustrations Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_07_59.png', family: 'Nature', kind: 'card-sheet', note: 'Collection complète Nature' },
+  { source: 'ChatGPT Image 8 sept. 2026, 15_23_42.png', kind: 'special-card', note: 'Le Souverain Félin / Le Conquérant premium rouge' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_17_07.png', kind: 'special-card', note: 'Le Souverain Félin / Le Conquérant premium rouge variante' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_20_11.png', family: 'Nobles', kind: 'card-sheet', note: 'Collection complète Nobles' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_29.png', family: 'Guérisseurs', kind: 'booster', note: 'Booster Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_42.png', family: 'Guérisseurs', kind: 'card-sheet', note: '3 épiques Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_19_59.png', family: 'Guérisseurs', kind: 'card-sheet', note: '4 héros Guérisseurs rares/épiques' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_17.png', family: 'Ombres', kind: 'special-card', note: 'Apprenti de l’Ombre, carte isolée' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_07.png', family: 'Créatures', kind: 'special-card', note: 'Dragon Céleste légendaire' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_05_17.png', family: 'Créatures', kind: 'card-art', note: '8 illustrations costumes' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_16_00.png', family: 'Guérisseurs', kind: 'card-sheet', note: '8 héros Guérisseurs' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_32.png', family: 'Créatures', kind: 'card-art', note: '4 illustrations Créatures' },
+  { source: 'ChatGPT Image 7 sept. 2026, 15_06_02.png', family: 'Créatures', kind: 'special-card', note: 'Cerbère légendaire' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_08_53.png', family: 'Nature', kind: 'card-sheet', note: 'Collection complète Nature' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_57_27.png', kind: 'special-card', note: 'Les Trois Chats de Kharl premium' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_17_47.png', family: 'Ombres', kind: 'card-sheet', note: 'Planche objets/événements Ombres' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_15_32.png', family: 'Guérisseurs', kind: 'card-sheet', note: '7 communes Guérisseurs' },
+  { source: 'ChatGPT Image 7 sept. 2026, 22_57_53.png', kind: 'special-card', note: 'Le Conquérant premium isolé' },
+  { source: 'ChatGPT Image 5 sept. 2026, 23_18_14.png', family: 'Créatures', kind: 'card-art', note: '6 illustrations rares Créatures' }
+];
+
+export const generatedAssetsByFamily = generatedAssets.reduce<Record<string, GeneratedAsset[]>>((acc, asset) => {
+  const key = asset.family ?? 'Spécial / UI';
+  (acc[key] ??= []).push(asset);
+  return acc;
+}, {});
