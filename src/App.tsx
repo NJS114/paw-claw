@@ -1,154 +1,21 @@
 import { useEffect, useMemo, useState } from 'react';
 import { cards, families, rarities, type CardData } from './data/gameCards';
+import { addCards, loadCollection, ownedCount, saveCollection, type OwnedCards } from './data/collection';
 
 type Screen = 'home' | 'battle' | 'boosters' | 'collection' | 'deck' | 'assets' | 'shop' | 'profile';
 type AssetManifest = { sourceZip: string; count: number; entries: string[] };
+const generatedBase='/assets/generated/';
+const familySheet:Record<string,string>={Magiciens:'chatgpt-image-7-sept.-2026-15_03_35.webp',Ombres:'chatgpt-image-7-sept.-2026-15_03_31.webp',Nobles:'chatgpt-image-7-sept.-2026-15_07_01.webp',Robots:'chatgpt-image-7-sept.-2026-15_01_47.webp',Nature:'chatgpt-image-7-sept.-2026-22_07_59.webp',Guérisseurs:'chatgpt-image-7-sept.-2026-15_03_15.webp',Créatures:'chatgpt-image-7-sept.-2026-15_04_45.webp',Pirates:'chatgpt-image-5-sept.-2026-23_17_33.webp',Éléments:'chatgpt-image-7-sept.-2026-15_04_34.webp',Armée:'plateau-salle-du-trone.webp'};
 
-const generatedBase = '/assets/generated/';
-const battleCards = cards.filter((c) => c.type === 'Héros').slice(0, 7);
-
-const familySheet: Record<string, string> = {
-  Magiciens: 'chatgpt-image-7-sept.-2026-15_03_35.webp',
-  Ombres: 'chatgpt-image-7-sept.-2026-15_03_31.webp',
-  Nobles: 'chatgpt-image-7-sept.-2026-15_07_01.webp',
-  Robots: 'chatgpt-image-7-sept.-2026-15_01_47.webp',
-  Nature: 'chatgpt-image-7-sept.-2026-22_07_59.webp',
-  Guérisseurs: 'chatgpt-image-7-sept.-2026-15_03_15.webp',
-  Créatures: 'chatgpt-image-7-sept.-2026-15_04_45.webp',
-  Pirates: 'chatgpt-image-5-sept.-2026-23_17_33.webp',
-  Éléments: 'chatgpt-image-7-sept.-2026-15_04_34.webp',
-  Armée: 'plateau-salle-du-trone.webp'
-};
-
-export function App() {
-  const [screen, setScreen] = useState<Screen>('home');
-  const [energy, setEnergy] = useState(5);
-  const [playerHp, setPlayerHp] = useState(20);
-  const [enemyHp, setEnemyHp] = useState(20);
-  const [board, setBoard] = useState<(CardData | null)[]>(Array(7).fill(null));
-
-  function playCard(card: CardData, index: number) {
-    if (card.type !== 'Héros' || energy < card.cost || board[index]) return;
-    const next = [...board];
-    next[index] = card;
-    setBoard(next);
-    setEnergy((e) => e - card.cost);
-  }
-
-  function endTurn() {
-    const damage = board.reduce((sum, card) => sum + (card?.atk ?? 0), 0);
-    setEnemyHp((hp) => Math.max(0, hp - damage));
-    setEnergy(5);
-  }
-
-  return (
-    <div className="app-shell">
-      <header className="topbar">
-        <button className="brand" onClick={() => setScreen('home')}>PAW & CLAW</button>
-        <div className="tagline">Différentes âmes. Même arène.</div>
-        <div className="currency">🪙 1 240</div>
-      </header>
-
-      <nav className="nav-row">
-        {(['home','battle','boosters','collection','deck','assets','shop','profile'] as Screen[]).map((item) => (
-          <button key={item} className={screen === item ? 'active' : ''} onClick={() => setScreen(item)}>{item}</button>
-        ))}
-      </nav>
-
-      <main>
-        {screen === 'home' && <Home onPlay={() => setScreen('battle')} onBoosters={() => setScreen('boosters')} onCollection={() => setScreen('collection')} />}
-        {screen === 'battle' && <Battle board={board} handCards={battleCards} energy={energy} playerHp={playerHp} enemyHp={enemyHp} onPlay={playCard} onEndTurn={endTurn} />}
-        {screen === 'collection' && <Collection />}
-        {screen === 'boosters' && <BoosterRoom />}
-        {screen === 'deck' && <DeckBuilder />}
-        {screen === 'assets' && <AssetsLibrary />}
-        {(screen === 'shop' || screen === 'profile') && <Placeholder title={screen.toUpperCase()} />}
-      </main>
-    </div>
-  );
-}
-
-function Home({ onPlay, onBoosters, onCollection }: { onPlay: () => void; onBoosters: () => void; onCollection: () => void }) {
-  return <section className="home-hero">
-    <div className="hero-copy">
-      <p className="eyebrow">COLLECT · BATTLE · BELONG</p>
-      <h1>Bienvenue dans l’arène</h1>
-      <p>Construis ton deck, ouvre des boosters et retrouve les cartes générées dans une collection classée par famille et rareté.</p>
-      <div className="hero-actions"><button className="primary" onClick={onPlay}>Jouer maintenant</button><button onClick={onBoosters}>Ouvrir un booster</button><button onClick={onCollection}>Voir les cartes</button></div>
-    </div>
-    <div className="home-visual"><img src={`${generatedBase}heros-duo.webp`} alt="Héros Paw & Claw" /></div>
-  </section>;
-}
-
-function Collection() {
-  const [family, setFamily] = useState<(typeof families)[number]>('Tous');
-  const [rarity, setRarity] = useState<(typeof rarities)[number]>('Toutes');
-  const [query, setQuery] = useState('');
-  const filtered = useMemo(() => cards.filter((card) => (family === 'Tous' || card.family === family) && (rarity === 'Toutes' || card.rarity === rarity) && card.name.toLowerCase().includes(query.toLowerCase())), [family, rarity, query]);
-
-  return <section className="collection-screen">
-    <div className="collection-head"><div><p className="eyebrow">BIBLIOTHÈQUE</p><h2>Collection Paw & Claw</h2><p>{cards.length} cartes classifiées. Les premières séries sont maintenant découpées individuellement.</p></div><input className="search" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Rechercher une carte…" /></div>
-    <div className="family-strip">{families.slice(1).map((name) => <button key={name} onClick={() => setFamily(name)} className={family === name ? 'active' : ''}>{name}<span>{cards.filter(c => c.family === name).length}</span></button>)}</div>
-    <div className="filter-row"><button className={family === 'Tous' ? 'active' : ''} onClick={() => setFamily('Tous')}>Toutes les familles</button>{rarities.map((r) => <button key={r} className={rarity === r ? 'active' : ''} onClick={() => setRarity(r)}>{r}</button>)}<strong>{filtered.length} résultat{filtered.length > 1 ? 's' : ''}</strong></div>
-    <div className="collection-grid">{filtered.map((card) => <CatalogCard key={card.id} card={card} />)}</div>
-  </section>;
-}
-
-function CardImage({ card, className }: { card: CardData; className?: string }) {
-  const fallback = familySheet[card.family] ? `${generatedBase}${familySheet[card.family]}` : `${generatedBase}carte-bleue.webp`;
-  const [src, setSrc] = useState(card.assetPath ?? fallback);
-  useEffect(() => setSrc(card.assetPath ?? fallback), [card.id, card.assetPath, fallback]);
-  return <img className={className} src={src} alt={card.name} onError={() => { if (src !== fallback) setSrc(fallback); }} loading="lazy" />;
-}
-
-function CatalogCard({ card }: { card: CardData }) {
-  return <article className={`catalog-card ${rarityClass(card.rarity)}`}>
-    <div className="catalog-art"><CardImage card={card}/><span className="catalog-cost">{card.cost}</span><span className="catalog-family">{familyIcon(card.family)}</span></div>
-    <div className="catalog-body"><div className="rarity-line"><span>{card.rarity}</span><span>{card.type}</span></div><h3>{card.name}</h3><p>{card.flavor ?? card.family}</p>{card.type === 'Héros' && <div className="stats"><span>⚔️ {card.atk}</span><span>❤️ {card.hp}</span></div>}<small className="source-sheet">{card.id} · {card.family}</small></div>
-  </article>;
-}
-
-function AssetsLibrary() {
-  const [manifest, setManifest] = useState<AssetManifest | null>(null);
-  const [query, setQuery] = useState('');
-  useEffect(() => { fetch(`${generatedBase}manifest.json`).then(r => r.json()).then(setManifest).catch(() => setManifest(null)); }, []);
-  const entries = (manifest?.entries ?? []).filter((name) => name.toLowerCase().includes(query.toLowerCase()));
-  return <section className="collection-screen"><div className="collection-head"><div><p className="eyebrow">ASSETS GÉNÉRÉS</p><h2>Bibliothèque visuelle</h2><p>{manifest ? `${manifest.count} images extraites automatiquement du ZIP.` : 'Les assets seront extraits automatiquement au lancement/build.'}</p></div><input className="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Filtrer les images…" /></div><div className="asset-grid">{entries.map(name => <article className="asset-tile" key={name}><img src={`${generatedBase}${name}`} alt={name} loading="lazy"/><small>{name}</small></article>)}</div></section>;
-}
-
-function BoosterRoom() {
-  const [opened, setOpened] = useState<CardData[]>([]);
-  function openPack() {
-    const commons = shuffle(cards.filter(c => c.rarity === 'Commune')).slice(0, 8);
-    const rares = shuffle(cards.filter(c => c.rarity === 'Rare')).slice(0, 3);
-    const premium = shuffle(cards.filter(c => c.rarity === 'Épique' || c.rarity === 'Légendaire')).slice(0, 1);
-    setOpened([...commons, ...rares, ...premium]);
-  }
-  return <section className="booster-screen"><div className="booster-pack visual-pack"><img src={`${generatedBase}booster-violet.webp`} alt="Booster Paw & Claw"/><button className="primary" onClick={openPack}>{opened.length ? 'Ouvrir un autre booster' : 'Ouvrir le booster'}</button></div>{opened.length > 0 && <div className="booster-results">{opened.map((card, i) => <CatalogCard key={`${card.id}-${i}`} card={card} />)}</div>}</section>;
-}
-
-function DeckBuilder() {
-  const [deck, setDeck] = useState<string[]>(cards.filter(c => c.type === 'Héros').slice(0, 12).map(c => c.id));
-  const deckCards = deck.map(id => cards.find(c => c.id === id)).filter(Boolean) as CardData[];
-  const available = cards.filter(c => c.type === 'Héros' && !deck.includes(c.id));
-  return <section className="deck-screen"><div className="collection-head"><div><p className="eyebrow">DECK BUILDER</p><h2>Mon deck</h2><p>{deck.length}/20 cartes</p></div></div><div className="deck-columns"><div><h3>Deck actuel</h3><div className="deck-list">{deckCards.map(c => <button key={c.id} onClick={() => setDeck(d => d.filter(id => id !== c.id))}><span>{familyIcon(c.family)} {c.name}</span><span>{c.cost} ✨ · {c.rarity}</span></button>)}</div></div><div><h3>Cartes disponibles</h3><div className="deck-list">{available.slice(0, 50).map(c => <button key={c.id} disabled={deck.length >= 20} onClick={() => setDeck(d => [...d, c.id])}><span>{familyIcon(c.family)} {c.name}</span><span>Ajouter +</span></button>)}</div></div></div></section>;
-}
-
-function Battle({ board, handCards, energy, playerHp, enemyHp, onPlay, onEndTurn }: { board: (CardData | null)[]; handCards: CardData[]; energy: number; playerHp: number; enemyHp: number; onPlay: (card: CardData, index: number) => void; onEndTurn: () => void; }) {
-  return <section className="battle-screen" style={{backgroundImage:`linear-gradient(rgba(4,10,24,.2),rgba(4,10,24,.28)),url('${generatedBase}chatgpt-image-6-sept.-2026-01_35_40.webp')`}}>
-    <div className="battle-hud enemy-hud"><span>Rival IA</span><strong>❤️ {enemyHp}</strong></div>
-    <div className="enemy-zone">{Array.from({ length: 7 }).map((_, i) => <div key={i} className="slot enemy-slot">🐾</div>)}</div>
-    <div className="arena-center"><div className="paw-emblem">🐾</div></div>
-    <div className="player-zone">{board.map((card, i) => <button key={i} className="slot player-slot" onClick={() => onPlay(handCards[i % handCards.length], i)}>{card ? <MiniCard card={card} /> : <span>🐾</span>}</button>)}</div>
-    <div className="battle-footer"><div className="battle-hud"><span>Joueur</span><strong>❤️ {playerHp}</strong><strong>✨ {energy}/5</strong></div><div className="hand">{handCards.slice(0,5).map((card) => <MiniCard key={card.id} card={card} />)}</div><div className="turn-actions"><button className="primary" onClick={onEndTurn}>Fin du tour</button></div></div>
-  </section>;
-}
-
-function MiniCard({ card }: { card: CardData }) {
-  return <article className={`mini-card ${rarityClass(card.rarity)}`}><div className="cost">{card.cost}</div><div className="card-art"><CardImage card={card}/></div><strong>{card.name}</strong><small>{card.family}</small><div className="stats"><span>⚔️ {card.atk ?? '-'}</span><span>❤️ {card.hp ?? '-'}</span></div></article>;
-}
-
-function Placeholder({ title }: { title: string }) { return <section className="placeholder"><h2>{title}</h2><p>Écran prêt pour la prochaine passe Paw & Claw.</p><div className="placeholder-grid">{Array.from({ length: 6 }).map((_, i) => <div className="panel" key={i}>🐾</div>)}</div></section>; }
-function rarityClass(rarity: string) { return rarity.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
-function shuffle<T>(input: T[]) { return [...input].sort(() => Math.random() - .5); }
-function familyIcon(family: string) { return ({Armée:'🛡️',Magiciens:'🌀',Nobles:'👑',Ombres:'🌘',Robots:'⚙️',Nature:'🍃',Éléments:'🔥',Guérisseurs:'✚',Pirates:'☠️',Créatures:'✦'} as Record<string,string>)[family] ?? '🐾'; }
+export function App(){const[screen,setScreen]=useState<Screen>('home');const[owned,setOwned]=useState<OwnedCards>(()=>loadCollection());const[energy,setEnergy]=useState(5);const[enemyHp,setEnemyHp]=useState(20);const[board,setBoard]=useState<(CardData|null)[]>(Array(7).fill(null));useEffect(()=>saveCollection(owned),[owned]);const battleCards=cards.filter(c=>c.type==='Héros'&&(owned[c.id]??0)>0).slice(0,7);function playCard(card:CardData,index:number){if(!card||energy<card.cost||board[index])return;const n=[...board];n[index]=card;setBoard(n);setEnergy(e=>e-card.cost)}function endTurn(){setEnemyHp(h=>Math.max(0,h-board.reduce((s,c)=>s+(c?.atk??0),0)));setEnergy(5)}return <div className="app-shell"><header className="topbar"><button className="brand" onClick={()=>setScreen('home')}>PAW & CLAW</button><div className="tagline">Différentes âmes. Même arène.</div><div className="currency">🃏 {ownedCount(owned)} · 🪙 1 240</div></header><nav className="nav-row">{(['home','battle','boosters','collection','deck','assets','shop','profile'] as Screen[]).map(x=><button key={x} className={screen===x?'active':''} onClick={()=>setScreen(x)}>{x}</button>)}</nav><main>{screen==='home'&&<Home go={setScreen}/>} {screen==='battle'&&<Battle board={board} hand={battleCards} energy={energy} enemyHp={enemyHp} onPlay={playCard} onEnd={endTurn}/>} {screen==='collection'&&<Collection owned={owned}/>} {screen==='boosters'&&<BoosterRoom onPull={pulled=>setOwned(o=>addCards(o,pulled))}/>} {screen==='deck'&&<DeckBuilder owned={owned}/>} {screen==='assets'&&<AssetsLibrary/>} {(screen==='shop'||screen==='profile')&&<Placeholder title={screen.toUpperCase()}/>}</main></div>}
+function Home({go}:{go:(s:Screen)=>void}){return <section className="home-hero"><div className="hero-copy"><p className="eyebrow">COLLECT · BATTLE · BELONG</p><h1>Bienvenue dans l’arène</h1><p>Collectionne les chats et chiens de chaque faction, construis ton deck et combats dans l’arène Paw & Claw.</p><div className="hero-actions"><button className="primary" onClick={()=>go('battle')}>Jouer maintenant</button><button onClick={()=>go('boosters')}>Ouvrir un booster</button><button onClick={()=>go('collection')}>Ma collection</button></div></div><div className="home-visual"><img src={`${generatedBase}heros-duo.webp`} alt="Héros Paw & Claw"/></div></section>}
+function Collection({owned}:{owned:OwnedCards}){const[family,setFamily]=useState<(typeof families)[number]>('Tous');const[rarity,setRarity]=useState<(typeof rarities)[number]>('Toutes');const[query,setQuery]=useState('');const filtered=useMemo(()=>cards.filter(c=>(family==='Tous'||c.family===family)&&(rarity==='Toutes'||c.rarity===rarity)&&c.name.toLowerCase().includes(query.toLowerCase())),[family,rarity,query]);return <section className="collection-screen"><div className="collection-head"><div><p className="eyebrow">BIBLIOTHÈQUE</p><h2>Collection Paw & Claw</h2><p>{Object.keys(owned).filter(id=>owned[id]>0).length}/{cards.length} cartes découvertes · {ownedCount(owned)} exemplaires.</p></div><input className="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Rechercher une carte…"/></div><div className="family-strip">{families.slice(1).map(n=><button key={n} onClick={()=>setFamily(n)} className={family===n?'active':''}>{n}<span>{cards.filter(c=>c.family===n).length}</span></button>)}</div><div className="filter-row"><button className={family==='Tous'?'active':''} onClick={()=>setFamily('Tous')}>Toutes</button>{rarities.map(r=><button key={r} className={rarity===r?'active':''} onClick={()=>setRarity(r)}>{r}</button>)}</div><div className="collection-grid">{filtered.map(c=><CatalogCard key={c.id} card={c} copies={owned[c.id]??0}/>)}</div></section>}
+function CardImage({card}:{card:CardData}){const fallback=familySheet[card.family]?`${generatedBase}${familySheet[card.family]}`:`${generatedBase}carte-bleue.webp`;const[src,setSrc]=useState(card.assetPath??fallback);useEffect(()=>setSrc(card.assetPath??fallback),[card.id]);return <img src={src} alt={card.name} onError={()=>src!==fallback&&setSrc(fallback)} loading="lazy"/>}
+function CatalogCard({card,copies}:{card:CardData;copies?:number}){return <article className={`catalog-card ${rarityClass(card.rarity)} ${copies===0?'locked':''}`}><div className="catalog-art"><CardImage card={card}/><span className="catalog-cost">{card.cost}</span><span className="catalog-family">{familyIcon(card.family)}</span>{copies!==undefined&&<span className="owned-badge">×{copies}</span>}</div><div className="catalog-body"><div className="rarity-line"><span>{card.rarity}</span><span>{card.type}</span></div><h3>{card.name}</h3><p>{copies===0?'Carte non découverte':card.flavor??card.family}</p>{card.type==='Héros'&&<div className="stats"><span>⚔️ {card.atk}</span><span>❤️ {card.hp}</span></div>}</div></article>}
+function BoosterRoom({onPull}:{onPull:(c:CardData[])=>void}){const[opened,setOpened]=useState<CardData[]>([]);function open(){const pull=[...shuffle(cards.filter(c=>c.rarity==='Commune')).slice(0,8),...shuffle(cards.filter(c=>c.rarity==='Rare')).slice(0,3),...shuffle(cards.filter(c=>c.rarity==='Épique'||c.rarity==='Légendaire')).slice(0,1)];setOpened(pull);onPull(pull)}return <section className="booster-screen"><div className="booster-pack visual-pack"><img src={`${generatedBase}booster-violet.webp`} alt="Booster"/><button className="primary" onClick={open}>{opened.length?'Ouvrir encore':'Ouvrir le booster'}</button></div><div className="booster-results">{opened.map((c,i)=><CatalogCard key={c.id+i} card={c}/>)}</div></section>}
+function DeckBuilder({owned}:{owned:OwnedCards}){const pool=cards.filter(c=>c.type==='Héros'&&(owned[c.id]??0)>0);const[deck,setDeck]=useState<string[]>(pool.slice(0,12).map(c=>c.id));return <section className="deck-screen"><div className="collection-head"><div><p className="eyebrow">DECK BUILDER</p><h2>Mon deck</h2><p>{deck.length}/20 · uniquement tes cartes possédées</p></div></div><div className="deck-columns"><div><h3>Deck actuel</h3><div className="deck-list">{deck.map(id=>cards.find(c=>c.id===id)!).filter(Boolean).map(c=><button key={c.id} onClick={()=>setDeck(d=>d.filter(x=>x!==c.id))}><span>{familyIcon(c.family)} {c.name}</span><span>Retirer</span></button>)}</div></div><div><h3>Disponibles</h3><div className="deck-list">{pool.filter(c=>!deck.includes(c.id)).map(c=><button key={c.id} disabled={deck.length>=20} onClick={()=>setDeck(d=>[...d,c.id])}><span>{familyIcon(c.family)} {c.name}</span><span>Ajouter +</span></button>)}</div></div></div></section>}
+function Battle({board,hand,energy,enemyHp,onPlay,onEnd}:{board:(CardData|null)[];hand:CardData[];energy:number;enemyHp:number;onPlay:(c:CardData,i:number)=>void;onEnd:()=>void}){return <section className="battle-screen" style={{backgroundImage:`linear-gradient(rgba(4,10,24,.2),rgba(4,10,24,.28)),url('${generatedBase}chatgpt-image-6-sept.-2026-01_35_40.webp')`}}><div className="battle-hud enemy-hud">Rival IA <strong>❤️ {enemyHp}</strong></div><div className="enemy-zone">{Array.from({length:7}).map((_,i)=><div className="slot" key={i}>🐾</div>)}</div><div className="arena-center"><div className="paw-emblem">🐾</div></div><div className="player-zone">{board.map((c,i)=><button className="slot" key={i} onClick={()=>hand.length&&onPlay(hand[i%hand.length],i)}>{c?<MiniCard card={c}/>:<span>🐾</span>}</button>)}</div><div className="battle-footer"><div className="battle-hud">Joueur <strong>❤️ 20</strong><strong>✨ {energy}/5</strong></div><div className="hand">{hand.slice(0,5).map(c=><MiniCard key={c.id} card={c}/>)}</div><div className="turn-actions"><button className="primary" onClick={onEnd}>Fin du tour</button></div></div></section>}
+function MiniCard({card}:{card:CardData}){return <article className={`mini-card ${rarityClass(card.rarity)}`}><div className="cost">{card.cost}</div><div className="card-art"><CardImage card={card}/></div><strong>{card.name}</strong><small>{card.family}</small><div className="stats"><span>⚔️ {card.atk??'-'}</span><span>❤️ {card.hp??'-'}</span></div></article>}
+function AssetsLibrary(){const[m,setM]=useState<AssetManifest|null>(null);useEffect(()=>{fetch(`${generatedBase}manifest.json`).then(r=>r.json()).then(setM).catch(()=>{})},[]);return <section className="collection-screen"><div className="collection-head"><div><p className="eyebrow">ASSETS</p><h2>Bibliothèque visuelle</h2><p>{m?.count??0} images du pack source.</p></div></div><div className="asset-grid">{(m?.entries??[]).map(n=><article className="asset-tile" key={n}><img src={`${generatedBase}${n}`} loading="lazy"/><small>{n}</small></article>)}</div></section>}
+function Placeholder({title}:{title:string}){return <section className="placeholder"><h2>{title}</h2><p>Écran en construction.</p></section>}
+function rarityClass(r:string){return r.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}function shuffle<T>(a:T[]){return [...a].sort(()=>Math.random()-.5)}function familyIcon(f:string){return ({Armée:'🛡️',Magiciens:'🌀',Nobles:'👑',Ombres:'🌘',Robots:'⚙️',Nature:'🍃',Éléments:'🔥',Guérisseurs:'✚',Pirates:'☠️',Créatures:'✦'} as Record<string,string>)[f]??'🐾'}
