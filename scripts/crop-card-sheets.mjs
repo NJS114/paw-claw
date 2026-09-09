@@ -12,8 +12,7 @@ const jobs = [
   { family: 'nobles', source: 'chatgpt-image-7-sept.-2026-15_07_01.webp', ids: ['nob-001','nob-002','nob-003','nob-004','nob-005','nob-006','nob-007','nob-008'] },
   { family: 'robots', source: 'chatgpt-image-7-sept.-2026-15_03_26.webp', ids: ['rob-001','rob-002','rob-003','rob-004','rob-005','rob-006','rob-007','rob-008'] },
   { family: 'nature', source: 'chatgpt-image-7-sept.-2026-15_04_34.webp', ids: ['nat-001','nat-002','nat-003','nat-004','nat-005','nat-006','nat-007','nat-008'] },
-  { family: 'guerisseurs', source: 'chatgpt-image-7-sept.-2026-15_03_15.webp', ids: ['gue-001','gue-002','gue-003','gue-004','gue-005','gue-006','gue-007','gue-008'] },
-  { family: 'creatures', source: 'chatgpt-image-7-sept.-2026-15_03_11.webp', ids: ['cre-001','cre-002','cre-003','cre-004','cre-005','cre-006','cre-007','cre-008'] }
+  { family: 'créatures', source: 'chatgpt-image-7-sept.-2026-15_03_11.webp', ids: ['cre-001','cre-002','cre-003','cre-004','cre-005','cre-006','cre-007','cre-008'] }
 ];
 
 const cols = 4;
@@ -28,8 +27,10 @@ for (const job of jobs) {
     console.warn(`Source absente: ${job.source}`);
     continue;
   }
+
   const meta = await sharp(sourcePath).metadata();
   if (!meta.width || !meta.height) continue;
+
   const cellW = Math.floor(meta.width / cols);
   const cellH = Math.floor(meta.height / rows);
   const outDir = path.join(cardsRoot, job.family);
@@ -42,6 +43,7 @@ for (const job of jobs) {
     const top = row * cellH + insetY;
     const width = Math.max(1, cellW - insetX * 2);
     const height = Math.max(1, cellH - insetY * 2);
+
     await sharp(sourcePath)
       .extract({ left, top, width, height })
       .resize({ width: 420, height: 560, fit: 'cover', position: 'centre' })
