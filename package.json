@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "assets:import": "node scripts/import-assets.mjs",
+    "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs",
+    "assets:crop": "node scripts/crop-card-sheets.mjs",
     "predev": "npm run assets:import",
     "dev": "vite",
     "prebuild": "npm run assets:import",
@@ -17,6 +18,7 @@
     "typescript": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "adm-zip": "^0.5.16"
+    "adm-zip": "^0.5.16",
+    "sharp": "^0.34.3"
   }
 }
