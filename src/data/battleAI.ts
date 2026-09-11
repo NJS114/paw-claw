@@ -1,12 +1,12 @@
 import type { CardData } from './gameCards';
 import { effectiveAttack, playUnit, type BattleSideState } from './battleEngine';
+import { rarityAIPriority } from './rarityBalance';
 import { synergyProgress } from './synergies';
 
 export type AIDifficulty='easy'|'normal'|'hard';
 export type AIMove={card:CardData;slot:number;score:number;reason:string};
 export type AIPlan={side:BattleSideState;moves:AIMove[];label:string};
 
-const alive=(side:BattleSideState)=>side.board.filter(Boolean);
 const familyCount=(side:BattleSideState,family:string)=>side.board.filter(c=>c?.family===family).length;
 const emptySlots=(side:BattleSideState)=>side.board.map((c,i)=>c?-1:i).filter(i=>i>=0);
 const affordable=(side:BattleSideState)=>side.hand.filter(c=>c.type==='Héros'&&c.cost<=side.energy);
@@ -14,7 +14,8 @@ const affordable=(side:BattleSideState)=>side.hand.filter(c=>c.type==='Héros'&&
 function laneScore(side:BattleSideState,enemy:BattleSideState,card:CardData,slot:number,difficulty:AIDifficulty){
   const target=enemy.board[slot];
   const same=familyCount(side,card.family);
-  let score=(card.atk??0)*1.55+(card.hp??1)*1.05-card.cost*.15;
+  const rarityWeight=difficulty==='easy'?.25:difficulty==='normal'?.65:1;
+  let score=(card.atk??0)*1.55+(card.hp??1)*1.05-card.cost*.15+rarityAIPriority(card)*rarityWeight;
   let reason='pression de ligne';
 
   if(same===2){score+=difficulty==='hard'?8:5;reason='palier de synergie 3/3'}
