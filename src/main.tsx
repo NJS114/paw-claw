@@ -11,6 +11,7 @@ import './battle-effects.css';
 import './battle-events.css';
 import './battle-mulligan.css';
 import './battle-ai.css';
+import './battle-synergy-premium.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
