@@ -22,7 +22,7 @@ export type BattleState = {
 export type CombatEvent = {
   id:string;
   lane:number;
-  type:'clash'|'direct-hit'|'unit-damage'|'unit-destroyed'|'unit-saved'|'shield-block'|'heal'|'momentum';
+  type:'clash'|'direct-hit'|'unit-damage'|'unit-destroyed'|'unit-saved'|'shield-block'|'heal'|'momentum'|'buff-atk'|'buff-hp'|'armor'|'shield-gain'|'energy'|'draw';
   source:'player'|'enemy';
   target:'player'|'enemy';
   value?:number;
@@ -107,9 +107,12 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
     if(a && d){
       const aSide={...attacker,board:aBoard},dSide={...defender,board:dBoard};
       const rawA=effectiveAttack(a,aSide,dSide),rawD=effectiveAttack(d,dSide,aSide);
-      const aAtk=Math.max(0,rawA-armorBonus(dSide,d));
-      const dAtk=Math.max(0,rawD-armorBonus(aSide,a));
+      const dArmor=armorBonus(dSide,d),aArmor=armorBonus(aSide,a);
+      const aAtk=Math.max(0,rawA-dArmor);
+      const dAtk=Math.max(0,rawD-aArmor);
       events.push({id:eventId('clash',i),lane:i,type:'clash',source:'player',target:'enemy',text:`Ligne ${i+1} : ${a.name} affronte ${d.name}.`});
+      if(dArmor>0&&rawA>aAtk)events.push({id:eventId('armor-e',i),lane:i,type:'armor',source:'enemy',target:'enemy',value:rawA-aAtk,cardId:d.id,text:`Formation réduit de ${rawA-aAtk} les dégâts reçus par ${d.name}.`});
+      if(aArmor>0&&rawD>dAtk)events.push({id:eventId('armor-p',i),lane:i,type:'armor',source:'player',target:'player',value:rawD-dAtk,cardId:a.id,text:`Formation réduit de ${rawD-dAtk} les dégâts reçus par ${a.name}.`});
       a.currentHp=(a.currentHp??1)-dAtk;
       d.currentHp=(d.currentHp??1)-aAtk;
       events.push({id:eventId('damage-e',i),lane:i,type:'unit-damage',source:'player',target:'enemy',value:aAtk,cardId:d.id,text:`${d.name} subit ${aAtk} dégâts.`});
@@ -153,11 +156,19 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
 
   if(attackerKills && count(aBoard,'Pirates')>=3){
     nextA.energy += 1;
-    if(count(aBoard,'Pirates')>=5 && !nextA.pirateDrawUsed && nextA.deck[0] && nextA.hand.length<5) nextA={...nextA,hand:[...nextA.hand,nextA.deck[0]],deck:nextA.deck.slice(1),pirateDrawUsed:true};
+    events.push({id:eventId('pirate-energy-p',-1),lane:-1,type:'energy',source:'player',target:'player',value:1,text:'Butin rend 1 énergie.'});
+    if(count(aBoard,'Pirates')>=5 && !nextA.pirateDrawUsed && nextA.deck[0] && nextA.hand.length<5){
+      nextA={...nextA,hand:[...nextA.hand,nextA.deck[0]],deck:nextA.deck.slice(1),pirateDrawUsed:true};
+      events.push({id:eventId('pirate-draw-p',-1),lane:-1,type:'draw',source:'player',target:'player',value:1,text:'Butin permet de piocher 1 carte.'});
+    }
   }
   if(defenderKills && count(dBoard,'Pirates')>=3){
     nextD.energy += 1;
-    if(count(dBoard,'Pirates')>=5 && !nextD.pirateDrawUsed && nextD.deck[0] && nextD.hand.length<5) nextD={...nextD,hand:[...nextD.hand,nextD.deck[0]],deck:nextD.deck.slice(1),pirateDrawUsed:true};
+    events.push({id:eventId('pirate-energy-e',-1),lane:-1,type:'energy',source:'enemy',target:'enemy',value:1,text:'Butin adverse rend 1 énergie.'});
+    if(count(dBoard,'Pirates')>=5 && !nextD.pirateDrawUsed && nextD.deck[0] && nextD.hand.length<5){
+      nextD={...nextD,hand:[...nextD.hand,nextD.deck[0]],deck:nextD.deck.slice(1),pirateDrawUsed:true};
+      events.push({id:eventId('pirate-draw-e',-1),lane:-1,type:'draw',source:'enemy',target:'enemy',value:1,text:'Butin adverse pioche 1 carte.'});
+    }
   }
 
   return { attacker:nextA, defender:nextD, attackerKills, defenderKills, events };
@@ -184,14 +195,22 @@ export function resolveEndTurn(side:BattleSideState,enemy:BattleSideState){
   if(nextEnemy.heroHp>enemyHpBefore)events.push({id:eventId('heal-e',-1),lane:-1,type:'heal',source:'enemy',target:'enemy',value:nextEnemy.heroHp-enemyHpBefore,text:`Le rival récupère ${nextEnemy.heroHp-enemyHpBefore} PV.`});
   const hitEnemy=absorb(nextEnemy.heroHp,nextEnemy.shield,own.enemyDamage);nextEnemy={...nextEnemy,heroHp:hitEnemy.heroHp,shield:hitEnemy.shield};
   const hitSide=absorb(nextSide.heroHp,nextSide.shield,opp.enemyDamage);nextSide={...nextSide,heroHp:hitSide.heroHp,shield:hitSide.shield};
+  if(hitEnemy.blocked)events.push({id:eventId('end-shield-e',-1),lane:-1,type:'shield-block',source:'player',target:'enemy',value:hitEnemy.blocked,text:`Le bouclier adverse absorbe ${hitEnemy.blocked} dégâts de synergie.`});
+  if(hitSide.blocked)events.push({id:eventId('end-shield-p',-1),lane:-1,type:'shield-block',source:'enemy',target:'player',value:hitSide.blocked,text:`Ton bouclier absorbe ${hitSide.blocked} dégâts de synergie.`});
   if(hitEnemy.dealt)events.push({id:eventId('end-hit-e',-1),lane:-1,type:'direct-hit',source:'player',target:'enemy',value:hitEnemy.dealt,text:`Une synergie inflige ${hitEnemy.dealt} dégâts directs au rival.`});
   if(hitSide.dealt)events.push({id:eventId('end-hit-p',-1),lane:-1,type:'direct-hit',source:'enemy',target:'player',value:hitSide.dealt,text:`Une synergie adverse t’inflige ${hitSide.dealt} dégâts directs.`});
 
   nextSide=healNatureUnits(nextSide,'player',events);
   nextEnemy=healNatureUnits(nextEnemy,'enemy',events);
 
-  if(count(nextSide.board,'Nobles')>=5) nextSide={...nextSide,shield:Math.max(nextSide.shield,3)};
-  if(count(nextEnemy.board,'Nobles')>=5) nextEnemy={...nextEnemy,shield:Math.max(nextEnemy.shield,3)};
+  if(count(nextSide.board,'Nobles')>=5){
+    const before=nextSide.shield;nextSide={...nextSide,shield:Math.max(nextSide.shield,3)};
+    if(nextSide.shield>before)events.push({id:eventId('nobles-shield-p',-1),lane:-1,type:'shield-gain',source:'player',target:'player',value:nextSide.shield-before,text:`Cour royale confère ${nextSide.shield-before} point${nextSide.shield-before>1?'s':''} de bouclier.`});
+  }
+  if(count(nextEnemy.board,'Nobles')>=5){
+    const before=nextEnemy.shield;nextEnemy={...nextEnemy,shield:Math.max(nextEnemy.shield,3)};
+    if(nextEnemy.shield>before)events.push({id:eventId('nobles-shield-e',-1),lane:-1,type:'shield-gain',source:'enemy',target:'enemy',value:nextEnemy.shield-before,text:`Cour royale adverse confère ${nextEnemy.shield-before} point${nextEnemy.shield-before>1?'s':''} de bouclier.`});
+  }
   return {side:nextSide,enemy:nextEnemy,events};
 }
 
