@@ -19,6 +19,7 @@ import './production-ui.css';
 import './matchmaking.css';
 import './deck-studio.css';
 import './inventory.css';
+import './progression-hub.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
