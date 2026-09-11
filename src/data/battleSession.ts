@@ -5,6 +5,7 @@ const LEGACY_ACTIVE_KEY='paw-claw.battle.active.v2';
 const HISTORY_KEY='paw-claw.battle.history.v2';
 
 export type BattlePhase='intro'|'player'|'enemy'|'combat'|'result';
+export type BattleCheckpoint='intro'|'stable-player';
 
 export type BattleStats={cardsPlayed:number;unitsDestroyed:number;unitsLost:number;damageDealt:number;damageTaken:number;healingDone:number;synergyActivations:number;comebackTriggered:boolean;maxBoard:number;};
 export const emptyBattleStats=():BattleStats=>({cardsPlayed:0,unitsDestroyed:0,unitsLost:0,damageDealt:0,damageTaken:0,healingDone:0,synergyActivations:0,comebackTriggered:false,maxBoard:0});
@@ -18,21 +19,42 @@ export type SavedBattle={
   maxMomentum:number;
   stats:BattleStats;
   phase?:BattlePhase;
-  checkpoint?:'stable-player'|'intro';
+  checkpoint?:BattleCheckpoint;
+  checkpointState?:BattleState;
   state:BattleState;
 };
 
+function cloneState(state:BattleState):BattleState{
+  return JSON.parse(JSON.stringify(state)) as BattleState;
+}
+
 function normalize(parsed:SavedBattle):SavedBattle{
-  return {...parsed,version:3,stats:{...emptyBattleStats(),...(parsed.stats||{})},phase:parsed.phase||'player',checkpoint:parsed.checkpoint||'stable-player'};
+  const phase=parsed.phase||'player';
+  const checkpoint=parsed.checkpoint||(phase==='intro'?'intro':'stable-player');
+  const checkpointState=parsed.checkpointState?cloneState(parsed.checkpointState):cloneState(parsed.state);
+  return {...parsed,version:3,stats:{...emptyBattleStats(),...(parsed.stats||{})},phase,checkpoint,checkpointState};
+}
+
+function recoverInterrupted(saved:SavedBattle):SavedBattle{
+  const normalized=normalize(saved);
+  if((normalized.phase==='enemy'||normalized.phase==='combat')&&normalized.checkpointState){
+    return {...normalized,state:cloneState(normalized.checkpointState),phase:'player',checkpoint:'stable-player',updatedAt:Date.now()};
+  }
+  if(normalized.phase==='result') return {...normalized,phase:'player',checkpoint:'stable-player'};
+  return normalized;
 }
 
 export function loadBattle():SavedBattle|null{
   try{
     const raw=localStorage.getItem(ACTIVE_KEY);
-    if(raw)return normalize(JSON.parse(raw) as SavedBattle);
+    if(raw){
+      const recovered=recoverInterrupted(JSON.parse(raw) as SavedBattle);
+      if(recovered.phase==='player') saveBattle(recovered);
+      return recovered;
+    }
     const legacyRaw=localStorage.getItem(LEGACY_ACTIVE_KEY);
     if(!legacyRaw)return null;
-    const migrated=normalize(JSON.parse(legacyRaw) as SavedBattle);
+    const migrated=recoverInterrupted(JSON.parse(legacyRaw) as SavedBattle);
     saveBattle(migrated);localStorage.removeItem(LEGACY_ACTIVE_KEY);return migrated;
   }catch{return null}
 }
