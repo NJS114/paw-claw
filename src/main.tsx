@@ -7,6 +7,7 @@ import './collection.css';
 import './progression.css';
 import './battle.css';
 import './battle-cinematic.css';
+import './battle-effects.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
