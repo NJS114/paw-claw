@@ -10,6 +10,7 @@ import './battle-cinematic.css';
 import './battle-effects.css';
 import './battle-events.css';
 import './battle-mulligan.css';
+import './battle-ai.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
