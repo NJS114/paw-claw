@@ -14,6 +14,7 @@ import './battle-ai.css';
 import './battle-synergy-premium.css';
 import './battle-family-fx.css';
 import './battle-feedback.css';
+import './battle-deck-hud.css';
 import './balance.css';
 import './production-ui.css';
 import './matchmaking.css';
