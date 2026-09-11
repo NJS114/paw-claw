@@ -1,0 +1,9 @@
+.event-float.event-fatigue{font-weight:900;letter-spacing:.08em;box-shadow:0 0 0 1px rgba(255,255,255,.12),0 10px 28px rgba(80,0,0,.35)}
+.combat-event-feed .feed-fatigue{font-weight:900;text-transform:uppercase;letter-spacing:.04em}
+.combat-event-feed .feed-lore{font-weight:800;border:1px solid rgba(214,179,94,.55);box-shadow:0 0 24px rgba(214,179,94,.16)}
+.result-card.draw{border-color:rgba(214,179,94,.65);box-shadow:0 24px 80px rgba(0,0,0,.58),0 0 42px rgba(214,179,94,.12)}
+.result-card.draw h2{letter-spacing:.03em}
+.battle-screen.phase-player .battle-command-bar:has(.hand-title small:last-child){transition:filter .25s ease}
+@keyframes fatiguePulse{0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.04);filter:brightness(1.25)}}
+.event-float.event-fatigue{animation:fatiguePulse .62s ease 1}
+@media (prefers-reduced-motion:reduce){.event-float.event-fatigue{animation:none}}
