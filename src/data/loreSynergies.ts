@@ -5,6 +5,7 @@ export type Species='Chat'|'Chien';
 export type LoreEffect='mutual-destruction'|'buff'|'debuff';
 export type LoreScope='same-side'|'opponents';
 export type LoreBond={id:string;title:string;story:string;cardA:string;cardB:string;effect:LoreEffect;scope:LoreScope;value?:number};
+type LoreBoardCard=BoardCard&{loreMarks?:string[]};
 
 const SPECIES_BY_ID:Record<string,Species>={
  'omb-005':'Chien','hea-004':'Chat','nob-007':'Chat','nob-008':'Chien','rob-005':'Chien','rob-006':'Chat'
@@ -24,23 +25,26 @@ export const LORE_BONDS:LoreBond[]=[
 ];
 
 const has=(board:(BoardCard|null)[],id:string)=>board.some(c=>c?.id===id);
+const marked=(card:BoardCard,bondId:string)=>((card as LoreBoardCard).loreMarks??[]).includes(bondId);
+const withMark=(card:BoardCard,bondId:string)=>({...card,loreMarks:[...((card as LoreBoardCard).loreMarks??[]),bondId]}) as LoreBoardCard;
 const mutatePair=(board:(BoardCard|null)[],bond:LoreBond)=>board.map(c=>{
- if(!c||(c.id!==bond.cardA&&c.id!==bond.cardB))return c;
- if(bond.effect==='buff')return {...c,atk:(c.atk??0)+(bond.value??1),hp:(c.hp??1)+(bond.value??1),currentHp:(c.currentHp??c.hp??1)+(bond.value??1)};
- if(bond.effect==='debuff')return {...c,atk:Math.max(0,(c.atk??0)-(bond.value??1))};
+ if(!c||(c.id!==bond.cardA&&c.id!==bond.cardB)||marked(c,bond.id))return c;
+ const markedCard=withMark(c,bond.id);
+ if(bond.effect==='buff')return {...markedCard,atk:(c.atk??0)+(bond.value??1),hp:(c.hp??1)+(bond.value??1),currentHp:(c.currentHp??c.hp??1)+(bond.value??1)};
+ if(bond.effect==='debuff')return {...markedCard,atk:Math.max(0,(c.atk??0)-(bond.value??1))};
  return null;
 });
 
 export function applySameSideLore(board:(BoardCard|null)[]){
  let next=board.map(c=>c?{...c}:null);
- const triggered=LORE_BONDS.filter(b=>b.scope==='same-side'&&has(next,b.cardA)&&has(next,b.cardB));
+ const triggered=LORE_BONDS.filter(b=>b.scope==='same-side'&&has(next,b.cardA)&&has(next,b.cardB)&&next.some(c=>c&&(c.id===b.cardA||c.id===b.cardB)&&!marked(c,b.id)));
  for(const bond of triggered)next=mutatePair(next,bond);
  return {board:next,triggered};
 }
 
 export function applyOpponentLore(left:(BoardCard|null)[],right:(BoardCard|null)[]){
  let a=left.map(c=>c?{...c}:null),b=right.map(c=>c?{...c}:null);
- const triggered=LORE_BONDS.filter(x=>x.scope==='opponents'&&((has(a,x.cardA)&&has(b,x.cardB))||(has(a,x.cardB)&&has(b,x.cardA))));
+ const triggered=LORE_BONDS.filter(x=>x.scope==='opponents'&&((has(a,x.cardA)&&has(b,x.cardB))||(has(a,x.cardB)&&has(b,x.cardA)))&&[...a,...b].some(c=>c&&(c.id===x.cardA||c.id===x.cardB)&&!marked(c,x.id)));
  for(const bond of triggered){
    if(bond.effect==='mutual-destruction'){
      a=a.map(c=>c&&(c.id===bond.cardA||c.id===bond.cardB)?null:c);
