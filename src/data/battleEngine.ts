@@ -19,9 +19,21 @@ export type BattleState = {
   log: string[];
 };
 
+export type CombatEvent = {
+  id:string;
+  lane:number;
+  type:'clash'|'direct-hit'|'unit-damage'|'unit-destroyed'|'unit-saved'|'shield-block'|'heal'|'momentum';
+  source:'player'|'enemy';
+  target:'player'|'enemy';
+  value?:number;
+  cardId?:string;
+  text:string;
+};
+
 const alive = (board:(BoardCard|null)[]) => board.filter(Boolean) as BoardCard[];
 const count = (board:(BoardCard|null)[], family:string) => alive(board).filter(c=>c.family===family).length;
 const clampHp = (hp:number) => Math.max(0, Math.min(20, hp));
+const eventId=(type:string,lane:number)=>`${type}-${lane}-${Math.random().toString(36).slice(2,8)}`;
 
 export function effectiveAttack(card:BoardCard, side:BattleSideState, enemy:BattleSideState){
   return (card.atk ?? 0) + attackBonus(side, enemy, card) + (side.momentum >= 3 ? 1 : 0);
@@ -61,7 +73,7 @@ export function playUnit(side:BattleSideState, enemy:BattleSideState, card:CardD
 
 function absorb(heroHp:number, shield:number, damage:number){
   const blocked = Math.min(shield,damage);
-  return { heroHp: clampHp(heroHp - (damage-blocked)), shield:shield-blocked };
+  return { heroHp: clampHp(heroHp - (damage-blocked)), shield:shield-blocked, blocked, dealt:damage-blocked };
 }
 
 export function resolveCombat(attacker:BattleSideState, defender:BattleSideState){
@@ -69,33 +81,55 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
   const dBoard = defender.board.map(c=>c ? {...c,currentHp:c.currentHp ?? c.hp ?? 1}:null);
   let aHp=attacker.heroHp,dHp=defender.heroHp,aShield=attacker.shield,dShield=defender.shield;
   let attackerKills=0, defenderKills=0;
+  const events:CombatEvent[]=[];
 
   for(let i=0;i<7;i++){
     const a=aBoard[i], d=dBoard[i];
     if(a && d){
       const aAtk=effectiveAttack(a,{...attacker,board:aBoard},{...defender,board:dBoard});
       const dAtk=effectiveAttack(d,{...defender,board:dBoard},{...attacker,board:aBoard});
+      events.push({id:eventId('clash',i),lane:i,type:'clash',source:'player',target:'enemy',text:`Ligne ${i+1} : ${a.name} affronte ${d.name}.`});
       a.currentHp=(a.currentHp??1)-dAtk;
       d.currentHp=(d.currentHp??1)-aAtk;
+      events.push({id:eventId('damage-e',i),lane:i,type:'unit-damage',source:'player',target:'enemy',value:aAtk,cardId:d.id,text:`${d.name} subit ${aAtk} dégâts.`});
+      events.push({id:eventId('damage-p',i),lane:i,type:'unit-damage',source:'enemy',target:'player',value:dAtk,cardId:a.id,text:`${a.name} subit ${dAtk} dégâts.`});
       if((d.currentHp??0)<=0){
-        if(count(dBoard,'Guérisseurs')>=5 && !defender.healerSaveUsed){ d.currentHp=1; defender={...defender,healerSaveUsed:true}; }
-        else { dBoard[i]=null; attackerKills++; }
+        if(count(dBoard,'Guérisseurs')>=5 && !defender.healerSaveUsed){
+          d.currentHp=1; defender={...defender,healerSaveUsed:true};
+          events.push({id:eventId('save-e',i),lane:i,type:'unit-saved',source:'enemy',target:'enemy',cardId:d.id,text:`Sanctuaire sauve ${d.name} à 1 PV.`});
+        } else {
+          dBoard[i]=null; attackerKills++;
+          events.push({id:eventId('destroy-e',i),lane:i,type:'unit-destroyed',source:'player',target:'enemy',cardId:d.id,text:`${d.name} est éliminé.`});
+        }
       }
       if((a.currentHp??0)<=0){
-        if(count(aBoard,'Guérisseurs')>=5 && !attacker.healerSaveUsed){ a.currentHp=1; attacker={...attacker,healerSaveUsed:true}; }
-        else { aBoard[i]=null; defenderKills++; }
+        if(count(aBoard,'Guérisseurs')>=5 && !attacker.healerSaveUsed){
+          a.currentHp=1; attacker={...attacker,healerSaveUsed:true};
+          events.push({id:eventId('save-p',i),lane:i,type:'unit-saved',source:'player',target:'player',cardId:a.id,text:`Sanctuaire sauve ${a.name} à 1 PV.`});
+        } else {
+          aBoard[i]=null; defenderKills++;
+          events.push({id:eventId('destroy-p',i),lane:i,type:'unit-destroyed',source:'enemy',target:'player',cardId:a.id,text:`${a.name} est éliminé.`});
+        }
       }
     } else if(a){
-      const result=absorb(dHp,dShield,effectiveAttack(a,{...attacker,board:aBoard},{...defender,board:dBoard}));dHp=result.heroHp;dShield=result.shield;
+      const power=effectiveAttack(a,{...attacker,board:aBoard},{...defender,board:dBoard});
+      const result=absorb(dHp,dShield,power);dHp=result.heroHp;dShield=result.shield;
+      if(result.blocked)events.push({id:eventId('shield-e',i),lane:i,type:'shield-block',source:'player',target:'enemy',value:result.blocked,text:`Le bouclier adverse absorbe ${result.blocked} dégâts.`});
+      if(result.dealt)events.push({id:eventId('direct-e',i),lane:i,type:'direct-hit',source:'player',target:'enemy',value:result.dealt,cardId:a.id,text:`${a.name} inflige ${result.dealt} dégâts directs.`});
     } else if(d){
-      const result=absorb(aHp,aShield,effectiveAttack(d,{...defender,board:dBoard},{...attacker,board:aBoard}));aHp=result.heroHp;aShield=result.shield;
+      const power=effectiveAttack(d,{...defender,board:dBoard},{...attacker,board:aBoard});
+      const result=absorb(aHp,aShield,power);aHp=result.heroHp;aShield=result.shield;
+      if(result.blocked)events.push({id:eventId('shield-p',i),lane:i,type:'shield-block',source:'enemy',target:'player',value:result.blocked,text:`Ton bouclier absorbe ${result.blocked} dégâts.`});
+      if(result.dealt)events.push({id:eventId('direct-p',i),lane:i,type:'direct-hit',source:'enemy',target:'player',value:result.dealt,cardId:d.id,text:`${d.name} inflige ${result.dealt} dégâts directs.`});
     }
   }
 
+  const previousAMomentum=attacker.momentum, previousDMomentum=defender.momentum;
   let nextA={...attacker,board:aBoard,heroHp:aHp,shield:aShield,momentum:Math.min(5,Math.max(0,attacker.momentum + (attackerKills?1:0) - (defenderKills?1:0)))};
   let nextD={...defender,board:dBoard,heroHp:dHp,shield:dShield,momentum:Math.min(5,Math.max(0,defender.momentum + (defenderKills?1:0) - (attackerKills?1:0)))};
+  if(nextA.momentum!==previousAMomentum)events.push({id:eventId('momentum-p',-1),lane:-1,type:'momentum',source:'player',target:'player',value:nextA.momentum-previousAMomentum,text:`Momentum joueur : ${nextA.momentum}/5.`});
+  if(nextD.momentum!==previousDMomentum)events.push({id:eventId('momentum-e',-1),lane:-1,type:'momentum',source:'enemy',target:'enemy',value:nextD.momentum-previousDMomentum,text:`Momentum rival : ${nextD.momentum}/5.`});
 
-  // Pirates convert a first kill into tempo, but only once per turn.
   if(attackerKills && count(aBoard,'Pirates')>=3){
     nextA.energy += 1;
     if(count(aBoard,'Pirates')>=5 && !nextA.pirateDrawUsed && nextA.deck[0]) nextA={...nextA,hand:[...nextA.hand,nextA.deck[0]],deck:nextA.deck.slice(1),pirateDrawUsed:true};
@@ -105,24 +139,28 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
     if(count(dBoard,'Pirates')>=5 && !nextD.pirateDrawUsed && nextD.deck[0]) nextD={...nextD,hand:[...nextD.hand,nextD.deck[0]],deck:nextD.deck.slice(1),pirateDrawUsed:true};
   }
 
-  return { attacker:nextA, defender:nextD, attackerKills, defenderKills };
+  return { attacker:nextA, defender:nextD, attackerKills, defenderKills, events };
 }
 
 export function resolveEndTurn(side:BattleSideState,enemy:BattleSideState){
   const own=endTurnHeroDelta(side), opp=endTurnHeroDelta(enemy);
+  const events:CombatEvent[]=[];
+  const sideHpBefore=side.heroHp,enemyHpBefore=enemy.heroHp;
   let nextSide={...side,heroHp:clampHp(side.heroHp+own.heal)};
   let nextEnemy={...enemy,heroHp:clampHp(enemy.heroHp+opp.heal)};
+  if(nextSide.heroHp>sideHpBefore)events.push({id:eventId('heal-p',-1),lane:-1,type:'heal',source:'player',target:'player',value:nextSide.heroHp-sideHpBefore,text:`Tu récupères ${nextSide.heroHp-sideHpBefore} PV.`});
+  if(nextEnemy.heroHp>enemyHpBefore)events.push({id:eventId('heal-e',-1),lane:-1,type:'heal',source:'enemy',target:'enemy',value:nextEnemy.heroHp-enemyHpBefore,text:`Le rival récupère ${nextEnemy.heroHp-enemyHpBefore} PV.`});
   const hitEnemy=absorb(nextEnemy.heroHp,nextEnemy.shield,own.enemyDamage);nextEnemy={...nextEnemy,heroHp:hitEnemy.heroHp,shield:hitEnemy.shield};
   const hitSide=absorb(nextSide.heroHp,nextSide.shield,opp.enemyDamage);nextSide={...nextSide,heroHp:hitSide.heroHp,shield:hitSide.shield};
+  if(hitEnemy.dealt)events.push({id:eventId('end-hit-e',-1),lane:-1,type:'direct-hit',source:'player',target:'enemy',value:hitEnemy.dealt,text:`Une synergie inflige ${hitEnemy.dealt} dégâts directs au rival.`});
+  if(hitSide.dealt)events.push({id:eventId('end-hit-p',-1),lane:-1,type:'direct-hit',source:'enemy',target:'player',value:hitSide.dealt,text:`Une synergie adverse t’inflige ${hitSide.dealt} dégâts directs.`});
 
-  // Nature 3 heals damaged units by 1 each turn.
   if(count(nextSide.board,'Nature')>=3) nextSide={...nextSide,board:nextSide.board.map(c=>c?{...c,currentHp:Math.min(c.hp??1,(c.currentHp??c.hp??1)+1)}:null)};
   if(count(nextEnemy.board,'Nature')>=3) nextEnemy={...nextEnemy,board:nextEnemy.board.map(c=>c?{...c,currentHp:Math.min(c.hp??1,(c.currentHp??c.hp??1)+1)}:null)};
 
-  // Nobles 5 generate a small renewable shield; capped to avoid stall games.
   if(count(nextSide.board,'Nobles')>=5) nextSide={...nextSide,shield:Math.min(3,nextSide.shield+3)};
   if(count(nextEnemy.board,'Nobles')>=5) nextEnemy={...nextEnemy,shield:Math.min(3,nextEnemy.shield+3)};
-  return {side:nextSide,enemy:nextEnemy};
+  return {side:nextSide,enemy:nextEnemy,events};
 }
 
 export function momentumLabel(value:number){
