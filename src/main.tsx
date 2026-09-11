@@ -16,6 +16,7 @@ import './battle-family-fx.css';
 import './battle-feedback.css';
 import './battle-deck-hud.css';
 import './battle-finalization.css';
+import './battle-final-polish.css';
 import './balance.css';
 import './production-ui.css';
 import './matchmaking.css';
