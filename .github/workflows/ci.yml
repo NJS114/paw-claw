@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test-and-build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -18,5 +18,9 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install
+      - name: Unit tests
+        run: npm run test:unit
+      - name: Functional tests
+        run: npm run test:functional
       - name: Build
         run: npm run build
