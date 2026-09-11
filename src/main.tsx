@@ -17,6 +17,7 @@ import './battle-feedback.css';
 import './balance.css';
 import './production-ui.css';
 import './matchmaking.css';
+import './deck-studio.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
