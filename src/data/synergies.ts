@@ -3,30 +3,39 @@ import type { CardData } from './gameCards';
 export type BoardCard = CardData & { currentHp?: number };
 export type Side = { board:(BoardCard|null)[]; heroHp:number; energy:number };
 export type Synergy = { id:string; title:string; description:string; active:boolean; tier:number };
+export type SynergyProgress = { family:string; count:number; next:number|null; tier:0|1|2; label:string };
 
 const alive=(b:(BoardCard|null)[])=>b.filter(Boolean) as BoardCard[];
 const familyCount=(b:(BoardCard|null)[],family:string)=>alive(b).filter(c=>c.family===family).length;
 
-/** Synergies are deliberately board-count based: easy to read, hard to snowball forever. */
+export const FAMILY_RULES:Record<string,[string,string]>={
+  'Armée':['Formation','3: +1 ATK aux unités. 5: +1 ATK supplémentaire et +1 armure.'],
+  'Magiciens':['Convergence','3: +1 énergie au prochain tour. 5: la première carte jouée coûte 1 de moins.'],
+  'Nobles':['Cour royale','3: +1 PV max aux unités. 5: le héros gagne un bouclier de 3.'],
+  'Ombres':['Embuscade','3: +1 ATK ce tour. 5: les deux unités les plus faibles gagnent +2 ATK ce tour.'],
+  'Robots':['Réseau','3: +1/+1 à la dernière unité posée. 5: +1/+1 à toutes les unités.'],
+  'Nature':['Meute sauvage','3: soigne 1 PV aux unités en fin de tour. 5: soigne aussi 2 PV au héros.'],
+  'Éléments':['Réaction','3: 1 dégât au héros adverse en fin de tour. 5: 2 dégâts à la place.'],
+  'Guérisseurs':['Sanctuaire','3: soigne 2 PV au héros en fin de tour. 5: la première unité qui devrait mourir reste à 1 PV, une fois par tour.'],
+  'Pirates':['Butin','3: +1 énergie après avoir détruit une unité. 5: pioche 1 carte après la première destruction.'],
+  'Créatures':['Instinct','3: +1 PV aux unités. 5: +2 ATK aux unités ayant 50% PV ou moins.']
+};
+
+/** Progression lisible pour l'UI : uniquement les familles réellement présentes sur le plateau. */
+export function synergyProgress(side:Side):SynergyProgress[]{
+  return Object.keys(FAMILY_RULES)
+    .map(family=>{const count=familyCount(side.board,family);return {family,count,next:count<3?3:count<5?5:null,tier:(count>=5?2:count>=3?1:0) as 0|1|2,label:FAMILY_RULES[family][0]};})
+    .filter(x=>x.count>0)
+    .sort((a,b)=>b.count-a.count||a.family.localeCompare(b.family));
+}
+
+/** Synergies volontairement basées sur le nombre de cartes posées : simples à lire et à anticiper. */
 export function synergies(side:Side, enemy:Side):Synergy[]{
   const units=alive(side.board).length, foes=alive(enemy.board).length;
   const list:Synergy[]=[];
-  const familyRules:Record<string,[string,string]>={
-    'Armée':['Formation','3: +1 ATK aux unités. 5: +1 ATK supplémentaire et +1 armure.'],
-    'Magiciens':['Convergence','3: +1 énergie au prochain tour. 5: la première carte jouée coûte 1 de moins.'],
-    'Nobles':['Cour royale','3: +1 PV max aux unités. 5: le héros gagne un bouclier de 3.'],
-    'Ombres':['Embuscade','3: +1 ATK ce tour. 5: les deux unités les plus faibles gagnent +2 ATK ce tour.'],
-    'Robots':['Réseau','3: +1/+1 à la dernière unité posée. 5: +1/+1 à toutes les unités.'],
-    'Nature':['Meute sauvage','3: soigne 1 PV aux unités en fin de tour. 5: soigne aussi 2 PV au héros.'],
-    'Éléments':['Réaction','3: 1 dégât au héros adverse en fin de tour. 5: 2 dégâts à la place.'],
-    'Guérisseurs':['Sanctuaire','3: soigne 2 PV au héros en fin de tour. 5: la première unité qui devrait mourir reste à 1 PV, une fois par tour.'],
-    'Pirates':['Butin','3: +1 énergie après avoir détruit une unité. 5: pioche 1 carte après la première destruction.'],
-    'Créatures':['Instinct','3: +1 PV aux unités. 5: +2 ATK aux unités ayant 50% PV ou moins.']
-  };
-  for(const [family,[title,description]] of Object.entries(familyRules)){
+  for(const [family,[title,description]] of Object.entries(FAMILY_RULES)){
     const n=familyCount(side.board,family); if(n>=3) list.push({id:`family-${family}`,title:`${title} ${n>=5?'II':'I'}`,description,active:true,tier:n>=5?2:1});
   }
-  // Comeback systems: strong enough to create hope, capped so losing is still meaningful.
   if(side.heroHp<=10) list.push({id:'last-stand',title:'Dernier Souffle',description:'À 10 PV ou moins : +1 énergie par tour et la première unité posée gagne +1/+1.',active:true,tier:1});
   if(side.heroHp<=5) list.push({id:'clutch',title:'Instinct de Survie',description:'À 5 PV ou moins : une fois par partie, soigne 3 PV et pioche 1 carte.',active:true,tier:2});
   if(foes-units>=2) list.push({id:'outnumbered',title:'Dos au Mur',description:'Si l’adversaire a au moins 2 unités de plus : tes unités gagnent +1 ATK pendant le prochain combat.',active:true,tier:1});
