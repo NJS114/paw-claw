@@ -1,5 +1,6 @@
 import type { CardData } from './gameCards';
 import { armorBonus, attackBonus, endTurnHeroDelta, familyCount, turnEnergy, type BoardCard, type Side } from './synergies';
+import { applyOpponentLore, applySameSideLore } from './loreSynergies';
 
 export type BattleSideState = Side & {
   hand: CardData[];
@@ -22,7 +23,7 @@ export type BattleState = {
 export type CombatEvent = {
   id:string;
   lane:number;
-  type:'clash'|'direct-hit'|'unit-damage'|'unit-destroyed'|'unit-saved'|'shield-block'|'heal'|'momentum'|'buff-atk'|'buff-hp'|'armor'|'shield-gain'|'energy'|'draw';
+  type:'clash'|'direct-hit'|'unit-damage'|'unit-destroyed'|'unit-saved'|'shield-block'|'heal'|'momentum'|'buff-atk'|'buff-hp'|'armor'|'shield-gain'|'energy'|'draw'|'lore';
   source:'player'|'enemy';
   target:'player'|'enemy';
   value?:number;
@@ -87,6 +88,7 @@ export function playUnit(side:BattleSideState, enemy:BattleSideState, card:CardD
   const atkBoost = (comeback?1:0)+(robot3?1:0);
   board[slot] = { ...card, atk:(card.atk??0)+atkBoost, hp:(card.hp??1)+hpBoost, currentHp:(card.hp??1)+hpBoost };
   board=buffBoardOnThreshold(before,board);
+  board=applySameSideLore(board).board;
   return { ...side, board, energy:side.energy-cost, hand:side.hand.filter((c,i)=>i!==side.hand.indexOf(card)), firstPlayDone:true };
 }
 
@@ -96,11 +98,17 @@ function absorb(heroHp:number, shield:number, damage:number){
 }
 
 export function resolveCombat(attacker:BattleSideState, defender:BattleSideState){
-  const aBoard = attacker.board.map(c=>c ? {...c,currentHp:c.currentHp ?? c.hp ?? 1}:null);
-  const dBoard = defender.board.map(c=>c ? {...c,currentHp:c.currentHp ?? c.hp ?? 1}:null);
+  const aStart=attacker.board.map(c=>c ? {...c,currentHp:c.currentHp ?? c.hp ?? 1}:null);
+  const dStart=defender.board.map(c=>c ? {...c,currentHp:c.currentHp ?? c.hp ?? 1}:null);
+  const lore=applyOpponentLore(aStart,dStart);
+  const aBoard = lore.left;
+  const dBoard = lore.right;
   let aHp=attacker.heroHp,dHp=defender.heroHp,aShield=attacker.shield,dShield=defender.shield;
   let attackerKills=0, defenderKills=0;
   const events:CombatEvent[]=[];
+  for(const bond of lore.triggered){
+    events.push({id:eventId(`lore-${bond.id}`,-1),lane:-1,type:'lore',source:'player',target:'enemy',text:`Histoire — ${bond.title} : ${bond.story}`});
+  }
 
   for(let i=0;i<7;i++){
     const a=aBoard[i], d=dBoard[i];
@@ -112,7 +120,7 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
       const dAtk=Math.max(0,rawD-aArmor);
       events.push({id:eventId('clash',i),lane:i,type:'clash',source:'player',target:'enemy',text:`Ligne ${i+1} : ${a.name} affronte ${d.name}.`});
       if(dArmor>0&&rawA>aAtk)events.push({id:eventId('armor-e',i),lane:i,type:'armor',source:'enemy',target:'enemy',value:rawA-aAtk,cardId:d.id,text:`Formation réduit de ${rawA-aAtk} les dégâts reçus par ${d.name}.`});
-      if(aArmor>0&&rawD>dAtk)events.push({id:eventId('armor-p',i),lane:i,type:'armor',source:'player',target:'player',value:rawD-dAtk,cardId:a.id,text:`Formation réduit de ${rawD-dAtk} les dégâts reçus par ${a.name}.`});
+      if(aArmor>0&&rawD>dAtk)events.push({id:eventId('armor-p',i),lane:i,type:'armor',source:'player',target:'player',value:rawD-aAtk,cardId:a.id,text:`Formation réduit les dégâts reçus par ${a.name}.`});
       a.currentHp=(a.currentHp??1)-dAtk;
       d.currentHp=(d.currentHp??1)-aAtk;
       events.push({id:eventId('damage-e',i),lane:i,type:'unit-damage',source:'player',target:'enemy',value:aAtk,cardId:d.id,text:`${d.name} subit ${aAtk} dégâts.`});
