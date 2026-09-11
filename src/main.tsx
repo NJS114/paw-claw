@@ -21,6 +21,7 @@ import './matchmaking.css';
 import './deck-studio.css';
 import './inventory.css';
 import './progression-hub.css';
+import './monetization.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
