@@ -1,5 +1,5 @@
 import type { CardData } from './gameCards';
-import { attackBonus, endTurnHeroDelta, turnEnergy, type BoardCard, type Side } from './synergies';
+import { armorBonus, attackBonus, endTurnHeroDelta, familyCount, turnEnergy, type BoardCard, type Side } from './synergies';
 
 export type BattleSideState = Side & {
   hand: CardData[];
@@ -31,7 +31,7 @@ export type CombatEvent = {
 };
 
 const alive = (board:(BoardCard|null)[]) => board.filter(Boolean) as BoardCard[];
-const count = (board:(BoardCard|null)[], family:string) => alive(board).filter(c=>c.family===family).length;
+const count = (board:(BoardCard|null)[], family:string) => familyCount(board,family);
 const clampHp = (hp:number) => Math.max(0, Math.min(20, hp));
 const eventId=(type:string,lane:number)=>`${type}-${lane}-${Math.random().toString(36).slice(2,8)}`;
 
@@ -42,7 +42,7 @@ export function effectiveAttack(card:BoardCard, side:BattleSideState, enemy:Batt
 export function beginTurn(side:BattleSideState, enemy:BattleSideState):BattleSideState {
   let next = { ...side, energy: turnEnergy(side), firstPlayDone:false, pirateDrawUsed:false, healerSaveUsed:false };
   if(next.heroHp <= 5 && !next.survivalUsed){
-    const drawn = next.deck[0];
+    const drawn = next.hand.length<5 ? next.deck[0] : undefined;
     next = {
       ...next,
       heroHp: clampHp(next.heroHp + 3),
@@ -56,18 +56,37 @@ export function beginTurn(side:BattleSideState, enemy:BattleSideState):BattleSid
   return next;
 }
 
+function buffBoardOnThreshold(before:(BoardCard|null)[], after:(BoardCard|null)[]){
+  let board=after.map(c=>c?{...c}:null);
+  const crossedNobles3=count(before,'Nobles')<3&&count(board,'Nobles')>=3;
+  const crossedRobots5=count(before,'Robots')<5&&count(board,'Robots')>=5;
+  const crossedCreatures3=count(before,'Créatures')<3&&count(board,'Créatures')>=3;
+
+  if(crossedNobles3){
+    board=board.map(c=>c?{...c,hp:(c.hp??1)+1,currentHp:(c.currentHp??c.hp??1)+1}:null);
+  }
+  if(crossedRobots5){
+    board=board.map(c=>c&&c.family==='Robots'?{...c,atk:(c.atk??0)+1,hp:(c.hp??1)+1,currentHp:(c.currentHp??c.hp??1)+1}:c);
+  }
+  if(crossedCreatures3){
+    board=board.map(c=>c&&c.family==='Créatures'?{...c,hp:(c.hp??1)+1,currentHp:(c.currentHp??c.hp??1)+1}:c);
+  }
+  return board;
+}
+
 export function playUnit(side:BattleSideState, enemy:BattleSideState, card:CardData, slot:number):BattleSideState {
   if(card.type !== 'Héros' || slot < 0 || slot > 6 || side.board[slot]) return side;
   let cost = card.cost;
   if(count(side.board,'Magiciens') >= 5 && !side.firstPlayDone) cost = Math.max(0,cost-1);
   if(side.energy < cost) return side;
-  const board = [...side.board];
+  const before=[...side.board];
+  let board = [...side.board];
   const comeback = side.heroHp <= 10 && !side.firstPlayDone;
   const robot3 = card.family === 'Robots' && count(side.board,'Robots') >= 2;
-  const creature3 = card.family === 'Créatures' && count(side.board,'Créatures') >= 2;
-  const hpBoost = (comeback?1:0)+(robot3?1:0)+(creature3?1:0);
+  const hpBoost = (comeback?1:0)+(robot3?1:0);
   const atkBoost = (comeback?1:0)+(robot3?1:0);
   board[slot] = { ...card, atk:(card.atk??0)+atkBoost, hp:(card.hp??1)+hpBoost, currentHp:(card.hp??1)+hpBoost };
+  board=buffBoardOnThreshold(before,board);
   return { ...side, board, energy:side.energy-cost, hand:side.hand.filter((c,i)=>i!==side.hand.indexOf(card)), firstPlayDone:true };
 }
 
@@ -86,8 +105,10 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
   for(let i=0;i<7;i++){
     const a=aBoard[i], d=dBoard[i];
     if(a && d){
-      const aAtk=effectiveAttack(a,{...attacker,board:aBoard},{...defender,board:dBoard});
-      const dAtk=effectiveAttack(d,{...defender,board:dBoard},{...attacker,board:aBoard});
+      const aSide={...attacker,board:aBoard},dSide={...defender,board:dBoard};
+      const rawA=effectiveAttack(a,aSide,dSide),rawD=effectiveAttack(d,dSide,aSide);
+      const aAtk=Math.max(0,rawA-armorBonus(dSide,d));
+      const dAtk=Math.max(0,rawD-armorBonus(aSide,a));
       events.push({id:eventId('clash',i),lane:i,type:'clash',source:'player',target:'enemy',text:`Ligne ${i+1} : ${a.name} affronte ${d.name}.`});
       a.currentHp=(a.currentHp??1)-dAtk;
       d.currentHp=(d.currentHp??1)-aAtk;
@@ -132,14 +153,25 @@ export function resolveCombat(attacker:BattleSideState, defender:BattleSideState
 
   if(attackerKills && count(aBoard,'Pirates')>=3){
     nextA.energy += 1;
-    if(count(aBoard,'Pirates')>=5 && !nextA.pirateDrawUsed && nextA.deck[0]) nextA={...nextA,hand:[...nextA.hand,nextA.deck[0]],deck:nextA.deck.slice(1),pirateDrawUsed:true};
+    if(count(aBoard,'Pirates')>=5 && !nextA.pirateDrawUsed && nextA.deck[0] && nextA.hand.length<5) nextA={...nextA,hand:[...nextA.hand,nextA.deck[0]],deck:nextA.deck.slice(1),pirateDrawUsed:true};
   }
   if(defenderKills && count(dBoard,'Pirates')>=3){
     nextD.energy += 1;
-    if(count(dBoard,'Pirates')>=5 && !nextD.pirateDrawUsed && nextD.deck[0]) nextD={...nextD,hand:[...nextD.hand,nextD.deck[0]],deck:nextD.deck.slice(1),pirateDrawUsed:true};
+    if(count(dBoard,'Pirates')>=5 && !nextD.pirateDrawUsed && nextD.deck[0] && nextD.hand.length<5) nextD={...nextD,hand:[...nextD.hand,nextD.deck[0]],deck:nextD.deck.slice(1),pirateDrawUsed:true};
   }
 
   return { attacker:nextA, defender:nextD, attackerKills, defenderKills, events };
+}
+
+function healNatureUnits(side:BattleSideState,target:'player'|'enemy',events:CombatEvent[]){
+  if(count(side.board,'Nature')<3) return side;
+  const board=side.board.map((c,lane)=>{
+    if(!c)return null;
+    const before=c.currentHp??c.hp??1,max=c.hp??1,after=Math.min(max,before+1);
+    if(after>before)events.push({id:eventId(`nature-${target}`,lane),lane,type:'heal',source:target,target,value:after-before,cardId:c.id,text:`${c.name} récupère ${after-before} PV grâce à Nature.`});
+    return {...c,currentHp:after};
+  });
+  return {...side,board};
 }
 
 export function resolveEndTurn(side:BattleSideState,enemy:BattleSideState){
@@ -155,11 +187,11 @@ export function resolveEndTurn(side:BattleSideState,enemy:BattleSideState){
   if(hitEnemy.dealt)events.push({id:eventId('end-hit-e',-1),lane:-1,type:'direct-hit',source:'player',target:'enemy',value:hitEnemy.dealt,text:`Une synergie inflige ${hitEnemy.dealt} dégâts directs au rival.`});
   if(hitSide.dealt)events.push({id:eventId('end-hit-p',-1),lane:-1,type:'direct-hit',source:'enemy',target:'player',value:hitSide.dealt,text:`Une synergie adverse t’inflige ${hitSide.dealt} dégâts directs.`});
 
-  if(count(nextSide.board,'Nature')>=3) nextSide={...nextSide,board:nextSide.board.map(c=>c?{...c,currentHp:Math.min(c.hp??1,(c.currentHp??c.hp??1)+1)}:null)};
-  if(count(nextEnemy.board,'Nature')>=3) nextEnemy={...nextEnemy,board:nextEnemy.board.map(c=>c?{...c,currentHp:Math.min(c.hp??1,(c.currentHp??c.hp??1)+1)}:null)};
+  nextSide=healNatureUnits(nextSide,'player',events);
+  nextEnemy=healNatureUnits(nextEnemy,'enemy',events);
 
-  if(count(nextSide.board,'Nobles')>=5) nextSide={...nextSide,shield:Math.min(3,nextSide.shield+3)};
-  if(count(nextEnemy.board,'Nobles')>=5) nextEnemy={...nextEnemy,shield:Math.min(3,nextEnemy.shield+3)};
+  if(count(nextSide.board,'Nobles')>=5) nextSide={...nextSide,shield:Math.max(nextSide.shield,3)};
+  if(count(nextEnemy.board,'Nobles')>=5) nextEnemy={...nextEnemy,shield:Math.max(nextEnemy.shield,3)};
   return {side:nextSide,enemy:nextEnemy,events};
 }
 
