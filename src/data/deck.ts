@@ -1,5 +1,6 @@
 import type { CardData } from './gameCards';
 import type { OwnedCards } from './collection';
+import { rarityCopyLimit } from './rarityBalance';
 
 const DECK_KEY='paw-claw.deck.active.v1';
 export const DECK_SIZE=20;
@@ -20,19 +21,42 @@ export function saveDeck(deck:SavedDeck){
 }
 
 export function starterDeck(cards:CardData[],owned:OwnedCards):SavedDeck{
-  const ids=cards.filter(c=>c.type==='Héros'&&(owned[c.id]??0)>0).slice(0,DECK_SIZE).map(c=>c.id);
+  const ids:string[]=[];
+  for(const card of cards){
+    if(card.type!=='Héros')continue;
+    const copies=Math.min(owned[card.id]??0,rarityCopyLimit(card));
+    for(let i=0;i<copies&&ids.length<DECK_SIZE;i++)ids.push(card.id);
+    if(ids.length>=DECK_SIZE)break;
+  }
   return {version:1,name:'Deck principal',cardIds:ids,updatedAt:Date.now()};
 }
 
 export function validateDeck(deck:SavedDeck,cards:CardData[],owned:OwnedCards){
   const cardMap=new Map(cards.map(c=>[c.id,c]));
-  const validIds=deck.cardIds.filter(id=>{
-    const card=cardMap.get(id);
-    return !!card&&card.type==='Héros'&&(owned[id]??0)>0;
-  }).slice(0,DECK_SIZE);
+  const counts=new Map<string,number>();
+  const validIds:string[]=[];
   const issues:string[]=[];
+
+  for(const id of deck.cardIds.slice(0,DECK_SIZE)){
+    const card=cardMap.get(id);
+    if(!card||card.type!=='Héros')continue;
+    const next=(counts.get(id)??0)+1;
+    const ownedCopies=owned[id]??0;
+    const rarityLimit=rarityCopyLimit(card);
+    if(next>ownedCopies){
+      if(!issues.includes(`${card.name} : seulement ${ownedCopies} exemplaire${ownedCopies>1?'s':''} possédé${ownedCopies>1?'s':''}.`))issues.push(`${card.name} : seulement ${ownedCopies} exemplaire${ownedCopies>1?'s':''} possédé${ownedCopies>1?'s':''}.`);
+      continue;
+    }
+    if(next>rarityLimit){
+      if(!issues.includes(`${card.name} : maximum ${rarityLimit} exemplaire${rarityLimit>1?'s':''} pour une carte ${card.rarity.toLowerCase()}.`))issues.push(`${card.name} : maximum ${rarityLimit} exemplaire${rarityLimit>1?'s':''} pour une carte ${card.rarity.toLowerCase()}.`);
+      continue;
+    }
+    counts.set(id,next);
+    validIds.push(id);
+  }
+
   if(validIds.length<DECK_SIZE)issues.push(`Ajoute ${DECK_SIZE-validIds.length} carte${DECK_SIZE-validIds.length>1?'s':''} pour atteindre ${DECK_SIZE}.`);
-  return {valid:validIds.length===DECK_SIZE,cardIds:validIds,issues};
+  return {valid:validIds.length===DECK_SIZE&&issues.length===0,cardIds:validIds,issues};
 }
 
 export function deckCards(deck:SavedDeck,cards:CardData[],owned:OwnedCards){
