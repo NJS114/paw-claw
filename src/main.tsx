@@ -16,8 +16,8 @@ import './battle-family-fx.css';
 import './battle-feedback.css';
 import './balance.css';
 import './production-ui.css';
-import { App } from './App';
+import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode><App /></React.StrictMode>,
+ <React.StrictMode><ProductionShell /></React.StrictMode>,
 );
