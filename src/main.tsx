@@ -13,6 +13,7 @@ import './battle-mulligan.css';
 import './battle-ai.css';
 import './battle-synergy-premium.css';
 import './battle-family-fx.css';
+import './battle-feedback.css';
 import { App } from './App';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
