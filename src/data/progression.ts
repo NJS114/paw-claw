@@ -1,5 +1,6 @@
 export type Progression = {
   coins: number;
+  gems: number;
   xp: number;
   level: number;
   wins: number;
@@ -9,7 +10,7 @@ export type Progression = {
 };
 
 const KEY = 'paw-claw.progression.v1';
-const initial: Progression = { coins: 1240, xp: 0, level: 1, wins: 0, losses: 0, boostersOpened: 0, sealedBoosters: 1 };
+const initial: Progression = { coins: 1240, gems:120, xp: 0, level: 1, wins: 0, losses: 0, boostersOpened: 0, sealedBoosters: 1 };
 
 export function loadProgression(): Progression {
   try { return { ...initial, ...JSON.parse(localStorage.getItem(KEY) || '{}') }; }
@@ -24,7 +25,10 @@ export function addXp(p: Progression, amount: number): Progression {
   return { ...p, xp, level };
 }
 export function battleVictory(p: Progression): Progression {
-  return addXp({ ...p, coins: p.coins + 80, wins: p.wins + 1 }, 60);
+  return addXp({ ...p, coins: p.coins + 80, gems:p.gems+2, wins: p.wins + 1 }, 60);
+}
+export function battleDefeat(p:Progression):Progression{
+  return addXp({...p,coins:p.coins+25,losses:p.losses+1},25);
 }
 export function buyBooster(p: Progression, price = 100): Progression | null {
   if (p.coins < price) return null;
