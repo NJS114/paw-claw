@@ -1,7 +1,8 @@
-import { useEffect,useMemo,useRef,useState } from 'react';
+import { useEffect,useMemo,useRef,useState,type CSSProperties } from 'react';
 import { BattleArena } from './BattleArena';
 import { cards,type CardData } from './data/gameCards';
 import { speciesOf,type Species } from './data/loreSynergies';
+import { clearBattle } from './data/battleSession';
 
 type Phase='search'|'prepare'|'battle';
 const PREP_SECONDS=10;
@@ -23,6 +24,8 @@ export function Matchmaking({playerPool,onWin,onLose,onEditDeck}:{playerPool:Car
  const[phase,setPhase]=useState<Phase>('search');
  const[seconds,setSeconds]=useState(PREP_SECONDS);
  const searchTimer=useRef<number|null>(null);
+ const locked=useRef(false);
+ function launch(){if(locked.current)return;locked.current=true;clearBattle();setPhase('battle')}
 
  useEffect(()=>{
    if(phase!=='search')return;
@@ -32,7 +35,7 @@ export function Matchmaking({playerPool,onWin,onLose,onEditDeck}:{playerPool:Car
 
  useEffect(()=>{
    if(phase!=='prepare')return;
-   if(seconds<=0){setPhase('battle');return}
+   if(seconds<=0){launch();return}
    const id=window.setTimeout(()=>setSeconds(v=>v-1),1000);
    return()=>window.clearTimeout(id);
  },[phase,seconds]);
@@ -52,8 +55,8 @@ export function Matchmaking({playerPool,onWin,onLose,onEditDeck}:{playerPool:Car
      <div className="versus-species"><div><small>TON CAMP</small><strong>{playerSpecies.toUpperCase()}S</strong><span>{playerPool.length} cartes</span></div><b>VS</b><div><small>RIVAL</small><strong>{rivalSpecies.toUpperCase()}S</strong><span>Deck adverse verrouillé</span></div></div>
      <h2>Prépare ton entrée dans l’arène</h2>
      <p>Le deck actif sera verrouillé au lancement. Dix secondes suffisent pour vérifier ton choix sans ralentir la partie.</p>
-     <div className="match-countdown" aria-live="polite"><span style={{'--progress':`${seconds/PREP_SECONDS*100}%`} as React.CSSProperties}>{seconds}</span><small>secondes</small></div>
-     <div className="match-actions"><button onClick={onEditDeck}>Changer de deck</button><button className="primary" onClick={()=>setPhase('battle')}>Prêt</button></div>
+     <div className="match-countdown" aria-live="polite"><span style={{'--progress':`${seconds/PREP_SECONDS*100}%`} as CSSProperties}>{seconds}</span><small>secondes</small></div>
+     <div className="match-actions"><button onClick={onEditDeck}>Changer de deck</button><button className="primary" onClick={launch}>Prêt</button></div>
    </div>}
  </section>
 }
