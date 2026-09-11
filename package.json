@@ -10,7 +10,12 @@
     "dev": "vite",
     "prebuild": "npm run assets:import",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:unit": "vitest run src/data/*.test.ts",
+    "test:functional": "vitest run src/*.functional.test.tsx",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
@@ -23,6 +28,12 @@
   },
   "devDependencies": {
     "@types/react": "latest",
-    "@types/react-dom": "latest"
+    "@types/react-dom": "latest",
+    "@testing-library/jest-dom": "latest",
+    "@testing-library/react": "latest",
+    "@testing-library/user-event": "latest",
+    "@vitest/coverage-v8": "latest",
+    "jsdom": "latest",
+    "vitest": "latest"
   }
 }
