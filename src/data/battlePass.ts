@@ -19,7 +19,7 @@ function fresh():BattlePassState{return{version:1,season:currentSeason(),xp:0,pr
 function normalize(s:BattlePassState){return s.season===currentSeason()?s:fresh()}
 export function loadBattlePass():BattlePassState{try{return normalize(JSON.parse(localStorage.getItem(KEY)||'null')||fresh())}catch{return fresh()}}
 export function saveBattlePass(s:BattlePassState){try{localStorage.setItem(KEY,JSON.stringify(normalize(s)))}catch{}}
-export function addBattlePassXp(s:BattlePassState,amount:number){return{...normalize(s),xp:Math.max(0,normalize(s).xp+Math.max(0,amount))}}
+export function addBattlePassXp(s:BattlePassState,amount:number){const state=normalize(s);return{...state,xp:Math.max(0,state.xp+Math.max(0,amount))}}
 export function unlockPremium(s:BattlePassState){return{...normalize(s),premium:true}}
 export function claimPassReward(s:BattlePassState,level:number,lane:'free'|'premium'){
  const state=normalize(s),tier=PASS_TIERS.find(t=>t.level===level);if(!tier||state.xp<tier.xp)return null;
@@ -27,4 +27,4 @@ export function claimPassReward(s:BattlePassState,level:number,lane:'free'|'prem
  const claimed=lane==='free'?state.claimedFree:state.claimedPremium;if(claimed.includes(level))return null;
  return{reward:lane==='free'?tier.free:tier.premium,state:{...state,[lane==='free'?'claimedFree':'claimedPremium']:[...claimed,level]}};
 }
-export function passLevel(s:BattlePassState){return PASS_TIERS.filter(t=>s.xp>=t.xp).at(-1)?.level??1}
+export function passLevel(s:BattlePassState){const rows=PASS_TIERS.filter(t=>s.xp>=t.xp);return rows.length?rows[rows.length-1].level:1}
