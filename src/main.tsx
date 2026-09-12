@@ -24,6 +24,7 @@ import './deck-studio.css';
 import './inventory.css';
 import './progression-hub.css';
 import './monetization.css';
+import './mobile-app.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
