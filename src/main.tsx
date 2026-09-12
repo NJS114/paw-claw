@@ -25,6 +25,7 @@ import './inventory.css';
 import './progression-hub.css';
 import './monetization.css';
 import './mobile-app.css';
+import './game-assets.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
