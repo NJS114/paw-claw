@@ -18,6 +18,8 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install
+      - name: Validate assets
+        run: npm run assets:validate
       - name: Unit tests
         run: npm run test:unit
       - name: Functional tests
