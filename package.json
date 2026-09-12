@@ -6,6 +6,7 @@
   "scripts": {
     "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs",
     "assets:crop": "node scripts/crop-card-sheets.mjs",
+    "assets:validate": "node scripts/validate-assets.mjs",
     "predev": "npm run assets:import",
     "dev": "vite",
     "prebuild": "npm run assets:import",
@@ -15,7 +16,8 @@
     "test:unit": "vitest run src/data/*.test.ts",
     "test:functional": "vitest run src/*.functional.test.tsx",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:all": "npm run assets:validate && npm run test:unit && npm run test:functional"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
