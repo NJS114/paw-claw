@@ -1,0 +1,56 @@
+/* Mobile-first card choreography for the combat scene. */
+.real-card-back,.real-deck-back{overflow:hidden;background:#07111f!important;border-color:rgba(224,184,91,.72)!important}
+.real-card-back .game-asset,.real-deck-back>.game-asset{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}
+.real-deck-back small{z-index:3}.real-deck-back:before{display:none!important}
+.deck-zone.drawing .real-deck-back>.game-asset{animation:pcDeckBackDraw .65s cubic-bezier(.2,.8,.2,1)}
+.hidden-hand .real-card-back{transform-origin:50% 120%;animation:pcEnemyHandDeal .42s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i) * 55ms)}
+
+/* Hand cards feel physical on touch. */
+.cinematic-hand{perspective:1200px}.cinematic-hand .hand-card{transform-origin:50% 115%;will-change:transform,filter}.cinematic-hand .hand-card .battle-card{transition:transform .18s ease,filter .18s ease;backface-visibility:hidden}.cinematic-hand .hand-card:hover .battle-card{transform:rotateX(2deg) rotateY(-2deg)}.cinematic-hand .hand-card.selected .battle-card{animation:pcCardSelect .28s cubic-bezier(.2,.9,.25,1) both}.cinematic-hand .hand-card:active .battle-card{transform:translateY(2px) scale(.985)}
+
+/* A newly occupied lane lands like a played card instead of appearing statically. */
+.arena-slot.occupied .battle-card{animation:pcCardLand .34s cubic-bezier(.16,.82,.22,1) both;transform-origin:50% 100%;will-change:transform,filter,opacity}
+.enemy-zone .arena-slot.occupied .battle-card{animation-name:pcEnemyCardLand}
+
+/* Combat response choreography reuses the event classes already emitted by BattleArena. */
+.arena-slot.event-damaged .battle-card{animation:pcHitShake .42s cubic-bezier(.3,.8,.2,1) both}
+.arena-slot.event-damaged:after{content:'';position:absolute;inset:-12%;z-index:14;pointer-events:none;background:linear-gradient(115deg,transparent 38%,rgba(111,180,255,.96) 48%,rgba(255,255,255,.9) 50%,rgba(111,180,255,.88) 53%,transparent 63%);mix-blend-mode:screen;animation:pcSlash .38s ease-out both}
+.arena-slot.event-destroyed .battle-card{animation:pcCardBreak .64s cubic-bezier(.3,.7,.2,1) forwards!important}
+.arena-slot.event-destroyed:before{content:'';position:absolute;inset:10%;z-index:15;pointer-events:none;border-radius:50%;background:radial-gradient(circle,rgba(255,228,169,.95),rgba(255,136,56,.55) 28%,transparent 68%);animation:pcBurst .58s ease-out forwards}
+.arena-slot.event-saved .battle-card{animation:pcSaved .7s ease-out both!important}
+.arena-slot.event-buffed .battle-card{animation:pcBuff .62s ease-out both!important}
+.arena-slot.event-buffed:after{content:'';position:absolute;inset:-10%;z-index:13;pointer-events:none;background:radial-gradient(circle at 50% 80%,rgba(255,210,91,.58),transparent 55%);animation:pcBuffGlow .7s ease-out both}
+.arena-slot.event-armored .battle-card{animation:pcArmor .62s ease-out both!important}
+.arena-slot.event-armored:before{content:'';position:absolute;inset:-7%;z-index:13;pointer-events:none;border:2px solid rgba(125,191,255,.82);border-radius:18px;box-shadow:0 0 28px rgba(93,167,255,.55),inset 0 0 20px rgba(121,188,255,.16);animation:pcShieldShell .66s ease-out both}
+.arena-slot.event-lore .battle-card{animation:pcLoreCard .78s ease-out both!important}
+.arena-slot.event-lore:after{content:'';position:absolute;inset:-18%;z-index:14;pointer-events:none;border-radius:50%;background:conic-gradient(from 0deg,transparent,rgba(162,104,255,.72),rgba(255,211,111,.65),transparent 72%);filter:blur(4px);animation:pcLoreAura 1s ease-out both}
+
+/* Hero feedback */
+.status-card.status-reacting{animation:pcHeroReact .38s ease-out}.status-card.status-reacting:after{content:'';position:absolute;inset:-3px;border-radius:inherit;pointer-events:none;border:1px solid rgba(255,216,126,.55);animation:pcStatusPulse .55s ease-out}
+.event-float{font-weight:900;text-shadow:0 2px 10px rgba(0,0,0,.8)}.event-float.event-unit-damage,.event-float.event-direct-hit,.event-float.event-fatigue{filter:drop-shadow(0 0 10px rgba(255,86,70,.45))}.event-float.event-heal,.event-float.event-unit-saved{filter:drop-shadow(0 0 10px rgba(86,255,154,.48))}.event-float.event-buff-atk,.event-float.event-buff-hp,.event-float.event-energy{filter:drop-shadow(0 0 10px rgba(255,202,83,.5))}
+
+/* Result screen entrance is now a game-result reveal. */
+.result-overlay{backdrop-filter:blur(8px)}.result-card{animation:pcResultEnter .55s cubic-bezier(.16,.84,.22,1) both}.result-card.win{box-shadow:0 0 0 1px rgba(255,207,91,.4),0 0 70px rgba(255,174,49,.2)}.result-card.lose{box-shadow:0 0 0 1px rgba(196,65,73,.35),0 0 60px rgba(131,23,40,.22)}.result-card.draw{box-shadow:0 0 0 1px rgba(117,155,255,.32),0 0 60px rgba(86,116,214,.18)}
+
+@keyframes pcDeckBackDraw{0%{transform:translateY(0) rotate(0)}35%{transform:translate(-16px,-13px) rotate(-5deg) scale(1.05)}100%{transform:none}}
+@keyframes pcEnemyHandDeal{from{opacity:0;transform:translate(40px,-20px) rotate(12deg) scale(.72)}to{opacity:1;transform:rotate(calc((var(--i) - 2) * 3deg))}}
+@keyframes pcCardSelect{0%{transform:translateY(0) scale(1)}65%{transform:translateY(-7px) scale(1.035)}100%{transform:translateY(-4px) scale(1.02)}}
+@keyframes pcCardLand{0%{opacity:0;transform:translateY(70px) rotateX(18deg) scale(.78);filter:brightness(1.55)}65%{opacity:1;transform:translateY(-6px) scale(1.035)}100%{transform:none;filter:none}}
+@keyframes pcEnemyCardLand{0%{opacity:0;transform:translateY(-62px) rotateX(-18deg) scale(.8);filter:brightness(1.45)}65%{opacity:1;transform:translateY(6px) scale(1.03)}100%{transform:none;filter:none}}
+@keyframes pcHitShake{0%,100%{transform:none}20%{transform:translateX(-7px) rotate(-2deg)}42%{transform:translateX(6px) rotate(1.5deg)}62%{transform:translateX(-3px)}80%{transform:translateX(2px)}}
+@keyframes pcSlash{0%{opacity:0;transform:translate(-20%,-12%) rotate(-7deg) scale(.7)}35%{opacity:1}100%{opacity:0;transform:translate(18%,16%) rotate(-7deg) scale(1.1)}}
+@keyframes pcCardBreak{0%{opacity:1;transform:none;filter:none}30%{transform:scale(1.06) rotate(-2deg);filter:brightness(1.6)}100%{opacity:0;transform:translateY(-24px) scale(.7) rotate(8deg);filter:brightness(2) blur(2px)}}
+@keyframes pcBurst{0%{opacity:0;transform:scale(.2)}35%{opacity:1}100%{opacity:0;transform:scale(1.8)}}
+@keyframes pcSaved{0%{transform:scale(.9);filter:brightness(1.8)}45%{transform:scale(1.05);filter:drop-shadow(0 0 24px rgba(84,255,164,.9))}100%{transform:none;filter:none}}
+@keyframes pcBuff{0%{transform:translateY(4px);filter:brightness(1)}42%{transform:translateY(-5px) scale(1.05);filter:brightness(1.5) drop-shadow(0 0 18px rgba(255,204,73,.72))}100%{transform:none;filter:none}}
+@keyframes pcBuffGlow{0%{opacity:0;transform:scale(.65)}45%{opacity:1}100%{opacity:0;transform:scale(1.3)}}
+@keyframes pcArmor{0%{transform:scale(.94)}46%{transform:scale(1.04);filter:drop-shadow(0 0 17px rgba(114,190,255,.75))}100%{transform:none;filter:none}}
+@keyframes pcShieldShell{0%{opacity:0;transform:scale(.72)}40%{opacity:1}100%{opacity:0;transform:scale(1.16)}}
+@keyframes pcLoreCard{0%{transform:scale(.88);filter:saturate(.8)}45%{transform:scale(1.065);filter:brightness(1.5) saturate(1.25)}100%{transform:none;filter:none}}
+@keyframes pcLoreAura{0%{opacity:0;transform:scale(.5) rotate(0)}45%{opacity:.95}100%{opacity:0;transform:scale(1.3) rotate(130deg)}}
+@keyframes pcHeroReact{0%,100%{transform:none}35%{transform:scale(1.015)}65%{transform:scale(.995)}}
+@keyframes pcStatusPulse{0%{opacity:0;transform:scale(.96)}38%{opacity:1}100%{opacity:0;transform:scale(1.04)}}
+@keyframes pcResultEnter{0%{opacity:0;transform:translateY(36px) scale(.86)}65%{opacity:1;transform:translateY(-6px) scale(1.02)}100%{transform:none}}
+
+@media(max-width:720px){.arena-slot.event-damaged:after{inset:-8%}.cinematic-hand .hand-card:hover .battle-card{transform:none}.hidden-hand .real-card-back{animation-duration:.34s}.result-card{max-height:88dvh;overflow:auto}}
+@media(prefers-reduced-motion:reduce){.deck-zone.drawing .real-deck-back>.game-asset,.hidden-hand .real-card-back,.cinematic-hand .hand-card.selected .battle-card,.arena-slot.occupied .battle-card,.arena-slot.event-damaged .battle-card,.arena-slot.event-damaged:after,.arena-slot.event-destroyed .battle-card,.arena-slot.event-destroyed:before,.arena-slot.event-saved .battle-card,.arena-slot.event-buffed .battle-card,.arena-slot.event-buffed:after,.arena-slot.event-armored .battle-card,.arena-slot.event-armored:before,.arena-slot.event-lore .battle-card,.arena-slot.event-lore:after,.status-card.status-reacting,.status-card.status-reacting:after,.result-card{animation:none!important}}
