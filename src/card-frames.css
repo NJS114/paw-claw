@@ -1,0 +1,11 @@
+/* Real rarity frames supplied at repository root. Vite bundles these URLs from source CSS. */
+.catalog-card,.reveal-card,.mini-card{position:relative}
+.catalog-card::after,.reveal-card::after,.mini-card::after{content:'';position:absolute;inset:-2px;z-index:8;pointer-events:none;background-repeat:no-repeat;background-position:center;background-size:100% 100%;filter:drop-shadow(0 2px 6px rgba(0,0,0,.34))}
+.catalog-card.commune::after,.reveal-card.rarity-commune::after,.mini-card.commune::after{background-image:url('../Contour_carte_commune-removebg-preview.png')}
+.catalog-card.rare::after,.reveal-card.rarity-rare::after,.mini-card.rare::after{background-image:url('../contour_carte_rare-removebg-preview.png')}
+.catalog-card.epique::after,.reveal-card.rarity-epique::after,.mini-card.epique::after{background-image:url('../contour_carte_epique-removebg-preview.png')}
+.catalog-card.legendaire::after,.reveal-card.rarity-legendaire::after,.mini-card.legendaire::after{background-image:url('../Contour_carte_legendaire-removebg-preview.png')}
+.catalog-card.legendaire,.reveal-card.rarity-legendaire{filter:drop-shadow(0 0 12px rgba(255,198,77,.24))}
+.reveal-card.rarity-legendaire.is-latest::after{animation:legendary-frame-pulse 1.15s ease-in-out infinite alternate}
+@keyframes legendary-frame-pulse{from{filter:drop-shadow(0 0 5px rgba(255,198,77,.38))}to{filter:drop-shadow(0 0 18px rgba(255,224,135,.8))}}
+@media (prefers-reduced-motion:reduce){.reveal-card.rarity-legendaire.is-latest::after{animation:none}}
