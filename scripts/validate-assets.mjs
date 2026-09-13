@@ -20,12 +20,20 @@ const required=[
  'chatgpt-image-5-sept.-2026-23_17_33.webp',
  'chatgpt-image-7-sept.-2026-15_04_34.webp',
 ];
+const rarityFrames=[
+ 'Contour_carte_commune-removebg-preview.png',
+ 'contour_carte_rare-removebg-preview.png',
+ 'contour_carte_epique-removebg-preview.png',
+ 'Contour_carte_legendaire-removebg-preview.png',
+];
 
 const zip=new AdmZip(zipPath);const entries=zip.getEntries().filter(e=>!e.isDirectory);
 const basenames=new Set(entries.map(e=>path.basename(e.entryName)));
 const missing=required.filter(name=>!basenames.has(name));
+const missingFrames=rarityFrames.filter(name=>!fs.existsSync(path.join(root,name)));
 const duplicates=[...basenames].filter(name=>entries.filter(e=>path.basename(e.entryName)===name).length>1);
 if(missing.length){console.error(`Missing required Paw & Claw assets (${missing.length}):`);for(const name of missing)console.error(` - ${name}`);process.exit(1)}
+if(missingFrames.length){console.error(`Missing rarity card frames (${missingFrames.length}):`);for(const name of missingFrames)console.error(` - ${name}`);process.exit(1)}
 if(duplicates.length)console.warn(`Warning: ${duplicates.length} duplicate asset basenames detected.`);
 const imageEntries=entries.filter(e=>/\.(webp|png|jpg|jpeg)$/i.test(e.entryName));
-console.log(`Asset validation OK: ${required.length} required / ${imageEntries.length} images available.`);
+console.log(`Asset validation OK: ${required.length} required / ${imageEntries.length} images available / ${rarityFrames.length} rarity frames.`);
