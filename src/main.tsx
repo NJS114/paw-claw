@@ -26,7 +26,8 @@ import './progression-hub.css';
 import './monetization.css';
 import './mobile-app.css';
 import './game-assets.css';
-import './booster-opening-v2.css';
+import './booster-opening.css';
+import './mobile-lobby.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
