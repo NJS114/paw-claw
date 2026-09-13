@@ -29,6 +29,7 @@ import './monetization.css';
 import './mobile-app.css';
 import './game-assets.css';
 import './mobile-lobby.css';
+import './booster-opening.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
