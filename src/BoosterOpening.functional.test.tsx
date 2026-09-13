@@ -5,6 +5,15 @@ import {BoosterOpening} from './BoosterOpening';
 vi.mock('./data/booster',()=>({generateStandardBooster:()=>({legendary:false,cards:Array.from({length:12},(_,i)=>({id:`card-${i}`,name:`Carte ${i+1}`,family:'Nature',rarity:i===11?'Épique':'Commune',type:'Héros',cost:1,atk:1,hp:2,assetPath:'/assets/generated/carte-bleue.webp'}))})}));
 
 describe('BoosterOpening',()=>{
+ it('switches between the committed booster visuals',()=>{
+  render(<BoosterOpening owned={{}} available={1} onOpen={vi.fn(()=>true)} onShop={vi.fn()}/>);
+  expect(screen.getByText('Royaumes & Légendes')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Booster suivant'}));
+  expect(screen.getByText('Magiciens')).toBeInTheDocument();
+  fireEvent.click(screen.getByRole('button',{name:'Booster suivant'}));
+  expect(screen.getByText('Pirates')).toBeInTheDocument();
+ });
+
  it('opens a pack through charge, tear and reveal phases',()=>{
   vi.useFakeTimers();
   const onOpen=vi.fn(()=>true);
@@ -12,9 +21,9 @@ describe('BoosterOpening',()=>{
   fireEvent.click(screen.getByRole('button',{name:'Ouvrir'}));
   expect(onOpen).toHaveBeenCalledTimes(1);
   expect(screen.getByText('Énergie du royaume…')).toBeInTheDocument();
-  act(()=>vi.advanceTimersByTime(620));
+  act(()=>vi.advanceTimersByTime(650));
   expect(screen.getByText('Ouverture…')).toBeInTheDocument();
-  act(()=>vi.advanceTimersByTime(720));
+  act(()=>vi.advanceTimersByTime(760));
   expect(screen.getByRole('button',{name:/Révéler la carte 1\/12/})).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:/Révéler la carte 1\/12/}));
   expect(screen.getByText('Carte 1')).toBeInTheDocument();
