@@ -1,0 +1,37 @@
+import {render,screen} from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import {describe,expect,it,vi} from 'vitest';
+import {MobileLobby} from './MobileLobby';
+import type {Progression} from './data/progression';
+
+const progress:Progression={coins:1240,gems:120,xp:40,level:12,wins:8,losses:4,draws:1,boostersOpened:6,sealedBoosters:2};
+
+describe('MobileLobby',()=>{
+ it('shows mobile-game player resources and collection count',()=>{
+  render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
+  expect(screen.getByText('Niveau 12')).toBeInTheDocument();
+  expect(screen.getByText('1240')).toBeInTheDocument();
+  expect(screen.getByText('120')).toBeInTheDocument();
+  expect(screen.getByText(/148 cartes/)).toBeInTheDocument();
+  expect(screen.getByText(/2 disponibles/)).toBeInTheDocument();
+ });
+
+ it('routes primary play and collection actions',async()=>{
+  const user=userEvent.setup();const go=vi.fn();
+  render(<MobileLobby progress={progress} ownedCount={148} onNavigate={go}/>);
+  await user.click(screen.getByRole('button',{name:/JOUER/i}));
+  expect(go).toHaveBeenCalledWith('battle');
+  await user.click(screen.getByRole('button',{name:/Collection/i}));
+  expect(go).toHaveBeenCalledWith('collection');
+ });
+
+ it('exposes profile, progression, booster and shop shortcuts',async()=>{
+  const user=userEvent.setup();const go=vi.fn();
+  render(<MobileLobby progress={progress} ownedCount={148} onNavigate={go}/>);
+  await user.click(screen.getByRole('button',{name:'Ouvrir le profil'}));
+  await user.click(screen.getByRole('button',{name:/Missions/i}));
+  await user.click(screen.getByRole('button',{name:/Booster/i}));
+  await user.click(screen.getByRole('button',{name:/Boutique/i}));
+  expect(go.mock.calls.map(call=>call[0])).toEqual(expect.arrayContaining(['profile','progression','boosters','shop']));
+ });
+});
