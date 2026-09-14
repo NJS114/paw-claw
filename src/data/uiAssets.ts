@@ -2,6 +2,7 @@ export type AssetKind='background'|'character'|'booster'|'icon'|'fx'|'ui'|'loadi
 export type GameAsset={id:string;kind:AssetKind;src:string;fallback?:string;required:boolean;usage:string[];alt:string;priority?:'critical'|'high'|'normal'|'lazy'};
 
 const generated='/assets/generated/';
+const backgrounds='/assets/backgrounds/';
 const supplied={
  hero:new URL('../../heros-duo-removebg-preview.png',import.meta.url).href,
  booster:new URL('../../booster.png',import.meta.url).href,
@@ -62,11 +63,11 @@ export const GAME_ASSETS:GameAsset[]=[
  {id:'family.elements',kind:'background',src:`${generated}chatgpt-image-7-sept.-2026-15_04_34.webp`,required:true,usage:['collection-fallback','elements'],alt:'Univers Éléments Paw & Claw',priority:'lazy'},
 
  {id:'loading.portal',kind:'loading',src:`${generated}ui-loading-portal.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['startup','screen-transition','reconnect'],alt:'Portail de chargement Paw & Claw',priority:'high'},
- {id:'world.lobby-day',kind:'background',src:`${generated}bg-lobby-day.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['home'],alt:'Place royale Paw & Claw',priority:'high'},
- {id:'world.collection-hall',kind:'background',src:`${generated}bg-collection-hall.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['collection'],alt:'Galerie de collection Paw & Claw',priority:'normal'},
- {id:'world.deck-forge',kind:'background',src:`${generated}bg-deck-forge.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['deck'],alt:'Atelier de decks Paw & Claw',priority:'normal'},
- {id:'world.shop',kind:'background',src:`${generated}bg-shop.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['shop'],alt:'Boutique Paw & Claw',priority:'normal'},
- {id:'world.matchmaking',kind:'background',src:`${generated}bg-matchmaking.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['matchmaking'],alt:'Portail de matchmaking Paw & Claw',priority:'high'},
+ {id:'world.lobby-day',kind:'background',src:`${backgrounds}bg-lobby-day.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['home'],alt:'Place royale Paw & Claw',priority:'high'},
+ {id:'world.collection-hall',kind:'background',src:`${backgrounds}bg-collection-hall.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['collection'],alt:'Galerie de collection Paw & Claw',priority:'normal'},
+ {id:'world.deck-forge',kind:'background',src:`${backgrounds}bg-deck-forge.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['deck'],alt:'Atelier de decks Paw & Claw',priority:'normal'},
+ {id:'world.shop',kind:'background',src:`${backgrounds}bg-shop.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['shop'],alt:'Boutique Paw & Claw',priority:'normal'},
+ {id:'world.matchmaking',kind:'background',src:`${backgrounds}bg-matchmaking.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['matchmaking'],alt:'Portail de matchmaking Paw & Claw',priority:'high'},
 
  {id:'character.royal-cat',kind:'character',src:supplied.hero,fallback:`${generated}heros-duo.webp`,required:false,usage:['home','victory','profile'],alt:'Héros royal Paw & Claw',priority:'high'},
  {id:'character.pirate-dog',kind:'character',src:supplied.hero,fallback:`${generated}heros-duo.webp`,required:false,usage:['home','shop','matchmaking'],alt:'Héros Paw & Claw',priority:'normal'},
@@ -75,7 +76,7 @@ export const GAME_ASSETS:GameAsset[]=[
 
  {id:'fx.booster-glow',kind:'fx',src:`${generated}fx-booster-glow.webp`,fallback:supplied.booster,required:false,usage:['booster-opening'],alt:'',priority:'lazy'},
  {id:'fx.legendary-burst',kind:'fx',src:`${generated}fx-legendary-burst.webp`,fallback:supplied.booster,required:false,usage:['booster-opening','legendary-reveal'],alt:'',priority:'lazy'},
- {id:'battle.arena-main',kind:'battle',src:`${generated}bg-battle-arena.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['battle'],alt:'Arène principale Paw & Claw',priority:'critical'},
+ {id:'battle.arena-main',kind:'battle',src:`${backgrounds}bg-battle-arena.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['battle'],alt:'Arène principale Paw & Claw',priority:'critical'},
  {id:'battle.victory',kind:'result',src:`${generated}ui-victory.webp`,fallback:supplied.hero,required:false,usage:['victory'],alt:'Victoire Paw & Claw',priority:'normal'},
  {id:'battle.defeat',kind:'result',src:`${generated}ui-defeat.webp`,fallback:supplied.hero,required:false,usage:['defeat'],alt:'Défaite Paw & Claw',priority:'normal'},
  {id:'battle.draw',kind:'result',src:`${generated}ui-draw.webp`,fallback:supplied.hero,required:false,usage:['draw'],alt:'Égalité Paw & Claw',priority:'normal'},
