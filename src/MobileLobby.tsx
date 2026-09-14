@@ -9,30 +9,32 @@ type Props={
  onNavigate:(target:LobbyTarget)=>void;
 };
 
+function ActionAsset({assetId}:{assetId:string}){return <span className="lobby-action-asset" aria-hidden="true"><GameAsset assetId={assetId} decorative/></span>}
+
 export function MobileLobby({progress,ownedCount,onNavigate}:Props){
  return <section className="mobile-lobby" aria-label="Accueil Paw & Claw">
-   <GameAsset assetId="world.throne-arena" className="mobile-lobby-bg" decorative loading="eager"/>
+   <GameAsset assetId="world.lobby-day" className="mobile-lobby-bg" decorative loading="eager"/>
    <div className="mobile-lobby-scrim"/>
 
    <header className="lobby-player-strip">
     <button className="lobby-avatar" onClick={()=>onNavigate('profile')} aria-label="Ouvrir le profil">
-      <GameAsset assetId="brand.hero-duo" decorative/>
+      <GameAsset assetId="icon.profile" decorative loading="eager"/>
     </button>
     <div className="lobby-player-copy"><strong>Gardien du Royaume</strong><span>Niveau {progress.level}</span></div>
     <div className="lobby-wallet" aria-label="Ressources">
-      <span><b>{progress.coins}</b><small>Pièces</small></span>
-      <span><b>{progress.gems}</b><small>Gemmes</small></span>
+      <span><GameAsset assetId="icon.coins" decorative/><b>{progress.coins}</b><small>Pièces</small></span>
+      <span><GameAsset assetId="icon.gems" decorative/><b>{progress.gems}</b><small>Gemmes</small></span>
     </div>
    </header>
 
    <div className="lobby-side-actions lobby-side-left">
-    <button onClick={()=>onNavigate('progression')}><span className="lobby-action-glyph">M</span><strong>Missions</strong><small>Récompenses</small></button>
-    <button onClick={()=>onNavigate('progression')}><span className="lobby-action-glyph">P</span><strong>Passe</strong><small>Saison en cours</small></button>
+    <button onClick={()=>onNavigate('progression')}><ActionAsset assetId="icon.missions"/><strong>Missions</strong><small>Récompenses</small></button>
+    <button onClick={()=>onNavigate('progression')}><ActionAsset assetId="icon.pass"/><strong>Passe</strong><small>Saison en cours</small></button>
    </div>
 
    <div className="lobby-side-actions lobby-side-right">
-    <button onClick={()=>onNavigate('boosters')}><span className="lobby-action-glyph">B</span><strong>Booster</strong><small>{progress.sealedBoosters} disponible{progress.sealedBoosters>1?'s':''}</small></button>
-    <button onClick={()=>onNavigate('shop')}><span className="lobby-action-glyph">S</span><strong>Boutique</strong><small>Nouveautés</small></button>
+    <button onClick={()=>onNavigate('boosters')}><ActionAsset assetId="booster.standard-violet"/><strong>Booster</strong><small>{progress.sealedBoosters} disponible{progress.sealedBoosters>1?'s':''}</small></button>
+    <button onClick={()=>onNavigate('shop')}><ActionAsset assetId="icon.shop"/><strong>Boutique</strong><small>Nouveautés</small></button>
    </div>
 
    <div className="lobby-character-stage" aria-hidden="true">
@@ -48,17 +50,18 @@ export function MobileLobby({progress,ownedCount,onNavigate}:Props){
    </div>
 
    <div className="lobby-primary-zone">
-    <button className="lobby-play-button" onClick={()=>onNavigate('battle')}>
-      <span className="lobby-crossed-blades" aria-hidden="true">×</span>
-      <span><small>ARÈNE CLASSÉE</small><strong>JOUER</strong></span>
+    <button className="lobby-play-button image-button" onClick={()=>onNavigate('battle')} aria-label="Jouer en arène classée">
+      <GameAsset assetId="button.play" decorative loading="eager"/>
+      <span className="button-copy"><small>ARÈNE CLASSÉE</small><strong>JOUER</strong></span>
     </button>
     <div className="lobby-quick-row">
-      <button onClick={()=>onNavigate('collection')}><strong>Collection</strong><small>Voir mes cartes</small></button>
-      <button onClick={()=>onNavigate('deck')}><strong>Decks</strong><small>Préparer l'équipe</small></button>
+      <button className="quick-image-button" onClick={()=>onNavigate('collection')}><GameAsset assetId="button.collection" decorative/><span><strong>Collection</strong><small>Voir mes cartes</small></span></button>
+      <button className="quick-image-button" onClick={()=>onNavigate('deck')}><GameAsset assetId="icon.decks" decorative/><span><strong>Decks</strong><small>Préparer l'équipe</small></span></button>
     </div>
    </div>
 
    <div className="lobby-event-card" role="status">
+    <GameAsset assetId="button.events" className="lobby-event-visual" decorative/>
     <div><small>ÉVÉNEMENT DU ROYAUME</small><strong>Festival lunaire</strong><span>Récompenses bonus aujourd'hui</span></div>
     <button onClick={()=>onNavigate('progression')}>Voir</button>
    </div>
