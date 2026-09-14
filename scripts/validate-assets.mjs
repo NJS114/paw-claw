@@ -17,14 +17,20 @@ const rootVisuals=[
  'coffre-bleu.png','coffre-bois.png','coffre-rouge.png','btn-jouer.png','btn-arene.png','btn-combattre.png','btn-collection.png','btn-boutique.png','btn-missions.png','btn-evenements.png',
  'rarete-commune.png','rarete-rare.png','rarete-epique.png','rarete-legendaire.png',
 ];
+const backgrounds=[
+ 'bg-lobby-day.svg','bg-collection-hall.svg','bg-deck-forge.svg','bg-shop.svg','bg-matchmaking.svg','bg-battle-arena.svg',
+];
 
 const zip=new AdmZip(zipPath);const entries=zip.getEntries().filter(e=>!e.isDirectory);
 const basenames=new Set(entries.map(e=>path.basename(e.entryName)));
 const missing=required.filter(name=>!basenames.has(name));
 const missingRoot=rootVisuals.filter(name=>!fs.existsSync(path.join(root,name)));
+const backgroundDir=path.join(root,'public','assets','backgrounds');
+const missingBackgrounds=backgrounds.filter(name=>!fs.existsSync(path.join(backgroundDir,name)));
 const duplicates=[...basenames].filter(name=>entries.filter(e=>path.basename(e.entryName)===name).length>1);
 if(missing.length){console.error(`Missing required Paw & Claw assets (${missing.length}):`);for(const name of missing)console.error(` - ${name}`);process.exit(1)}
 if(missingRoot.length){console.error(`Missing committed root visuals (${missingRoot.length}):`);for(const name of missingRoot)console.error(` - ${name}`);process.exit(1)}
+if(missingBackgrounds.length){console.error(`Missing dedicated backgrounds (${missingBackgrounds.length}):`);for(const name of missingBackgrounds)console.error(` - public/assets/backgrounds/${name}`);process.exit(1)}
 if(duplicates.length)console.warn(`Warning: ${duplicates.length} duplicate asset basenames detected.`);
 const imageEntries=entries.filter(e=>/\.(webp|png|jpg|jpeg)$/i.test(e.entryName));
-console.log(`Asset validation OK: ${required.length} packaged / ${rootVisuals.length} committed root visuals / ${imageEntries.length} ZIP images.`);
+console.log(`Asset validation OK: ${required.length} packaged / ${rootVisuals.length} committed root visuals / ${backgrounds.length} dedicated backgrounds / ${imageEntries.length} ZIP images.`);
