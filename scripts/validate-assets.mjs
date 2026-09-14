@@ -12,7 +12,10 @@ const required=[
 ];
 const rootVisuals=[
  'Contour_carte_commune-removebg-preview.png','contour_carte_rare-removebg-preview.png','contour_carte_epique-removebg-preview.png','Contour_carte_legendaire-removebg-preview.png',
- 'booster.png','booster_magician.png','booster_pirate.png','booster_sante.png','dos_de_carte.png','heros-duo-removebg-preview.png',
+ 'booster.png','booster_magician.png','booster_pirate.png','booster_sante.png','dos_de_carte.png','heros-duo-removebg-preview.png','chat-bienvenue.png',
+ 'icone-piece.png','icone-gemme.png','icone-lettre.png','icone-livre.png','icone-parchemin.png','icone-couronne.png','icone-boussole.png','icone-banniere.png','icone-carte-tresor.png','icone-cle.png','icone-coeur.png','icone-eclair.png','icone-potion.png',
+ 'coffre-bleu.png','coffre-bois.png','coffre-rouge.png','btn-jouer.png','btn-arene.png','btn-combattre.png','btn-collection.png','btn-boutique.png','btn-missions.png','btn-evenements.png',
+ 'rarete-commune.png','rarete-rare.png','rarete-epique.png','rarete-legendaire.png',
 ];
 
 const zip=new AdmZip(zipPath);const entries=zip.getEntries().filter(e=>!e.isDirectory);
