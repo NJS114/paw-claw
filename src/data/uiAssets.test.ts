@@ -17,6 +17,14 @@ describe('Paw & Claw asset catalog',()=>{
   expect(asset('button.events').src).toContain('btn-evenements.png');
   expect(asset('rarity.legendary-badge').src).toContain('rarete-legendaire.png');
  });
+ it('uses a dedicated background for each major game screen',()=>{
+  expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-day.svg');
+  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-hall.svg');
+  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-forge.svg');
+  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop.svg');
+  expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking.svg');
+  expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-arena.svg');
+ });
  it('covers the full core mobile game journey',()=>{for(const usage of ['home','collection','deck','shop','matchmaking','battle','booster-opening','victory','defeat','draw','nav','reward'])expect(assetsFor(usage).length,`missing ${usage}`).toBeGreaterThan(0)});
  it('keeps safe fallbacks for planned visual media',()=>{for(const entry of GAME_ASSETS.filter(a=>!a.required)){const mayBeTransparentFx=entry.kind==='fx'||entry.kind==='icon';expect(Boolean(entry.fallback)||mayBeTransparentFx,`${entry.id} needs fallback`).toBe(true)}});
  it('throws on unknown ids instead of silently rendering broken media',()=>{expect(()=>asset('missing.asset')).toThrow(/inconnu/)});
