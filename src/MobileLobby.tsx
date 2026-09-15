@@ -40,7 +40,8 @@ export function MobileLobby({progress,ownedCount,onNavigate}:Props){
    <div className="lobby-character-stage" aria-hidden="true">
     <div className="lobby-aura lobby-aura-one"/>
     <div className="lobby-aura lobby-aura-two"/>
-    <GameAsset assetId="brand.hero-duo" className="lobby-heroes" decorative loading="eager"/>
+    <GameAsset assetId="lobby.hero-cat" className="lobby-hero lobby-hero-cat" decorative loading="eager"/>
+    <GameAsset assetId="lobby.hero-dog" className="lobby-hero lobby-hero-dog" decorative loading="eager"/>
    </div>
 
    <div className="lobby-callout">
@@ -50,19 +51,19 @@ export function MobileLobby({progress,ownedCount,onNavigate}:Props){
    </div>
 
    <div className="lobby-primary-zone">
-    <button className="lobby-play-button image-button" onClick={()=>onNavigate('battle')} aria-label="Jouer en arène classée">
+    <button className="lobby-play-button image-button" onClick={()=>onNavigate('battle')} aria-label="Jouer en arène">
       <GameAsset assetId="button.play" decorative loading="eager"/>
-      <span className="button-copy"><small>ARÈNE CLASSÉE</small><strong>JOUER</strong></span>
+      <span className="lobby-play-caption">PRÉPARER MON DUEL</span>
     </button>
     <div className="lobby-quick-row">
-      <button className="quick-image-button" onClick={()=>onNavigate('collection')}><GameAsset assetId="button.collection" decorative/><span><strong>Collection</strong><small>Voir mes cartes</small></span></button>
+      <button className="quick-image-button" onClick={()=>onNavigate('collection')}><GameAsset assetId="icon.collection" decorative/><span><strong>Collection</strong><small>Voir mes cartes</small></span></button>
       <button className="quick-image-button" onClick={()=>onNavigate('deck')}><GameAsset assetId="icon.decks" decorative/><span><strong>Decks</strong><small>Préparer l'équipe</small></span></button>
     </div>
    </div>
 
    <div className="lobby-event-card" role="status">
-    <GameAsset assetId="button.events" className="lobby-event-visual" decorative/>
-    <div><small>ÉVÉNEMENT DU ROYAUME</small><strong>Festival lunaire</strong><span>Récompenses bonus aujourd'hui</span></div>
+    <GameAsset assetId="icon.missions" className="lobby-event-visual" decorative/>
+    <div><small>PROGRESSION DU ROYAUME</small><strong>Missions et récompenses</strong><span>Consulte tes objectifs et ton passe</span></div>
     <button onClick={()=>onNavigate('progression')}>Voir</button>
    </div>
  </section>

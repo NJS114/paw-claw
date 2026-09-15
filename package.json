@@ -7,6 +7,7 @@
     "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs",
     "assets:crop": "node scripts/crop-card-sheets.mjs",
     "assets:validate": "node scripts/validate-assets.mjs",
+    "assets:audit": "node scripts/audit-asset-coverage.mjs",
     "predev": "npm run assets:import",
     "dev": "vite",
     "prebuild": "npm run assets:import",
