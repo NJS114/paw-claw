@@ -18,16 +18,16 @@ describe('Paw & Claw asset catalog',()=>{
   expect(asset('rarity.legendary-badge').src).toContain('rarete-legendaire.png');
  });
  it('uses a dedicated background for each major game screen',()=>{
-  expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-day-v2.webp');
+  expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-royal-v3.webp');
   expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-hall.svg');
   expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-forge.svg');
   expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop.svg');
   expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking.svg');
   expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-arena.svg');
  });
- it('uses two distinct existing hero sprites in the lobby',()=>{
-  expect(asset('lobby.hero-cat').src).toBe('/assets/generated/chaton-mage.webp');
-  expect(asset('lobby.hero-dog').src).toBe('/assets/generated/chien-chevalier.webp');
+ it('uses two distinct restored hero sprites in the lobby',()=>{
+  expect(asset('lobby.hero-cat').src).toBe('/assets/characters/lobby-cat-v3.webp');
+  expect(asset('lobby.hero-dog').src).toBe('/assets/characters/lobby-dog-v3.webp');
   expect(asset('lobby.hero-cat').src).not.toBe(asset('lobby.hero-dog').src);
  });
  it('covers the full core mobile game journey',()=>{for(const usage of ['home','collection','deck','shop','matchmaking','battle','booster-opening','victory','defeat','draw','nav','reward'])expect(assetsFor(usage).length,`missing ${usage}`).toBeGreaterThan(0)});

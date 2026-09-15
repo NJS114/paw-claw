@@ -55,9 +55,41 @@ ou modifier les règles pour combler ce manque visuel.
 
 ## Lot 1 — Lobby de référence
 
+### Révision après retour visuel utilisateur
+
+La capture du premier candidat a été **refusée visuellement** : décor en bande,
+héros trop petits, bandes noires, profil erroné, raccourci booster inadapté et
+habillage trop proche d'une interface web. Les tests techniques réussis ne
+constituaient pas une validation de fidélité artistique.
+
+La révision V3 se base sur la première image jointe par l'utilisateur (cité royale
+dorée avec deux héros au premier plan) ; les planches mobiles guident le reflow
+portrait. Elle remplace le décor simplifié par un décor dédié, les deux sprites par
+des versions régénérées avec alpha et le titre simple par un emblème isolé.
+Le registre garde des fallbacks existants. Les nouveaux originaux de production
+sont hors du dossier `generated/`, pour survivre à l'import automatique du ZIP.
+
+- `src/MobileLobby.tsx` : composition plein écran, actions en HTML, profil recadré
+  sur le véritable chat, compteur de boosters et expérience issus de la sauvegarde.
+- `src/mobile-lobby.css` : scène occupant le viewport, héros agrandis, contrôles
+  dorés, dispositions portrait/paysage. En portrait court, un défilement vertical
+  est autorisé plutôt que de réduire les zones tactiles.
+- `src/LobbyIcon.tsx` : symboles vectoriels sémantiques, sans emoji ni faux pictos.
+- `src/ProductionShell.tsx` : utilitaires regroupés dans un menu Options clavier.
+- Quête : branchement à `daily-play-3` et à ses compteurs réels ; accès à l'écran
+  existant de récupération. Aucune fausse promotion, récompense ou fonctionnalité.
+
+Les trois assets de scène ont été inspectés individuellement. La composition du
+jeu V3 **n'est pas encore contrôlée dans un navigateur** : le navigateur de la
+session précédente bloquait aussi l'endpoint officiel `terminal.local:4173`.
+La capture fournie par l'utilisateur est celle de V2, pas une preuve de V3.
+La PR reste en brouillon et la version publique n'est pas remplacée.
+
+La table ci-dessous conserve le bilan historique de V2 ; elle ne valide pas V3.
+
 | Élément | Fichier | Intégré | Tests techniques | Contrôle visuel | Accord utilisateur |
 | --- | --- | --- | --- | --- | --- |
-| Fond candidat | `public/assets/backgrounds/bg-lobby-day-v2.webp`, 1672×941, 190198 octets | Oui, registre central | Présence, dimensions, budget, fallback | En attente | En attente |
+| Fond candidat V2 | `public/assets/backgrounds/bg-lobby-day-v2.webp`, 1672×941, 190198 octets | Ancien candidat / fallback | Présence, dimensions, budget, fallback | Capture utilisateur reçue | Refusé |
 | Chat | `chaton-mage.webp` du ZIP | Oui, `lobby.hero-cat` | Source distincte et référence vérifiées | En attente | En attente |
 | Chien | `chien-chevalier.webp` du ZIP | Oui, `lobby.hero-dog` | Source distincte et référence vérifiées | En attente | En attente |
 | Actions / profil / ressources | Assets existants et HTML | Oui | Tests DOM des destinations et valeurs | En attente | En attente |

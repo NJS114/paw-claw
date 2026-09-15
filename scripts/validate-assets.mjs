@@ -18,7 +18,7 @@ const rootVisuals=[
  'rarete-commune.png','rarete-rare.png','rarete-epique.png','rarete-legendaire.png',
 ];
 const backgrounds=[
- 'bg-lobby-day.svg','bg-lobby-day-v2.webp','bg-collection-hall.svg','bg-deck-forge.svg','bg-shop.svg','bg-matchmaking.svg','bg-battle-arena.svg',
+ 'bg-lobby-day.svg','bg-lobby-day-v2.webp','bg-lobby-royal-v3.webp','bg-collection-hall.svg','bg-deck-forge.svg','bg-shop.svg','bg-matchmaking.svg','bg-battle-arena.svg',
 ];
 
 const zip=new AdmZip(zipPath);const entries=zip.getEntries().filter(e=>!e.isDirectory);
