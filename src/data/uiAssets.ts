@@ -63,7 +63,11 @@ export const GAME_ASSETS:GameAsset[]=[
  {id:'family.elements',kind:'background',src:`${generated}chatgpt-image-7-sept.-2026-15_04_34.webp`,required:true,usage:['collection-fallback','elements'],alt:'Univers Éléments Paw & Claw',priority:'lazy'},
 
  {id:'loading.portal',kind:'loading',src:`${generated}ui-loading-portal.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['startup','screen-transition','reconnect'],alt:'Portail de chargement Paw & Claw',priority:'high'},
- {id:'world.lobby-day',kind:'background',src:`${backgrounds}bg-lobby-day.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['home'],alt:'Place royale Paw & Claw',priority:'high'},
+ {id:'world.lobby-day',kind:'background',src:`${backgrounds}bg-lobby-royal-v3.webp`,fallback:`${backgrounds}bg-lobby-day-v2.webp`,required:true,usage:['home'],alt:'Cité royale Paw & Claw',priority:'critical'},
+ {id:'lobby.hero-cat',kind:'character',src:'/assets/characters/lobby-cat-v3.webp',fallback:`${generated}chaton-mage.webp`,required:true,usage:['home'],alt:'Chat mage royal',priority:'critical'},
+ {id:'lobby.hero-dog',kind:'character',src:'/assets/characters/lobby-dog-v3.webp',fallback:`${generated}chien-chevalier.webp`,required:true,usage:['home'],alt:'Chien chevalier royal',priority:'critical'},
+ {id:'lobby.booster',kind:'booster',src:`${generated}booster-violet.webp`,required:true,usage:['home'],alt:'Booster royal violet',priority:'high'},
+ {id:'lobby.logo',kind:'ui',src:'/assets/ui/paw-claw-logo-v3.webp',required:true,usage:['home'],alt:'Paw & Claw',priority:'critical'},
  {id:'world.collection-hall',kind:'background',src:`${backgrounds}bg-collection-hall.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['collection'],alt:'Galerie de collection Paw & Claw',priority:'normal'},
  {id:'world.deck-forge',kind:'background',src:`${backgrounds}bg-deck-forge.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['deck'],alt:'Atelier de decks Paw & Claw',priority:'normal'},
  {id:'world.shop',kind:'background',src:`${backgrounds}bg-shop.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['shop'],alt:'Boutique Paw & Claw',priority:'normal'},
