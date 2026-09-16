@@ -12,6 +12,7 @@
 .mobile-lobby-bg,.mobile-lobby-scrim{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .mobile-lobby-bg{z-index:-3;object-fit:cover;object-position:50% 58%}
 .mobile-lobby-scrim{z-index:-2;background:linear-gradient(180deg,#0a12283b,transparent 30%,transparent 65%,#081020a6),linear-gradient(90deg,#17131f55,transparent 25%,transparent 70%,#17131f55)}
+.mobile-lobby[data-lobby-period=day] .mobile-lobby-scrim{background:linear-gradient(180deg,#17375a24,transparent 30%,transparent 58%,#12243c85),linear-gradient(90deg,#25304440,transparent 25%,transparent 70%,#25304440)}
 .mobile-lobby button{font-family:inherit;color:inherit;cursor:pointer;touch-action:manipulation;transition:filter .18s ease,transform .18s ease;min-height:44px}
 .mobile-lobby button:focus-visible{outline:3px solid #ffeaac;outline-offset:5px}
 .mobile-lobby button:active{transform:translateY(2px)}

@@ -2,17 +2,19 @@ import {GameAsset} from './GameAsset';
 import {xpForLevel, type Progression} from './data/progression';
 import {MISSIONS, type MissionProgress} from './data/missions';
 import {LobbyIcon} from './LobbyIcon';
+import {lobbyAssetId,useLocalLobbyPeriod} from './lobbyTime';
 
 type LobbyTarget='battle'|'collection'|'deck'|'progression'|'shop'|'boosters'|'profile';
 type Props={progress:Progression;ownedCount:number;missions?:MissionProgress;onNavigate:(target:LobbyTarget)=>void};
 
 export function MobileLobby({progress,ownedCount,missions,onNavigate}:Props){
+ const lobbyPeriod=useLocalLobbyPeriod();
  const quest=MISSIONS.find(m=>m.id==='daily-play-3')!;
  const questCount=Math.min(quest.target,missions?.counts[quest.id]??0);
  const claimed=missions?.claimed.includes(quest.id)??false;
  const xpTarget=xpForLevel(progress.level);
- return <section className="mobile-lobby" aria-label="Accueil Paw & Claw">
-  <GameAsset assetId="world.lobby-portrait" className="mobile-lobby-bg" decorative loading="eager"/>
+ return <section className="mobile-lobby" data-lobby-period={lobbyPeriod} aria-label="Accueil Paw & Claw">
+  <GameAsset assetId={lobbyAssetId(lobbyPeriod)} className="mobile-lobby-bg" decorative loading="eager"/>
   <div className="mobile-lobby-scrim"/>
   <header className="lobby-player-strip">
    <button className="lobby-profile" onClick={()=>onNavigate('profile')} aria-label="Ouvrir le profil">
@@ -34,11 +36,6 @@ export function MobileLobby({progress,ownedCount,missions,onNavigate}:Props){
    <button className="lobby-tile" onClick={()=>onNavigate('progression')}><LobbyIcon name="crown"/><span>Passe</span></button>
    <button className="lobby-tile" onClick={()=>onNavigate('boosters')}><LobbyIcon name="cards"/><span>Boosters</span><small>{progress.sealedBoosters} disponible{progress.sealedBoosters!==1?'s':''}</small></button>
   </nav>
-  <div className="lobby-character-stage" aria-hidden="true">
-   <div className="lobby-ground-glow"/>
-   <GameAsset assetId="lobby.hero-cat" className="lobby-hero lobby-hero-cat" decorative loading="eager"/>
-   <GameAsset assetId="lobby.hero-dog" className="lobby-hero lobby-hero-dog" decorative loading="eager"/>
-  </div>
   <aside className="lobby-rewards" aria-label="Objectifs et récompenses">
    <button className="lobby-booster-card lobby-frame" onClick={()=>onNavigate('boosters')} aria-label="Ouvrir mes boosters">
     <GameAsset assetId="lobby.booster" decorative/>

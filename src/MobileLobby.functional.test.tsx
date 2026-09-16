@@ -19,19 +19,30 @@ describe('MobileLobby',()=>{
   rerender(<MobileLobby progress={progress} ownedCount={16} missions={{...missions,counts:{'daily-play-3':3},claimed:['daily-play-3']}} onNavigate={go}/>);
   expect(screen.getByRole('button',{name:/Récompense récupérée/})).toBeInTheDocument();
  });
- it('loads the dedicated portrait background and two independent hero sprites',()=>{
+ it('loads the local-time portrait artwork with the heroes playing together',()=>{
+  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-portrait-v4.webp');
-  expect(container.querySelector('.lobby-hero-cat')).toHaveAttribute('src','/assets/characters/lobby-cat-v3.webp');
-  expect(container.querySelector('.lobby-hero-dog')).toHaveAttribute('src','/assets/characters/lobby-dog-v3.webp');
+  expect(container.querySelector('.mobile-lobby')).toHaveAttribute('data-lobby-period','day');
+  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
+  expect(container.querySelector('.lobby-character-stage')).not.toBeInTheDocument();
   expect(container.querySelector('.button-copy')).not.toBeInTheDocument();
   expect(screen.queryByText('Festival lunaire')).not.toBeInTheDocument();
+  hours.mockRestore();
  });
  it('retains the previous background if the new asset fails to load',()=>{
+  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
   const background=container.querySelector('.mobile-lobby-bg')!;
   fireEvent.error(background);
-  expect(background).toHaveAttribute('src','/assets/backgrounds/bg-lobby-royal-v3.webp');
+  expect(background).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-v2.webp');
+  hours.mockRestore();
+ });
+ it('uses the quiet back-facing scene at night',()=>{
+  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(22);
+  const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
+  expect(container.querySelector('.mobile-lobby')).toHaveAttribute('data-lobby-period','night');
+  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-night-back-v7.webp');
+  hours.mockRestore();
  });
  it('keeps deck and reward actions interactive',async()=>{
   const user=userEvent.setup();const go=vi.fn();

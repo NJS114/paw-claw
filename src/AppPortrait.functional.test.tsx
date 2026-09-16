@@ -1,13 +1,14 @@
 import {render,screen,within} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import {describe,it,expect} from 'vitest';
+import {describe,it,expect,vi} from 'vitest';
 import {App} from './App';
 
 describe('Portrait app integration',()=>{
  it('keeps the four portrait destinations reachable and saves a real booster purchase',async()=>{
+  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   localStorage.clear();const user=userEvent.setup();const{container}=render(<App/>);
   const nav=within(screen.getByRole('navigation',{name:'Navigation principale'}));
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-portrait-v4.webp');
+  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
   await user.click(nav.getByRole('button',{name:'Collection'}));
   expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-portrait-v4.webp');
@@ -22,5 +23,6 @@ describe('Portrait app integration',()=>{
   expect(saved.coins).toBe(1140);expect(saved.sealedBoosters).toBe(2);
   await user.click(nav.getByRole('button',{name:'Accueil'}));
   expect(screen.getByRole('region',{name:'Accueil Paw & Claw'})).toBeInTheDocument();
+  hours.mockRestore();
  });
 });

@@ -64,7 +64,9 @@ export const GAME_ASSETS:GameAsset[]=[
 
  {id:'loading.portal',kind:'loading',src:`${generated}ui-loading-portal.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['startup','screen-transition','reconnect'],alt:'Portail de chargement Paw & Claw',priority:'high'},
  {id:'world.lobby-day',kind:'background',src:`${backgrounds}bg-lobby-royal-v3.webp`,fallback:`${backgrounds}bg-lobby-day-v2.webp`,required:true,usage:['home'],alt:'Cité royale Paw & Claw',priority:'critical'},
- {id:'world.lobby-portrait',kind:'background',src:`${backgrounds}bg-lobby-portrait-v4.webp`,fallback:`${backgrounds}bg-lobby-royal-v3.webp`,required:true,usage:['home','startup'],alt:'Royaume lunaire Paw & Claw',priority:'critical'},
+ {id:'world.lobby-day-approved',kind:'background',src:`${backgrounds}bg-lobby-day-royal-activity-v7.webp`,fallback:`${backgrounds}bg-lobby-day-v2.webp`,required:true,usage:['home','startup'],alt:'Les héros jouent aux cartes dans la cité royale en journée',priority:'critical'},
+ {id:'world.lobby-night-approved',kind:'background',src:`${backgrounds}bg-lobby-night-back-v7.webp`,fallback:`${backgrounds}bg-lobby-portrait-v4.webp`,required:true,usage:['home','startup'],alt:'Les héros contemplent le royaume de nuit',priority:'critical'},
+ {id:'world.lobby-portrait',kind:'background',src:`${backgrounds}bg-lobby-night-back-v7.webp`,fallback:`${backgrounds}bg-lobby-portrait-v4.webp`,required:true,usage:['home','startup'],alt:'Royaume lunaire Paw & Claw',priority:'critical'},
  {id:'lobby.hero-cat',kind:'character',src:'/assets/characters/lobby-cat-v3.webp',fallback:`${generated}chaton-mage.webp`,required:true,usage:['home'],alt:'Chat mage royal',priority:'critical'},
  {id:'lobby.hero-dog',kind:'character',src:'/assets/characters/lobby-dog-v3.webp',fallback:`${generated}chien-chevalier.webp`,required:true,usage:['home'],alt:'Chien chevalier royal',priority:'critical'},
  {id:'lobby.booster',kind:'booster',src:`${generated}booster-violet.webp`,required:true,usage:['home'],alt:'Booster royal violet',priority:'high'},
