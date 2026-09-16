@@ -9,9 +9,9 @@ describe('BoosterOpening',()=>{
   render(<BoosterOpening owned={{}} available={1} onOpen={vi.fn(()=>true)} onShop={vi.fn()}/>);
   expect(screen.getByText('Royaumes & Légendes')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Booster suivant'}));
-  expect(screen.getByText('Magiciens')).toBeInTheDocument();
+  expect(screen.getByText('Guérisseurs Émeraude')).toBeInTheDocument();
   fireEvent.click(screen.getByRole('button',{name:'Booster suivant'}));
-  expect(screen.getByText('Pirates')).toBeInTheDocument();
+  expect(screen.getByText('Guérisseurs Lumière')).toBeInTheDocument();
  });
 
  it('opens a pack through charge, tear and reveal phases',()=>{

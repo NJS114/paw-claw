@@ -4,18 +4,11 @@ import type {CardData} from './data/gameCards';
 import type {OwnedCards} from './data/collection';
 import {GameAsset} from './GameAsset';
 import {GameCard} from './GameCard';
+import {BOOSTER_PACKS} from './data/boosterPacks';
 
 type Phase='idle'|'charge'|'tear'|'reveal'|'complete';
 type Props={owned:OwnedCards;available:number;onOpen:(cards:CardData[])=>boolean;onShop:()=>void};
-type PackChoice={id:string;label:string;subtitle:string};
-
 const rarityRank:Record<string,number>={Commune:0,Rare:1,'Épique':2,'Légendaire':3};
-const packs:PackChoice[]=[
- {id:'lobby.booster',label:'Royaumes & Légendes',subtitle:'Collection principale'},
- {id:'booster.magicians',label:'Magiciens',subtitle:'Édition arcanique'},
- {id:'booster.pirates',label:'Pirates',subtitle:'Édition des mers'},
- {id:'booster.healers',label:'Guérisseurs',subtitle:'Édition sacrée'},
-];
 
 export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  const[phase,setPhase]=useState<Phase>('idle');
@@ -24,7 +17,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  const[newIds,setNewIds]=useState<Set<string>>(new Set());
  const[selectedPack,setSelectedPack]=useState(0);
  const legendary=useMemo(()=>cards.some(c=>c.rarity==='Légendaire'),[cards]);
- const pack=packs[selectedPack];
+ const pack=BOOSTER_PACKS[selectedPack];
 
  useEffect(()=>{
   if(phase!=='charge'&&phase!=='tear')return;
@@ -50,8 +43,8 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  }
 
  function reset(){setCards([]);setRevealed(0);setNewIds(new Set());setPhase('idle')}
- function prevPack(){if(phase!=='idle')return;setSelectedPack(i=>(i-1+packs.length)%packs.length)}
- function nextPack(){if(phase!=='idle')return;setSelectedPack(i=>(i+1)%packs.length)}
+ function prevPack(){if(phase!=='idle')return;setSelectedPack(i=>(i-1+BOOSTER_PACKS.length)%BOOSTER_PACKS.length)}
+ function nextPack(){if(phase!=='idle')return;setSelectedPack(i=>(i+1)%BOOSTER_PACKS.length)}
 
  return <section className={`booster-opening-v2 phase-${phase} ${legendary?'has-legendary':''}`} aria-label="Ouverture de booster">
   <div className="booster-stage" onClick={phase==='reveal'?revealNext:undefined}>

@@ -11,6 +11,6 @@ describe('BattleDeckHud',()=>{
   expect(screen.getByLabelText('Ta pioche : 17 cartes')).toBeInTheDocument();
   const backs=container.querySelectorAll('img');
   expect(backs.length).toBeGreaterThanOrEqual(7);
-  for(const image of backs)expect(image.getAttribute('src')).toMatch(/dos_de_carte\.png/);
+  for(const image of backs)expect(image.getAttribute('src')).toBe('/assets/card-backs/paw-claw-royal-v2.webp');
  });
 });
