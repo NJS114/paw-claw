@@ -19,7 +19,7 @@ export function GameCard({card,variant='standard',currentHp,copies,statusBadge,l
  const rarity=slug(card.rarity),family=slug(card.family),hp=currentHp??card.hp;
  const description=card.flavor??defaultEffect(card);
  const battleClass=variant==='battle'?'battle-card':'';
- const label=[card.name,card.rarity,card.family,`coût ${card.cost}`,card.atk!==undefined?`attaque ${card.atk}`:'',hp!==undefined?`${hp} points de vie`:'',description].filter(Boolean).join(', ');
+ const label=[card.name,card.rarity,card.family,card.species,card.breed,`coût ${card.cost}`,card.atk!==undefined?`attaque ${card.atk}`:'',hp!==undefined?`${hp} points de vie`:'',description].filter(Boolean).join(', ');
  return <div className={`game-card game-card--${variant} rarity-${rarity} family-${family} ${battleClass} ${locked?'is-locked':''} ${className}`.trim()} aria-label={label}>
   <div className="game-card__foil" aria-hidden="true"/>
   <div className="game-card__art"><CardArtwork card={card}/></div>
@@ -29,7 +29,7 @@ export function GameCard({card,variant='standard',currentHp,copies,statusBadge,l
   {copies!==undefined&&<span className="game-card__copies" aria-label={`${copies} exemplaire${copies>1?'s':''}`}>×{copies}</span>}
   {(atkBonus>0||hpBonus>0)&&<div className="game-card__modifiers">{atkBonus>0&&<span>+{atkBonus} ATQ</span>}{hpBonus>0&&<span>+{hpBonus} PV</span>}</div>}
   <div className="game-card__content">
-   <span className="game-card__rarity">{card.rarity} · {card.type}</span>
+   <span className="game-card__rarity">{card.rarity} · {card.breed??card.type}</span>
    <strong className="game-card__title">{card.name}</strong>
    <p className="game-card__description">{description}</p>
   </div>

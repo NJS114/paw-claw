@@ -1,4 +1,5 @@
 import { cards as baseCards, families, rarities, type CardData, type Rarity } from './cards';
+import { CARD_VISUAL_OVERRIDES } from './cardVisuals';
 
 const healer = (id:string,name:string,rarity:Rarity,cost:number,atk:number,hp:number,flavor:string):CardData => ({
   id,
@@ -29,7 +30,7 @@ export const healerCards: CardData[] = [
 export const cards: CardData[] = [
   ...baseCards.filter((card) => card.family !== 'Guérisseurs'),
   ...healerCards
-];
+].map(card=>({...card,...CARD_VISUAL_OVERRIDES[card.id]}));
 
 export { families, rarities };
 export type { CardData, Rarity };
