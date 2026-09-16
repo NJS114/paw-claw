@@ -12,7 +12,7 @@ export function MobileLobby({progress,ownedCount,missions,onNavigate}:Props){
  const claimed=missions?.claimed.includes(quest.id)??false;
  const xpTarget=xpForLevel(progress.level);
  return <section className="mobile-lobby" aria-label="Accueil Paw & Claw">
-  <GameAsset assetId="world.lobby-day" className="mobile-lobby-bg" decorative loading="eager"/>
+  <GameAsset assetId="world.lobby-portrait" className="mobile-lobby-bg" decorative loading="eager"/>
   <div className="mobile-lobby-scrim"/>
   <header className="lobby-player-strip">
    <button className="lobby-profile" onClick={()=>onNavigate('profile')} aria-label="Ouvrir le profil">

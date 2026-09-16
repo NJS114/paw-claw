@@ -1,0 +1,31 @@
+{
+  "generator": "built-in imagegen",
+  "reference": "6A78A6FB-23F5-4241-B2FE-D07AF2DA5687.jpeg",
+  "encoding": "WebP quality 88, no crop or resize",
+  "assets": [
+    {
+      "file": "public/assets/backgrounds/bg-lobby-portrait-v4.webp",
+      "width": 941,
+      "height": 1672,
+      "prompt": "Use case: stylized-concept. Production individual vertical 9:16 mobile game background for Paw & Claw. Reference image is a STYLE AND SCENE reference only, not an output layout. Match its detailed storybook fantasy illustration, navy blue and warm gold palette, magical lighting, polished painted mobile card game world. No text, no logo, no UI, no buttons, no readable cards, no contact sheet. Single full-bleed portrait image. LOBBY scene: moonlit royal castle city, huge glowing moon above delicate distant spires, stone terrace in foreground, navy and gold paw banners and warm lanterns framing the sides. Match the top-left Lobby in the reference, but NO cat or dog foreground characters: our separate sprites will be overlaid. Central lower half is a clearly readable terrace for those sprites, atmospheric deep blue twilight and warm gold windows. Rich depth, not flat or simplified. Compose specifically for tall phone screen."
+    },
+    {
+      "file": "public/assets/backgrounds/bg-collection-portrait-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "undefinedCOLLECTION scene: majestic vaulted royal card gallery, towering blue stained glass window with a simple gold paw emblem near the upper third, slender arches, navy gold banners, warm candles and ornate bookcases along the edges. Match the top Collection scene in the reference. Central aisle leads to a distant small pedestal. Do NOT put cards in foreground. Leave lower central floor quietly detailed and darker for the app's real card grid overlay. Light concentrated high in the glass, warm reflections on marble. One portrait artwork."
+    },
+    {
+      "file": "public/assets/backgrounds/bg-deck-portrait-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "undefinedDECK FORGE scene: warm royal strategy workshop interior, tall wooden shelves, rolled maps and closed navy/gold books at the edges, golden lanterns, blue/gold paw banner high at right, arched window with blue twilight at top. Match the top Decks panel in the reference. Rich craftsmanship, large wooden worktable filling lower half viewed at slight downward angle. Table center is uncluttered dark polished wood for real deck-editing controls to overlay. No drawn cards or text, no characters. A complete single portrait scene."
+    },
+    {
+      "file": "public/assets/backgrounds/bg-shop-portrait-v4.webp",
+      "width": 1024,
+      "height": 1536,
+      "prompt": "undefinedSHOP scene: magical royal market stall at evening, rich red-and-gold striped canopy at top, glowing amber lanterns on side columns, blue and violet crystals in shelves at the edges, small closed treasure chests, cozy medieval town behind. Match the top Shop scene in the reference but without shopkeeper characters. Lower central half an uncluttered dark wooden counter to show a separately composited booster pack. Deep navy shadows, gold trim, inviting storybook magic. Do not draw booster packs, interface or lettering. Single portrait background."
+    }
+  ]
+}

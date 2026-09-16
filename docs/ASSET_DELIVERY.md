@@ -1,5 +1,37 @@
 # Paw & Claw — suivi de livraison des assets
 
+## Lot portrait V4 — demande du 16 septembre
+
+L'utilisateur demande explicitement de poursuivre en portrait et d'ajouter les
+pages. Ce nouveau lot avance donc sur Accueil, Collection, Decks et Boutique sans
+faire passer la V3 pour visuellement approuvée. Le site public et main restent
+inchangés ; le travail continue dans la PR en brouillon.
+
+- Quatre nouveaux WebP verticaux, intégrés dans `public/assets/backgrounds/` :
+  `bg-lobby-portrait-v4.webp`, `bg-collection-portrait-v4.webp`,
+  `bg-deck-portrait-v4.webp`, `bg-shop-portrait-v4.webp`.
+- Accueil et chargement utilisent le décor lunaire vertical ; les trois autres
+  pages remplacent leurs fonds SVG. L'ouverture de booster réutilise la boutique.
+- Navigation HTML persistante, cinq destinations ; écran portrait centré jusqu'à
+  520 px sur ordinateur, largeur disponible sur téléphone. Le Combat conserve son
+  ancienne disposition et fera l'objet d'un lot dédié.
+- Collection : illustrations individuelles cadrées en portrait ; absence/erreur
+  annoncée par « Illustration à venir », sans substitution par une planche entière.
+- Decks : édition existante conservée ; analyse repliable, commandes tactiles,
+  lancement placé au-dessus de la navigation persistante.
+- Boutique : présentation portrait du vrai pack, achat à 100 pièces conservé,
+  contrôle du solde, accès aux packs possédés et offres non connectées explicites.
+- Prompts exacts, dimensions et chemins dans `portrait-v4-assets.json` ; outil
+  intégré imagegen, conversion WebP qualité 88 sans recadrage. Le Lobby est 941×1672,
+  les trois intérieurs 1024×1536 : tous sont portrait, pas tous au ratio 9:16 exact.
+
+39 tests réussis, dont un parcours réel Accueil → Collection → Decks → Boutique
+→ achat → Boosters → Accueil vérifiant l'enregistrement des pièces et du pack.
+Build et audit de présence à contrôler avec les commandes ci-dessous.
+Cela ne remplace pas une inspection visuelle : aucun contrôle navigateur du rendu
+V4 n'est revendiqué. Matchmaking, Combat, résultats, événements et VFX restent à
+traiter ; les 60 illustrations de cartes absentes ne sont pas inventées.
+
 ## Contrat de validation
 
 Une déclaration dans `uiAssets.ts` n'est pas une livraison. Chaque élément traverse

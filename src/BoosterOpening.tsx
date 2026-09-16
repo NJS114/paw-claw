@@ -10,7 +10,7 @@ type PackChoice={id:string;label:string;subtitle:string};
 
 const rarityRank:Record<string,number>={Commune:0,Rare:1,'Épique':2,'Légendaire':3};
 const packs:PackChoice[]=[
- {id:'booster.standard-violet',label:'Royaumes & Légendes',subtitle:'Collection principale'},
+ {id:'lobby.booster',label:'Royaumes & Légendes',subtitle:'Collection principale'},
  {id:'booster.magicians',label:'Magiciens',subtitle:'Édition arcanique'},
  {id:'booster.pirates',label:'Pirates',subtitle:'Édition des mers'},
  {id:'booster.healers',label:'Guérisseurs',subtitle:'Édition sacrée'},
@@ -55,7 +55,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  return <section className={`booster-opening-v2 phase-${phase} ${legendary?'has-legendary':''}`} aria-label="Ouverture de booster">
   <div className="booster-stage" onClick={phase==='reveal'?revealNext:undefined}>
    <div className="booster-stage-light" aria-hidden="true"/>
-   <GameAsset assetId="world.throne-arena" className="booster-stage-bg" decorative/>
+   <GameAsset assetId="world.shop" className="booster-stage-bg" decorative/>
    {phase==='idle'&&<div className="booster-picker" aria-label="Choisir un booster">
     <button onClick={e=>{e.stopPropagation();prevPack()}} aria-label="Booster précédent">‹</button>
     <div><strong>{pack.label}</strong><small>{pack.subtitle}</small></div>

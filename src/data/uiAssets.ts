@@ -64,13 +64,14 @@ export const GAME_ASSETS:GameAsset[]=[
 
  {id:'loading.portal',kind:'loading',src:`${generated}ui-loading-portal.webp`,fallback:`${generated}plateau-salle-du-trone.webp`,required:false,usage:['startup','screen-transition','reconnect'],alt:'Portail de chargement Paw & Claw',priority:'high'},
  {id:'world.lobby-day',kind:'background',src:`${backgrounds}bg-lobby-royal-v3.webp`,fallback:`${backgrounds}bg-lobby-day-v2.webp`,required:true,usage:['home'],alt:'Cité royale Paw & Claw',priority:'critical'},
+ {id:'world.lobby-portrait',kind:'background',src:`${backgrounds}bg-lobby-portrait-v4.webp`,fallback:`${backgrounds}bg-lobby-royal-v3.webp`,required:true,usage:['home','startup'],alt:'Royaume lunaire Paw & Claw',priority:'critical'},
  {id:'lobby.hero-cat',kind:'character',src:'/assets/characters/lobby-cat-v3.webp',fallback:`${generated}chaton-mage.webp`,required:true,usage:['home'],alt:'Chat mage royal',priority:'critical'},
  {id:'lobby.hero-dog',kind:'character',src:'/assets/characters/lobby-dog-v3.webp',fallback:`${generated}chien-chevalier.webp`,required:true,usage:['home'],alt:'Chien chevalier royal',priority:'critical'},
  {id:'lobby.booster',kind:'booster',src:`${generated}booster-violet.webp`,required:true,usage:['home'],alt:'Booster royal violet',priority:'high'},
  {id:'lobby.logo',kind:'ui',src:'/assets/ui/paw-claw-logo-v3.webp',required:true,usage:['home'],alt:'Paw & Claw',priority:'critical'},
- {id:'world.collection-hall',kind:'background',src:`${backgrounds}bg-collection-hall.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['collection'],alt:'Galerie de collection Paw & Claw',priority:'normal'},
- {id:'world.deck-forge',kind:'background',src:`${backgrounds}bg-deck-forge.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['deck'],alt:'Atelier de decks Paw & Claw',priority:'normal'},
- {id:'world.shop',kind:'background',src:`${backgrounds}bg-shop.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['shop'],alt:'Boutique Paw & Claw',priority:'normal'},
+ {id:'world.collection-hall',kind:'background',src:`${backgrounds}bg-collection-portrait-v4.webp`,fallback:`${backgrounds}bg-collection-hall.svg`,required:true,usage:['collection'],alt:'Galerie de collection Paw & Claw',priority:'normal'},
+ {id:'world.deck-forge',kind:'background',src:`${backgrounds}bg-deck-portrait-v4.webp`,fallback:`${backgrounds}bg-deck-forge.svg`,required:true,usage:['deck'],alt:'Atelier de decks Paw & Claw',priority:'normal'},
+ {id:'world.shop',kind:'background',src:`${backgrounds}bg-shop-portrait-v4.webp`,fallback:`${backgrounds}bg-shop.svg`,required:true,usage:['shop'],alt:'Boutique Paw & Claw',priority:'normal'},
  {id:'world.matchmaking',kind:'background',src:`${backgrounds}bg-matchmaking.svg`,fallback:`${generated}plateau-salle-du-trone.webp`,required:true,usage:['matchmaking'],alt:'Portail de matchmaking Paw & Claw',priority:'high'},
 
  {id:'character.royal-cat',kind:'character',src:supplied.hero,fallback:`${generated}heros-duo.webp`,required:false,usage:['home','victory','profile'],alt:'Héros royal Paw & Claw',priority:'high'},

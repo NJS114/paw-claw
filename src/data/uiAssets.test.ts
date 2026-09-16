@@ -19,9 +19,9 @@ describe('Paw & Claw asset catalog',()=>{
  });
  it('uses a dedicated background for each major game screen',()=>{
   expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-royal-v3.webp');
-  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-hall.svg');
-  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-forge.svg');
-  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop.svg');
+  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-portrait-v4.webp');
+  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-portrait-v4.webp');
+  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop-portrait-v4.webp');
   expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking.svg');
   expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-arena.svg');
  });

@@ -1,5 +1,6 @@
-type IconName='shop'|'scroll'|'crown'|'cards'|'swords'|'shield'|'gift'|'settings';
+type IconName='home'|'shop'|'scroll'|'crown'|'cards'|'swords'|'shield'|'gift'|'settings';
 const paths:Record<IconName,string>={
+ home:'M3 15 16 3l13 12M7 13v16h7v-9h5v9h6V13',
  shop:'M5 3h22l3 9a5 5 0 0 1-7 4 5 5 0 0 1-7 0 5 5 0 0 1-7 0 5 5 0 0 1-7-4L5 3ZM6 19v10h20V19M12 29v-9h8v9',
  scroll:'M9 3h17a4 4 0 0 1 0 8h-3M8 3a4 4 0 0 0 0 8h1v13a4 4 0 0 1-4 4h16a4 4 0 0 0 4-4V7M12 14h8M12 19h8',
  crown:'M3 10l6 5 7-11 7 11 6-5-4 17H7L3 10ZM8 23h16M16 12v5',
