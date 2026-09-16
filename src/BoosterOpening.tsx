@@ -3,6 +3,7 @@ import {generateStandardBooster} from './data/booster';
 import type {CardData} from './data/gameCards';
 import type {OwnedCards} from './data/collection';
 import {GameAsset} from './GameAsset';
+import {GameCard} from './GameCard';
 
 type Phase='idle'|'charge'|'tear'|'reveal'|'complete';
 type Props={owned:OwnedCards;available:number;onOpen:(cards:CardData[])=>boolean;onShop:()=>void};
@@ -76,7 +77,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
       const visible=index<revealed;
       const offset=Math.min(index,4);
       return <article key={`${card.id}-${index}`} className={`reveal-card rarity-${slug(card.rarity)} ${visible?'is-revealed':'is-hidden'} ${index===revealed-1?'is-latest':''}`} style={{'--offset':offset} as React.CSSProperties}>
-       {visible?<><div className="reveal-card-art"><img src={card.assetPath??'/assets/generated/carte-bleue.webp'} alt={card.name}/>{newIds.has(card.id)&&<span className="reveal-new">NOUVELLE</span>}</div><div className="reveal-card-meta"><small>{card.rarity}</small><strong>{card.name}</strong>{card.type==='Héros'&&<span>ATQ {card.atk} · PV {card.hp}</span>}</div></>:<div className="card-back-v2"><GameAsset assetId="booster.card-back" decorative loading="eager"/></div>}
+       {visible?<GameCard card={card} variant="feature" statusBadge={newIds.has(card.id)?'NOUVELLE':undefined}/>:<div className="card-back-v2"><GameAsset assetId="booster.card-back" decorative loading="eager"/></div>}
       </article>
      })}
     </div>
