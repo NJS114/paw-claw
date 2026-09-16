@@ -5,7 +5,7 @@ import { DECK_SIZE,validateDeck,type SavedDeck } from './data/deck';
 import { speciesOf,type Species } from './data/loreSynergies';
 import { analyzeDeck } from './data/deckAnalysis';
 import { createDeckProfile,deleteDeck,loadActiveDeckId,loadDeckLibrary,saveActiveDeckId,saveDeckLibrary,toggleFavorite,upsertDeck,type DeckLibrary,type DeckProfile } from './data/deckLibrary';
-import {CardArtwork} from './CardArtwork';
+import {GameCard} from './GameCard';
 
 function costCurve(deck:DeckProfile){const curve=[0,0,0,0,0,0,0];for(const id of deck.cardIds){const c=cards.find(x=>x.id===id);if(c)curve[Math.min(6,c.cost)]++}return curve}
 function families(deck:DeckProfile){return deck.cardIds.map(id=>cards.find(c=>c.id===id)?.family).filter(Boolean).reduce<Record<string,number>>((a,f)=>{a[f as string]=(a[f as string]||0)+1;return a},{})}
@@ -35,7 +35,7 @@ export function DeckStudio({owned,activeDeck,onActiveDeckChange,onPlay}:{owned:O
  {validation.issues.length>0&&<div className="deck-issues">{validation.issues.slice(0,4).map(x=><p key={x}>{x}</p>)}</div>}
  <div className="deck-mobile-tabs" role="tablist" aria-label="Cartes du deck"><button role="tab" aria-selected={panel==='deck'} onClick={()=>setPanel('deck')}>Deck <b>{active.cardIds.length}/{DECK_SIZE}</b></button><button role="tab" aria-selected={panel==='collection'} onClick={()=>setPanel('collection')}>Collection <b>{pool.length}</b></button></div>
  <section className="deck-card-vault" aria-label={panel==='deck'?active.name:`Cartes ${active.species}s disponibles`}>
-  <div className="deck-card-grid">{panel==='deck'?active.cardIds.map((id,i)=>{const c=cards.find(x=>x.id===id);return c?<button className="deck-card-token" key={`${id}-${i}`} onClick={()=>remove(id)} aria-label={`Retirer ${c.name}`}><CardArtwork card={c}/><span className="deck-token-cost">{c.cost}</span><span className="deck-token-action">−</span><strong>{c.name}</strong></button>:null}):pool.map(c=><button className="deck-card-token" key={c.id} disabled={active.cardIds.length>=DECK_SIZE} onClick={()=>add(c)} aria-label={`Ajouter ${c.name}`}><CardArtwork card={c}/><span className="deck-token-cost">{c.cost}</span><span className="deck-token-action">+</span><strong>{c.name}</strong></button>)}</div>
+  <div className="deck-card-grid">{panel==='deck'?active.cardIds.map((id,i)=>{const c=cards.find(x=>x.id===id);return c?<button className="deck-card-token" key={`${id}-${i}`} onClick={()=>remove(id)} aria-label={`Retirer ${c.name}`}><GameCard card={c} variant="compact"/><span className="deck-token-action">−</span></button>:null}):pool.map(c=><button className="deck-card-token" key={c.id} disabled={active.cardIds.length>=DECK_SIZE} onClick={()=>add(c)} aria-label={`Ajouter ${c.name}`}><GameCard card={c} variant="compact"/><span className="deck-token-action">+</span></button>)}</div>
   {panel==='deck'&&active.cardIds.length===0&&<p className="deck-empty">Choisis Collection puis touche une carte pour l’ajouter.</p>}
  </section>
  <div className="deck-launch"><button className="primary" disabled={!validation.valid} onClick={onPlay}>Utiliser ce deck et rechercher un combat</button></div></section>
