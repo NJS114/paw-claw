@@ -8,7 +8,7 @@ import type { Species } from './data/loreSynergies';
 import { BattleDeckHud } from './BattleDeckHud';
 
 const generatedBase='/assets/generated/';
-const battlefield='/assets/backgrounds/bg-battle-courtyard-v8.webp';
+const battlefield='/assets/backgrounds/bg-battle-courtyard-2d-v9.webp';
 const familySheet:Record<string,string>={Magiciens:'chatgpt-image-7-sept.-2026-15_03_35.webp',Ombres:'chatgpt-image-7-sept.-2026-15_03_31.webp',Nobles:'chatgpt-image-7-sept.-2026-15_07_01.webp',Robots:'chatgpt-image-7-sept.-2026-15_01_47.webp',Nature:'chatgpt-image-7-sept.-2026-22_07_59.webp',Guérisseurs:'chatgpt-image-7-sept.-2026-15_03_15.webp',Créatures:'chatgpt-image-7-sept.-2026-15_04_45.webp'};
 const AI_KEY='paw-claw.ai.difficulty.v1';
 const MAX_TURNS=40;
