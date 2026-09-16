@@ -5,6 +5,7 @@ import { DECK_SIZE,validateDeck,type SavedDeck } from './data/deck';
 import { speciesOf,type Species } from './data/loreSynergies';
 import { analyzeDeck } from './data/deckAnalysis';
 import { createDeckProfile,deleteDeck,loadActiveDeckId,loadDeckLibrary,saveActiveDeckId,saveDeckLibrary,toggleFavorite,upsertDeck,type DeckLibrary,type DeckProfile } from './data/deckLibrary';
+import {CardArtwork} from './CardArtwork';
 
 function costCurve(deck:DeckProfile){const curve=[0,0,0,0,0,0,0];for(const id of deck.cardIds){const c=cards.find(x=>x.id===id);if(c)curve[Math.min(6,c.cost)]++}return curve}
 function families(deck:DeckProfile){return deck.cardIds.map(id=>cards.find(c=>c.id===id)?.family).filter(Boolean).reduce<Record<string,number>>((a,f)=>{a[f as string]=(a[f as string]||0)+1;return a},{})}
@@ -12,6 +13,7 @@ function families(deck:DeckProfile){return deck.cardIds.map(id=>cards.find(c=>c.
 export function DeckStudio({owned,activeDeck,onActiveDeckChange,onPlay}:{owned:OwnedCards;activeDeck:SavedDeck;onActiveDeckChange:(d:SavedDeck)=>void;onPlay:()=>void}){
  const[lib,setLib]=useState<DeckLibrary>(()=>{const loaded=loadDeckLibrary();if(loaded.decks.length)return loaded;const species=(activeDeck.cardIds[0]&&cards.find(c=>c.id===activeDeck.cardIds[0]))?speciesOf(cards.find(c=>c.id===activeDeck.cardIds[0])!):'Chat';return {version:1,decks:[{...createDeckProfile(species,activeDeck.name),cardIds:activeDeck.cardIds}]}});
  const[activeId,setActiveId]=useState(()=>loadActiveDeckId()||lib.decks[0]?.id||'');
+ const[panel,setPanel]=useState<'deck'|'collection'>('deck');
  const active=lib.decks.find(d=>d.id===activeId)??lib.decks[0];
  useEffect(()=>{saveDeckLibrary(lib)},[lib]);
  useEffect(()=>{if(active){saveActiveDeckId(active.id);onActiveDeckChange({version:1,name:active.name,cardIds:active.cardIds,updatedAt:active.updatedAt})}},[active?.id,active?.updatedAt]);
@@ -31,6 +33,10 @@ export function DeckStudio({owned,activeDeck,onActiveDeckChange,onPlay}:{owned:O
  <div className="cost-curve" aria-label="Courbe de coût">{curve.map((n,c)=><div key={c}><span style={{height:`${Math.max(8,n*18)}px`}}/><small>{c===6?'6+':c}</small><b>{n}</b></div>)}</div>
  <div className="deck-synergy-preview">{analysis.thresholds.map(x=><span key={x.family}>{x.family} {x.count} · {x.tier}</span>)}{analysis.lore.map(x=><span className="lore-chip" key={x}>Histoire · {x}</span>)}</div></details>
  {validation.issues.length>0&&<div className="deck-issues">{validation.issues.slice(0,4).map(x=><p key={x}>{x}</p>)}</div>}
- <div className="deck-columns"><div><h3>{active.name}</h3><div className="deck-list">{active.cardIds.map((id,i)=>{const c=cards.find(x=>x.id===id);return c?<button key={`${id}-${i}`} onClick={()=>remove(id)}><span>{c.family} · {c.name}<small className="deck-card-species">{c.rarity} · coût {c.cost}</small></span><span>Retirer</span></button>:null})}</div></div><div><h3>Disponibles · {active.species}s</h3><div className="deck-list">{pool.map(c=><button key={c.id} disabled={active.cardIds.length>=DECK_SIZE} onClick={()=>add(c)}><span>{c.family} · {c.name}<small className="deck-card-species">{c.rarity} · coût {c.cost}</small></span><span>Ajouter</span></button>)}</div></div></div>
+ <div className="deck-mobile-tabs" role="tablist" aria-label="Cartes du deck"><button role="tab" aria-selected={panel==='deck'} onClick={()=>setPanel('deck')}>Deck <b>{active.cardIds.length}/{DECK_SIZE}</b></button><button role="tab" aria-selected={panel==='collection'} onClick={()=>setPanel('collection')}>Collection <b>{pool.length}</b></button></div>
+ <section className="deck-card-vault" aria-label={panel==='deck'?active.name:`Cartes ${active.species}s disponibles`}>
+  <div className="deck-card-grid">{panel==='deck'?active.cardIds.map((id,i)=>{const c=cards.find(x=>x.id===id);return c?<button className="deck-card-token" key={`${id}-${i}`} onClick={()=>remove(id)} aria-label={`Retirer ${c.name}`}><CardArtwork card={c}/><span className="deck-token-cost">{c.cost}</span><span className="deck-token-action">−</span><strong>{c.name}</strong></button>:null}):pool.map(c=><button className="deck-card-token" key={c.id} disabled={active.cardIds.length>=DECK_SIZE} onClick={()=>add(c)} aria-label={`Ajouter ${c.name}`}><CardArtwork card={c}/><span className="deck-token-cost">{c.cost}</span><span className="deck-token-action">+</span><strong>{c.name}</strong></button>)}</div>
+  {panel==='deck'&&active.cardIds.length===0&&<p className="deck-empty">Choisis Collection puis touche une carte pour l’ajouter.</p>}
+ </section>
  <div className="deck-launch"><button className="primary" disabled={!validation.valid} onClick={onPlay}>Utiliser ce deck et rechercher un combat</button></div></section>
 }

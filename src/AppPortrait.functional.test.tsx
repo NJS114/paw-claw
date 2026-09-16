@@ -11,12 +11,15 @@ describe('Portrait app integration',()=>{
   expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
   await user.click(nav.getByRole('button',{name:'Collection'}));
   expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-portrait-v4.webp');
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-gallery-v8.webp');
+  await user.click(screen.getAllByRole('button',{name:/^Voir /})[0]);
+  expect(screen.getByRole('dialog')).toBeInTheDocument();
+  await user.click(screen.getByRole('button',{name:'Fermer'}));
   await user.click(nav.getByRole('button',{name:'Decks'}));
   expect(screen.getByRole('heading',{name:'Atelier des decks'})).toBeInTheDocument();
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-deck-portrait-v4.webp');
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-deck-forge-v8.webp');
   await user.click(nav.getByRole('button',{name:'Boutique'}));
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-shop-portrait-v4.webp');
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-shop-market-v8.webp');
   await user.click(screen.getByRole('button',{name:'Acheter · 100 pièces'}));
   expect(screen.getByRole('region',{name:'Ouverture de booster'})).toBeInTheDocument();
   const saved=JSON.parse(localStorage.getItem('paw-claw.progression.v1')!);

@@ -21,11 +21,12 @@ describe('Paw & Claw asset catalog',()=>{
   expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-royal-v3.webp');
   expect(asset('world.lobby-day-approved').src).toBe('/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
   expect(asset('world.lobby-night-approved').src).toBe('/assets/backgrounds/bg-lobby-night-back-v7.webp');
-  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-portrait-v4.webp');
-  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-portrait-v4.webp');
-  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop-portrait-v4.webp');
-  expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking.svg');
-  expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-arena.svg');
+  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-gallery-v8.webp');
+  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-forge-v8.webp');
+  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop-market-v8.webp');
+  expect(asset('world.events').src).toBe('/assets/backgrounds/bg-events-festival-v8.webp');
+  expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking-plaza-v8.webp');
+  expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-courtyard-v8.webp');
  });
  it('uses two distinct restored hero sprites in the lobby',()=>{
   expect(asset('lobby.hero-cat').src).toBe('/assets/characters/lobby-cat-v3.webp');
