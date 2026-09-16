@@ -32,6 +32,7 @@ import './game-assets.css';
 import './mobile-lobby.css';
 import './booster-opening.css';
 import './screen-backgrounds.css';
+import './portrait-pages.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

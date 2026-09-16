@@ -147,4 +147,11 @@ Objectif: chaque écran doit utiliser des assets réutilisables, versionnés et 
 `fx-<effect>-<frame|variant>.webp`
 `booster-<family|event>-<front|back>.webp`
 
-Tous les nouveaux assets dédiés doivent d'abord être ajoutés au registre avec `required:false`, puis passer à `required:true` une fois réellement présents dans le ZIP optimisé.
+Les nouveaux assets dédiés peuvent être livrés directement dans `public/assets/`
+ou dans le ZIP source. Ne pas déposer un nouvel original dans `public/assets/generated/`,
+qui est reconstruit à chaque import. Passer `required:true` uniquement quand le
+fichier existe dans sa source de livraison et que sa présence est testée.
+Ce drapeau ne constitue pas une validation artistique.
+
+Le suivi de référence et les critères de validation sont dans [ASSET_DELIVERY.md](ASSET_DELIVERY.md).
+`npm run assets:audit` distingue les déclarations du catalogue des fichiers réellement présents.
