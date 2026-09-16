@@ -13,6 +13,8 @@ export type CardData = {
   flavor?: string;
   sourceSheet?: string;
   assetPath?: string;
+  species?: 'Chat' | 'Chien';
+  breed?: string;
 };
 
 const hero = (id:string,name:string,family:string,rarity:Rarity,cost:number,atk:number,hp:number,flavor?:string,sourceSheet?:string):CardData => ({id,name,family,rarity,type:'Héros',cost,atk,hp,flavor,sourceSheet,assetPath:`/assets/cards/${family.toLowerCase()}/${id}.webp`});

@@ -3,14 +3,14 @@ import {describe,expect,it} from 'vitest';
 import {GameCard} from './GameCard';
 import type {CardData} from './data/gameCards';
 
-const card:CardData={id:'test-legend',name:'Gardienne des Aurores',family:'Nobles',rarity:'Légendaire',type:'Héros',cost:5,atk:6,hp:8,flavor:'Protège les alliés à son arrivée.',assetPath:'/assets/cards/test.webp'};
+const card:CardData={id:'test-legend',name:'Gardienne des Aurores',family:'Nobles',rarity:'Légendaire',type:'Héros',cost:5,atk:6,hp:8,flavor:'Protège les alliés à son arrivée.',assetPath:'/assets/cards/test.webp',species:'Chien',breed:'Cavalier King Charles'};
 
 describe('GameCard',()=>{
  it('renders all live, translatable card information',()=>{
   const{container}=render(<GameCard card={card} variant="feature" copies={2} statusBadge="NOUVELLE"/>);
   expect(screen.getByText('Gardienne des Aurores')).toBeTruthy();
   expect(screen.getByText('Protège les alliés à son arrivée.')).toBeTruthy();
-  expect(screen.getByText('Légendaire · Héros')).toBeTruthy();
+  expect(screen.getByText('Légendaire · Cavalier King Charles')).toBeTruthy();
   expect(screen.getByText('Nobles')).toBeTruthy();
   expect(screen.getByText('NOUVELLE')).toBeTruthy();
   expect(screen.getByText('×2')).toBeTruthy();
