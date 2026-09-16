@@ -7,3 +7,7 @@
 @media(max-width:900px){.deck-zone{right:.45rem}.deck-zone.enemy{top:8rem}.deck-zone.player{bottom:7.6rem}.deck-stack{width:52px;height:73px}.hidden-hand{min-width:95px}.card-back{width:29px;height:41px;margin-left:-11px}}
 @media(max-width:650px){.deck-zone.enemy{top:7rem}.deck-zone.player{bottom:6.8rem}.hidden-hand{display:none}.deck-stack em{display:none}.hand-counter{display:none}.deck-stack{width:42px;height:59px}.deck-back small{width:17px;height:17px;min-width:17px;font-size:.58rem}}
 @media(prefers-reduced-motion:reduce){.deck-zone.drawing .deck-back,.deck-zone.drawing .deck-back:after,.phase-player .cinematic-hand .hand-card:last-child,.mulligan-card.marked,.card-back{animation:none!important}}
+
+/* Canonical royal card back used by every hidden battle card and deck layer. */
+.deck-stack>span,.deck-back,.card-back{background-image:url('/assets/card-backs/paw-claw-royal-v2.webp')}
+.real-card-back>.game-asset,.real-deck-back>.game-asset{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit}

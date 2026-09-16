@@ -5,7 +5,14 @@ describe('Paw & Claw asset catalog',()=>{
  it('has unique ids',()=>{const ids=assetIds();expect(new Set(ids).size).toBe(ids.length)});
  it('keeps required assets documented and usable',()=>{expect(REQUIRED_GAME_ASSETS.length).toBeGreaterThan(20);for(const entry of REQUIRED_GAME_ASSETS){expect(entry.src.length).toBeGreaterThan(0);expect(entry.usage.length).toBeGreaterThan(0);expect(entry.alt.length).toBeGreaterThan(0)}});
  it('resolves every registered asset by id',()=>{for(const entry of GAME_ASSETS)expect(asset(entry.id)).toEqual(entry)});
- it('uses the supplied hero, booster family and card back',()=>{expect(asset('brand.hero-duo').src).toContain('heros-duo-removebg-preview.png');expect(asset('booster.standard-violet').src).toContain('booster.png');expect(asset('booster.magicians').src).toContain('booster_magician.png');expect(asset('booster.pirates').src).toContain('booster_pirate.png');expect(asset('booster.healers').src).toContain('booster_sante.png');expect(asset('booster.card-back').src).toContain('dos_de_carte.png')});
+ it('uses the supplied hero and the approved royal booster set',()=>{
+  expect(asset('brand.hero-duo').src).toContain('heros-duo-removebg-preview.png');
+  expect(asset('booster.royal-legends').src).toBe('/assets/boosters/booster-royal-legends-v2.webp');
+  expect(asset('booster.healers-emerald').src).toBe('/assets/boosters/booster-healers-emerald-v2.webp');
+  expect(asset('booster.healers-light').src).toBe('/assets/boosters/booster-healers-light-v2.webp');
+  expect(asset('booster.card-back').src).toBe('/assets/card-backs/paw-claw-royal-v2.webp');
+  expect(asset('lobby.booster').src).toBe(asset('booster.royal-legends').src);
+ });
  it('uses the uploaded production UI pack',()=>{
   expect(asset('icon.coins').src).toContain('icone-piece.png');
   expect(asset('icon.gems').src).toContain('icone-gemme.png');

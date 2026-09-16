@@ -18,8 +18,11 @@ describe('Portrait pages',()=>{
  });
  it('connects the real booster purchase and owned pack actions',async()=>{
   const buy=vi.fn(()=>true),open=vi.fn();render(<PortraitShop progress={progress} onBuy={buy} onOpen={open} monetization={loadMonetization()}/>);
+  expect(screen.getByRole('button',{name:/Guérisseurs Émeraude/})).toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button',{name:/Guérisseurs Émeraude/}));
+  expect(screen.getByRole('heading',{name:'Guérisseurs Émeraude'})).toBeInTheDocument();
   await userEvent.click(screen.getByRole('button',{name:/Acheter/}));expect(buy).toHaveBeenCalledOnce();
-  expect(screen.getByRole('status')).toHaveTextContent('Booster ajouté');
+  expect(screen.getByRole('status')).toHaveTextContent(/Booster Guérisseurs Émeraude ajouté/);
   await userEvent.click(screen.getByRole('button',{name:/Ouvrir mes boosters/}));expect(open).toHaveBeenCalledOnce();
  });
  it('disables purchases with insufficient currency and keeps unpaid offers explicit',async()=>{
