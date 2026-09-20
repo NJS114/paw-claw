@@ -1,0 +1,385 @@
+.construct-dock {
+  z-index: 7;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  width: min(100%, 780px);
+  margin: 0 auto;
+  padding: 3px 8px;
+  color: #dcefff;
+  pointer-events: none;
+}
+.arena-construct {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 180px;
+  padding: 5px 9px;
+  border: 1px solid #6fbfd6aa;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #0b2635e8, #07131fe8);
+  box-shadow:
+    inset 0 0 12px #4ed6ff18,
+    0 5px 12px #0008;
+}
+.arena-construct > span:last-child {
+  display: grid;
+  gap: 1px;
+}
+.arena-construct strong {
+  font-size: 9px;
+  color: #d9f7ff;
+}
+.arena-construct small {
+  font-size: 7px;
+  color: #8db9c7;
+}
+.construct-silhouette {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border: 1px solid #9fe7f1;
+  border-radius: 5px 7px 4px 4px;
+  background: linear-gradient(#638ea0, #19394a);
+  box-shadow:
+    inset 0 0 0 2px #0c2635,
+    0 0 10px #65daf255;
+}
+.construct-silhouette:before,
+.construct-silhouette:after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  width: 9px;
+  height: 7px;
+  border: 2px solid #8fd9e4;
+  border-radius: 50%;
+  background: #0b1b27;
+}
+.construct-silhouette:before {
+  left: 3px;
+}
+.construct-silhouette:after {
+  right: 3px;
+}
+.construct-silhouette i {
+  position: absolute;
+  left: 13px;
+  top: -8px;
+  width: 11px;
+  height: 9px;
+  border: 1px solid #9fe7f1;
+  border-radius: 4px 4px 1px 1px;
+  background: #345e70;
+}
+.construct-silhouette i:after {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 2px;
+  width: 16px;
+  height: 3px;
+  border-radius: 3px;
+  background: #8fd9e4;
+  box-shadow: 0 0 7px #61d8ef;
+}
+.construct-dock.enemy .arena-construct {
+  transform: scale(0.92);
+  transform-origin: center bottom;
+  opacity: 0.9;
+}
+.combo-cinematic {
+  position: absolute;
+  z-index: 18;
+  left: 50%;
+  top: 50%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: min(86vw, 390px);
+  padding: 10px 14px;
+  border: 1px solid #e5c47b;
+  border-radius: 10px;
+  background: linear-gradient(100deg, #10192df4, #182d3df4);
+  box-shadow:
+    0 12px 34px #000b,
+    0 0 24px #6bdcff33;
+  color: #fff1c8;
+  transform: translate(-50%, -50%);
+  animation: combo-card 1.7s ease both;
+  pointer-events: none;
+}
+.combo-cinematic > span:last-child {
+  display: grid;
+  gap: 2px;
+}
+.combo-cinematic small {
+  font-size: 7px;
+  letter-spacing: 0.15em;
+  color: #9de8f2;
+}
+.combo-cinematic strong {
+  font:
+    600 15px Georgia,
+    serif;
+}
+.combo-vehicle {
+  position: relative;
+  display: block;
+  width: 56px;
+  height: 29px;
+  flex: 0 0 56px;
+}
+.combo-robot .combo-vehicle {
+  border: 2px solid #9ee9f1;
+  border-radius: 7px;
+  background: linear-gradient(#5b8798, #17394a);
+  box-shadow:
+    inset 0 0 0 3px #102a39,
+    0 0 15px #69dff166;
+  animation: tank-arrival 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.combo-robot .combo-vehicle:before,
+.combo-robot .combo-vehicle:after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  width: 14px;
+  height: 12px;
+  border: 3px solid #8ed8e2;
+  border-radius: 50%;
+  background: #0a1a25;
+}
+.combo-robot .combo-vehicle:before {
+  left: 4px;
+}
+.combo-robot .combo-vehicle:after {
+  right: 4px;
+}
+.combo-robot .combo-vehicle i {
+  position: absolute;
+  left: 18px;
+  top: -12px;
+  width: 19px;
+  height: 14px;
+  border: 2px solid #9ee9f1;
+  border-radius: 6px 6px 2px 2px;
+  background: #315a6d;
+}
+.combo-robot .combo-vehicle i:after {
+  content: "";
+  position: absolute;
+  left: 15px;
+  top: 4px;
+  width: 28px;
+  height: 4px;
+  border-radius: 4px;
+  background: #a9f2f8;
+  box-shadow: 0 0 10px #69dff1;
+}
+.combo-pirate {
+  border-color: #e7ad5d;
+  background: linear-gradient(100deg, #29170ef4, #182236f4);
+}
+.combo-pirate small {
+  color: #efb765;
+}
+.combo-pirate .combo-vehicle {
+  height: 18px;
+  margin-top: 12px;
+  border-radius: 4px 4px 20px 20px;
+  background: linear-gradient(#b36a30, #553018);
+  border: 2px solid #edbd72;
+  animation: ship-raid 1.45s cubic-bezier(0.2, 0.75, 0.2, 1) both;
+}
+.combo-pirate .combo-vehicle:before {
+  content: "";
+  position: absolute;
+  left: 24px;
+  bottom: 12px;
+  width: 3px;
+  height: 35px;
+  background: #e7c78d;
+}
+.combo-pirate .combo-vehicle:after {
+  content: "";
+  position: absolute;
+  left: 27px;
+  bottom: 19px;
+  width: 24px;
+  height: 23px;
+  clip-path: polygon(0 0, 100% 48%, 0 100%);
+  background: #b5473d;
+  border-left: 1px solid #f3cf91;
+}
+.combo-pirate .combo-vehicle i {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: -7px;
+  height: 4px;
+  border-radius: 50%;
+  background: #86bed5;
+  box-shadow: 0 5px 0 #6ba3bd55;
+}
+.event-construct-summon,
+.event-construct-fire {
+  color: #c9f7ff;
+  border-color: #6ed9ed80;
+  background: #0b4150eb;
+}
+.event-pirate-raid,
+.event-construct-damage {
+  color: #ffe1b3;
+  border-color: #e8a34f99;
+  background: #573019ed;
+}
+.event-family-combo,
+.event-rarity-power,
+.event-area-damage,
+.event-debuff-atk {
+  color: #fff0c8;
+  border-color: color-mix(in srgb, var(--synergy-glow, #d8ad55) 72%, #fff 8%);
+  background: #15203ded;
+}
+.combo-family {
+  --combo-accent: var(--synergy-glow, #d8ad55);
+  border-color: color-mix(in srgb, var(--combo-accent) 78%, #f7e6bd 22%);
+  background:
+    radial-gradient(circle at 14% 50%, var(--combo-accent), transparent 32%),
+    linear-gradient(100deg, #121a30f4, #1e2940f4);
+}
+.combo-sigil {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  flex: 0 0 48px;
+  border: 2px solid #f7dfaa;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--combo-accent) 45%, #10182b 55%);
+  box-shadow:
+    inset 0 0 0 4px #10182baa,
+    0 0 20px var(--combo-accent);
+}
+.combo-sigil:before,
+.combo-sigil:after {
+  content: "";
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border: 1px solid #ffe9b4;
+  transform: rotate(45deg);
+  background: var(--combo-accent);
+}
+.combo-sigil:before {
+  top: -4px;
+}
+.combo-sigil:after {
+  bottom: -4px;
+}
+.combo-sigil i {
+  color: #fff4d5;
+  font:
+    700 13px Georgia,
+    serif;
+  font-style: normal;
+  letter-spacing: 0.08em;
+}
+@keyframes combo-card {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -35%) scale(0.9);
+  }
+  18%,
+  72% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -62%) scale(0.97);
+  }
+}
+@keyframes tank-arrival {
+  0% {
+    transform: translateX(-90px);
+    opacity: 0;
+  }
+  38%,
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+@keyframes ship-raid {
+  0% {
+    transform: translateX(-160px) rotate(-4deg);
+    opacity: 0;
+  }
+  28%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(170px) rotate(3deg);
+    opacity: 0;
+  }
+}
+@media (max-width: 600px) {
+  .construct-dock {
+    position: absolute;
+    width: auto;
+    max-width: 175px;
+    padding: 0;
+  }
+  .construct-dock.enemy {
+    top: 61px;
+    left: 4px;
+  }
+  .construct-dock.player {
+    right: 4px;
+    bottom: 146px;
+  }
+  .arena-construct {
+    min-width: 0;
+    width: 168px;
+    padding: 3px 6px;
+  }
+  .construct-silhouette {
+    transform: scale(0.76);
+    margin-inline: -3px;
+  }
+  .arena-construct strong {
+    font-size: 7px;
+  }
+  .arena-construct small {
+    font-size: 6px;
+  }
+  .combo-cinematic {
+    width: calc(100% - 28px);
+    padding: 8px 10px;
+  }
+  .combo-cinematic strong {
+    font-size: 12px;
+  }
+  .combo-vehicle {
+    transform: scale(0.8);
+  }
+  .combo-sigil {
+    width: 40px;
+    height: 40px;
+    flex-basis: 40px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .combo-cinematic,
+  .combo-vehicle,
+  .combo-sigil {
+    animation: none !important;
+  }
+  .combo-cinematic {
+    opacity: 1;
+  }
+}

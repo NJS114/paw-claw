@@ -1,0 +1,229 @@
+:root {
+  --pc-royal-blue: #173b78;
+  --pc-royal-deep: #101f46;
+  --pc-sky: #7fb9ef;
+  --pc-gold: #d5a94f;
+  --pc-gold-light: #f3d58c;
+  --pc-ivory: #fff1cf;
+  --pc-parchment: #ead7ad;
+  --pc-coral: #bd5260;
+  --pc-ink: #101a35;
+  --pc-panel: #13264ee8;
+  --pc-line: #e5bd6f;
+}
+
+/*
+ * Pont visuel entre les illustrations de cartes et l'interface : couleurs
+ * royales saturées, surfaces mates et liserés peints, sans verre ni chrome 3D.
+ */
+.portrait-app:not(.battle-mode) {
+  color: var(--pc-ivory);
+  background: var(--pc-royal-deep);
+}
+.portrait-app .game-page-header {
+  background:
+    linear-gradient(90deg, #102658f2, #183f7bf2 52%, #102658f2),
+    var(--pc-royal-deep);
+  border-bottom: 2px solid var(--pc-gold);
+  box-shadow: 0 3px 0 #76502766;
+  backdrop-filter: none;
+}
+.portrait-app .game-page-header h1 {
+  color: var(--pc-ivory);
+  text-shadow: 0 1px 0 #604321;
+}
+.portrait-app .game-back,
+.portrait-app .game-header-wallet > span {
+  border-color: #f0cc7d99;
+  background: #17356de8;
+  box-shadow: none;
+}
+.portrait-app .game-navigation {
+  background: #102555f5;
+  border: 2px solid var(--pc-gold);
+  border-bottom: 0;
+  box-shadow: 0 -4px 0 #76502755;
+  backdrop-filter: none;
+}
+.portrait-app .game-navigation button {
+  color: #e8d9b7;
+}
+.portrait-app .game-navigation button[aria-current="page"] {
+  color: #fff4d4;
+  border-color: #f0cd80;
+  background: #315999;
+  box-shadow: inset 0 -3px #18366c;
+}
+.portrait-app .screen-background-scrim {
+  background: linear-gradient(
+    180deg,
+    #102a5a14,
+    #102a5a35 44%,
+    #0d1d42bd 82%,
+    #09152fef
+  );
+}
+.portrait-app .collection-world .screen-background-scrim,
+.portrait-app .deck-world .screen-background-scrim,
+.portrait-app .shop-world .screen-background-scrim,
+.portrait-app .events-world .screen-background-scrim {
+  background: linear-gradient(
+    180deg,
+    #132e6018,
+    #132e6052 45%,
+    #0d1c3bc9 78%,
+    #09142be9
+  );
+}
+.portrait-app .screen-with-background::after {
+  box-shadow: inset 0 0 54px #10224d38;
+}
+.portrait-app .collection-head,
+.portrait-app .deck-studio-head,
+.portrait-app .inventory-summary article,
+.portrait-app .deck-analysis-grid article,
+.portrait-app .deck-card-vault,
+.portrait-app .mission-panel,
+.portrait-app .pass-head,
+.portrait-app .pass-tier,
+.portrait-app .profile-card,
+.portrait-app .profile-stats > div {
+  color: var(--pc-ivory);
+  border-color: #e2bc73a6;
+  background: linear-gradient(135deg, #17386ee8, #102653ed), var(--pc-panel);
+  box-shadow:
+    inset 0 0 0 2px #f1d38a12,
+    0 4px 0 #08173466;
+  backdrop-filter: none;
+}
+.portrait-app .family-strip,
+.portrait-app .filter-row {
+  border-color: #dcb66b78;
+  background: #102955e8;
+  backdrop-filter: none;
+}
+.portrait-app .family-strip button,
+.portrait-app .filter-row button,
+.portrait-app .deck-editor-toolbar button {
+  color: #f0dfbd;
+  border-color: #d6ad6288;
+  background: #17386f;
+  box-shadow: none;
+}
+.portrait-app .family-strip button.active,
+.portrait-app .filter-row button.active,
+.portrait-app .deck-editor-toolbar button.active {
+  color: #fff7dc;
+  border-color: #f1d184;
+  background: #3563a2;
+  box-shadow: inset 0 -3px #183a76;
+}
+.portrait-app .collection-head h2,
+.portrait-app .deck-studio-head h2,
+.portrait-app .progression-hero h2,
+.portrait-app .portrait-shop-description h2 {
+  color: var(--pc-ivory);
+  text-shadow: 0 2px 0 #6d4b22;
+}
+.portrait-app .eyebrow,
+.portrait-app .shop-edition {
+  color: var(--pc-gold-light);
+}
+.portrait-app .search,
+.portrait-app .deck-editor-toolbar input {
+  color: #fff7df;
+  border-color: #dfb76f;
+  background: #102a59ed;
+  box-shadow: inset 0 2px #091a3d;
+}
+.portrait-app .catalog-card,
+.portrait-app .deck-card-token {
+  border-color: #dbb66f;
+  background: #172e59;
+  box-shadow: 0 4px 0 #09162f99;
+}
+.portrait-app .collection-card-sheet {
+  border-color: #efca7d;
+  background: #102653fa;
+  box-shadow: 0 -5px 0 #76502788;
+}
+.portrait-app .character-profile-summary,
+.portrait-app .character-ability,
+.portrait-app .character-combo,
+.portrait-app .character-evolution {
+  border-color: #d9b26e78;
+  background: #132d5be8;
+}
+.portrait-app .portrait-shop-description {
+  color: #fff3d5;
+  background: #122d5ce8;
+  border-block: 1px solid #d8ae6380;
+}
+.portrait-app .portrait-gold-button,
+.portrait-app .primary,
+.portrait-app .deck-launch .primary {
+  color: #fff7dc;
+  border-color: #f4d38c;
+  background: #b87931;
+  box-shadow:
+    inset 0 -4px #704116,
+    0 4px 0 #4b2a12aa;
+}
+.portrait-app .portrait-gold-button:active,
+.portrait-app .primary:active {
+  transform: translateY(2px);
+  box-shadow:
+    inset 0 -2px #704116,
+    0 2px 0 #4b2a12aa;
+}
+.portrait-app .progression-hero {
+  border-color: #e4bd72;
+  background: linear-gradient(180deg, #204b88b8, #112d5aee 66%);
+}
+.portrait-app .matchmaking-world {
+  filter: saturate(1.04) brightness(0.78);
+}
+.portrait-app .match-search-card,
+.portrait-app .match-ready-card,
+.portrait-app .versus-character {
+  border-color: #e2ba70 !important;
+  background: #112957d9 !important;
+  box-shadow: 0 5px 0 #07163188 !important;
+  backdrop-filter: none !important;
+}
+.portrait-app .combat-guide {
+  color: #f5e7ca;
+  border-color: #dcb46f;
+  background: #102755f2;
+}
+.portrait-app .status-card,
+.portrait-app .battle-command-bar,
+.portrait-app .battle-modal,
+.portrait-app .result-card {
+  border-color: #dbb46e;
+  background-color: #102550ed;
+  backdrop-filter: none;
+}
+.portrait-app .mobile-lobby-scrim {
+  background: linear-gradient(
+    180deg,
+    #1c4f9130,
+    transparent 48%,
+    #102a5688 77%,
+    #0b1b3ec9
+  );
+}
+.portrait-app .lobby-profile,
+.portrait-app .lobby-wallet > span,
+.portrait-app .lobby-quest {
+  border-color: #e4bc70;
+  background: #153268df;
+  box-shadow: 0 3px 0 #79542677;
+  backdrop-filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-app * {
+    text-shadow: none !important;
+  }
+}

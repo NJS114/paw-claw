@@ -1,59 +1,1268 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { cards, type CardData } from './data/gameCards';
-import { beginTurn, drawCard, momentumLabel, playUnit, resolveCombat, resolveEndTurn, resolveLoreSides, type BattleSideState, type BattleState, type CombatEvent } from './data/battleEngine';
-import { chooseEnemyPlan, type AIDifficulty } from './data/battleAI';
-import { synergyProgress, synergies } from './data/synergies';
-import { clearBattle, emptyBattleStats, finishBattle, loadBattle, saveBattle, type BattlePhase, type BattleResult, type SavedBattle } from './data/battleSession';
-import type { Species } from './data/loreSynergies';
-import { BattleDeckHud } from './BattleDeckHud';
-import { GameCard } from './GameCard';
+import { useEffect, useMemo, useRef, useState } from "react";
+import { cards, type CardData } from "./data/gameCards";
+import {
+  beginTurn,
+  drawCard,
+  momentumLabel,
+  playUnit,
+  resolveCombat,
+  resolveComboDeployments,
+  resolveEndTurn,
+  resolveLoreSides,
+  resolveRarityDeployAbility,
+  type ArenaConstruct,
+  type BattleSideState,
+  type BattleState,
+  type CombatEvent,
+} from "./data/battleEngine";
+import { chooseEnemyPlan, type AIDifficulty } from "./data/battleAI";
+import { synergyProgress, synergies } from "./data/synergies";
+import {
+  clearBattle,
+  emptyBattleStats,
+  finishBattle,
+  loadBattle,
+  saveBattle,
+  type BattlePhase,
+  type BattleResult,
+  type SavedBattle,
+} from "./data/battleSession";
+import type { Species } from "./data/loreSynergies";
+import { BattleDeckHud } from "./BattleDeckHud";
+import { GameCard } from "./GameCard";
+import { ECONOMY } from "./data/economy";
 
-const battlefield='/assets/backgrounds/bg-battle-courtyard-2d-v9.webp';
-const AI_KEY='paw-claw.ai.difficulty.v1';
-const MAX_TURNS=40;
-type Phase=BattlePhase;type Result=BattleResult|null;type SynergyFlash={family:string;label:string;tier:number;owner:'player'|'enemy'}|null;
-function rc(r:string){return r.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
-function familyClass(family:string){return `family-${rc(family).replace(/[^a-z0-9]+/g,'-')}`}
-function emptyBoard(){return Array(7).fill(null)}
-function shuffle<T>(input:T[]){const a=[...input];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function boardCount(side:BattleSideState){return side.board.filter(Boolean).length}
-function createSide(pool:CardData[]):BattleSideState{const deck=shuffle(pool);return{board:emptyBoard(),heroHp:20,energy:5,hand:deck.slice(0,5),deck:deck.slice(5),shield:0,momentum:0,survivalUsed:false,pirateDrawUsed:false,healerSaveUsed:false,firstPlayDone:false,fatigue:0}}
-function createBattle(playerPool:CardData[],enemyPool:CardData[]):SavedBattle{const state:BattleState={player:createSide(playerPool),enemy:createSide(enemyPool),turn:1,log:['Le duel commence.']};return{version:3,startedAt:Date.now(),updatedAt:Date.now(),maxMomentum:0,stats:emptyBattleStats(),phase:'intro',checkpoint:'intro',checkpointState:state,state}}
-function formatDuration(ms:number){const total=Math.max(0,Math.round(ms/1000)),m=Math.floor(total/60),s=total%60;return`${m} min ${String(s).padStart(2,'0')} s`}
-function eventText(e:CombatEvent){if(e.type==='unit-damage'||e.type==='direct-hit'||e.type==='fatigue')return`-${e.value??0}`;if(e.type==='heal')return`+${e.value??0} PV`;if(e.type==='shield-block')return`BLOQUÉ ${e.value??0}`;if(e.type==='unit-destroyed')return'ÉLIMINÉ';if(e.type==='unit-saved')return'SAUVÉ';if(e.type==='momentum')return`${(e.value??0)>0?'+':''}${e.value??0} MOMENTUM`;if(e.type==='buff-atk')return`+${e.value??0} ATQ`;if(e.type==='buff-hp')return`+${e.value??0} PV MAX`;if(e.type==='armor')return`ARMURE -${e.value??0}`;if(e.type==='shield-gain')return`+${e.value??0} BOUCLIER`;if(e.type==='energy')return`+${e.value??0} ÉNERGIE`;if(e.type==='draw')return(e.value??0)>0?`+${e.value??0} CARTE`:'MAIN PLEINE';if(e.type==='lore')return'HISTOIRE';return''}
-function initialDifficulty():AIDifficulty{try{const v=localStorage.getItem(AI_KEY);return v==='easy'||v==='hard'?v:'normal'}catch{return'normal'}}
-function difficultyLabel(d:AIDifficulty){return d==='easy'?'Facile':d==='hard'?'Difficile':'Normal'}
-function thresholdEvents(before:BattleSideState,after:BattleSideState,owner:'player'|'enemy',family?:string,tier?:number):CombatEvent[]{const out:CombatEvent[]=[];after.board.forEach((unit,lane)=>{if(!unit)return;const base=cards.find(c=>c.id===unit.id),prev=before.board[lane],oldAtk=prev?.atk??base?.atk??unit.atk??0,oldHp=prev?.hp??base?.hp??unit.hp??1,atkGain=(unit.atk??0)-oldAtk,hpGain=(unit.hp??1)-oldHp;if(atkGain>0)out.push({id:`buff-atk-${owner}-${lane}-${Date.now()}`,lane,type:'buff-atk',source:owner,target:owner,value:atkGain,cardId:unit.id,text:`${unit.name} gagne +${atkGain} ATQ.`});if(hpGain>0)out.push({id:`buff-hp-${owner}-${lane}-${Date.now()}`,lane,type:'buff-hp',source:owner,target:owner,value:hpGain,cardId:unit.id,text:`${unit.name} gagne +${hpGain} PV max.`});if(family==='Armée'&&tier===2&&unit.family==='Armée')out.push({id:`armor-${owner}-${lane}-${Date.now()}`,lane,type:'armor',source:owner,target:owner,value:1,cardId:unit.id,text:`${unit.name} gagne 1 armure grâce à Formation II.`})});return out}
-
-export function BattleArena({playerPool,enemyPool:providedEnemyPool,playerSpecies='Chat',enemySpecies='Chien',onWin,onLose,onDraw}:{playerPool:CardData[];enemyPool?:CardData[];playerSpecies?:Species;enemySpecies?:Species;onWin:()=>void;onLose:()=>void;onDraw:()=>void}){
- const enemyPool=useMemo(()=>providedEnemyPool?.length?providedEnemyPool:cards.filter(c=>c.type==='Héros').slice(8,36),[providedEnemyPool]);
- const initial=useMemo(()=>loadBattle()||createBattle(playerPool,enemyPool),[playerPool,enemyPool]);
- const[saved,setSaved]=useState<SavedBattle>(initial),[phase,setPhase]=useState<Phase>(initial.phase||'intro'),[selected,setSelected]=useState<number|null>(null),[result,setResult]=useState<Result>(null),[banner,setBanner]=useState(initial.phase==='player'?'Partie reprise':'Prépare ton premier tour'),[events,setEvents]=useState<CombatEvent[]>([]),[mulligan,setMulligan]=useState<number[]>([]),[difficulty,setDifficulty]=useState<AIDifficulty>(initialDifficulty),[aiPlan,setAiPlan]=useState(''),[synergyFlash,setSynergyFlash]=useState<SynergyFlash>(null);
- const rewarded=useRef(false),timers=useRef<number[]>([]);const state=saved.state;
- const playerSyn=synergies(state.player,state.enemy),enemySyn=synergies(state.enemy,state.player),playerProgress=synergyProgress(state.player),enemyProgress=synergyProgress(state.enemy);
- const later=(fn:()=>void,ms:number)=>{const id=window.setTimeout(fn,ms);timers.current.push(id);return id};
- useEffect(()=>()=>timers.current.forEach(window.clearTimeout),[]);
- useEffect(()=>{if(phase!=='result')saveBattle({...saved,phase})},[saved,phase]);
- useEffect(()=>{try{localStorage.setItem(AI_KEY,difficulty)}catch{}},[difficulty]);
- useEffect(()=>{if(result)return;if(state.player.heroHp<=0&&state.enemy.heroHp<=0)endMatch('draw',state);else if(state.player.heroHp<=0)endMatch('lose',state);else if(state.enemy.heroHp<=0)endMatch('win',state)},[state.player.heroHp,state.enemy.heroHp,result]);
- function patchState(next:BattleState,extra?:Partial<SavedBattle>){const nextPhase=extra?.phase??phase,stable=nextPhase==='player';setSaved(prev=>({...prev,...extra,version:3,maxMomentum:Math.max(prev.maxMomentum,next.player.momentum),state:next,phase:nextPhase,checkpoint:stable?'stable-player':(extra?.checkpoint??prev.checkpoint),checkpointState:stable?next:(extra?.checkpointState??prev.checkpointState),updatedAt:Date.now()}))}
- function triggerSynergy(flash:Exclude<SynergyFlash,null>){setSynergyFlash(flash);later(()=>setSynergyFlash(current=>current&&current.family===flash.family&&current.tier===flash.tier?null:current),1450)}
- function toggleMulligan(index:number){if(phase!=='intro')return;setMulligan(current=>current.includes(index)?current.filter(x=>x!==index):current.length<2?[...current,index]:current)}
- function start(){let player={...state.player};if(mulligan.length){const picks=[...mulligan].sort((a,b)=>a-b),replacements=player.deck.slice(0,picks.length),returned=picks.map(i=>player.hand[i]).filter(Boolean),hand=[...player.hand];picks.forEach((idx,i)=>{if(replacements[i])hand[idx]=replacements[i]});player={...player,hand,deck:shuffle([...player.deck.slice(replacements.length),...returned])}}player=beginTurn(player,state.enemy);const next={...state,player,log:[mulligan.length?`${mulligan.length} carte${mulligan.length>1?'s':''} remplacée${mulligan.length>1?'s':''}.`:'Main de départ conservée.',`Difficulté IA : ${difficultyLabel(difficulty)}.`,'Tour 1 : à toi de jouer.']};patchState(next,{phase:'player',checkpoint:'stable-player',checkpointState:next});setMulligan([]);setPhase('player');setBanner('À toi de jouer')}
- function select(index:number){if(phase!=='player')return;setSelected(selected===index?null:index)}
- function place(slot:number){if(phase!=='player'||selected===null)return;const card=state.player.hand[selected];if(!card)return;const beforeProgress=synergyProgress(state.player),beforeSide=state.player,nextPlayerRaw=playUnit(state.player,state.enemy,card,slot);if(nextPlayerRaw===state.player)return;const lore=resolveLoreSides(nextPlayerRaw,state.enemy),nextPlayer=lore.player,nextEnemy=lore.enemy,after=synergyProgress(nextPlayer),unlocked=after.find(x=>x.tier>(beforeProgress.find(b=>b.family===x.family)?.tier??0)),nextStats={...saved.stats,cardsPlayed:saved.stats.cardsPlayed+1,synergyActivations:saved.stats.synergyActivations+(unlocked?1:0),maxBoard:Math.max(saved.stats.maxBoard,boardCount(nextPlayer)),comebackTriggered:saved.stats.comebackTriggered||nextPlayer.heroHp<=10},feedback=[...thresholdEvents(beforeSide,nextPlayer,'player',unlocked?.family,unlocked?.tier),...lore.events],next={...state,player:nextPlayer,enemy:nextEnemy,log:[...lore.events.map(e=>e.text),unlocked?`${unlocked.family} atteint le palier ${unlocked.tier===2?'5/5':'3/3'} : ${unlocked.label} activée.`:`${card.name} entre en jeu sur la ligne ${slot+1}.`,...state.log].slice(0,6)};patchState(next,{stats:nextStats,phase:'player',checkpoint:'stable-player',checkpointState:next});if(feedback.length){setEvents(feedback);later(()=>setEvents(current=>current===feedback?[]:current),1350)}if(unlocked)triggerSynergy({family:unlocked.family,label:unlocked.label,tier:unlocked.tier,owner:'player'});setSelected(null);setBanner(lore.events.length?'Histoire déclenchée':unlocked?`${unlocked.label} activée`:`${card.name} est en position`)}
- function enemyTurn(){if(phase!=='player')return;setPhase('enemy');setEvents([]);setAiPlan('Analyse du plateau');setBanner('Le rival prépare sa réponse');patchState(state,{phase:'enemy',checkpoint:'stable-player',checkpointState:state});later(()=>{const started=beginTurn(state.enemy,state.player),draw=drawCard(started,'enemy','Pioche du rival');let enemy=draw.side;if(enemy.heroHp<=0){const dead={...state,enemy,log:[draw.event.text,...state.log].slice(0,6)};setEvents([draw.event]);patchState(dead,{phase:'combat'});return}const beforeProgress=synergyProgress(enemy),beforeSide=enemy,plan=chooseEnemyPlan(enemy,state.player,difficulty);enemy=plan.side;const lore=resolveLoreSides(state.player,enemy);const nextPlayer=lore.player;enemy=lore.enemy;const after=synergyProgress(enemy),unlocked=after.find(x=>x.tier>(beforeProgress.find(b=>b.family===x.family)?.tier??0)),feedback=[draw.event,...thresholdEvents(beforeSide,enemy,'enemy',unlocked?.family,unlocked?.tier),...lore.events];if(feedback.length)setEvents(feedback);if(unlocked)triggerSynergy({family:unlocked.family,label:unlocked.label,tier:unlocked.tier,owner:'enemy'});setAiPlan(plan.label);const moveText=plan.moves.length?plan.moves.map(m=>`${m.card.name} · ligne ${m.slot+1}`).join(' / '):'Aucune carte jouée',staged={...state,player:nextPlayer,enemy,log:[...lore.events.map(e=>e.text),unlocked?`Rival : ${unlocked.family} atteint ${unlocked.tier===2?'5/5':'3/3'} — ${unlocked.label}.`:`${difficultyLabel(difficulty)} : ${plan.label}.`,moveText,...state.log].slice(0,6)};patchState(staged,{phase:'combat',checkpoint:'stable-player',checkpointState:state});setPhase('combat');setBanner(lore.events.length?'Histoire déclenchée':unlocked?`${unlocked.label} adverse activée`:'Résolution du combat');later(()=>resolveRound(staged),750)},650)}
- function resolveRound(current:BattleState){const beforePlayerHp=current.player.heroHp,beforeEnemyHp=current.enemy.heroHp,clash=resolveCombat(current.player,current.enemy),lethal=clash.attacker.heroHp<=0||clash.defender.heroHp<=0,end=lethal?{side:clash.attacker,enemy:clash.defender,events:[] as CombatEvent[]}:resolveEndTurn(clash.attacker,clash.defender),baseEvents=[...clash.events,...end.events],afterPlayerHp=end.side.heroHp,afterEnemyHp=end.enemy.heroHp,damageDealt=Math.max(0,beforeEnemyHp-afterEnemyHp),damageTaken=Math.max(0,beforePlayerHp-afterPlayerHp),healingDone=Math.max(0,afterPlayerHp-beforePlayerHp),nextStats={...saved.stats,unitsDestroyed:saved.stats.unitsDestroyed+clash.attackerKills,unitsLost:saved.stats.unitsLost+clash.defenderKills,damageDealt:saved.stats.damageDealt+damageDealt,damageTaken:saved.stats.damageTaken+damageTaken,healingDone:saved.stats.healingDone+healingDone,comebackTriggered:saved.stats.comebackTriggered||end.side.survivalUsed||end.side.momentum>=3,maxBoard:Math.max(saved.stats.maxBoard,boardCount(end.side))},line=clash.attackerKills||clash.defenderKills?`${clash.attackerKills} unité adverse éliminée, ${clash.defenderKills} unité alliée perdue.`:'Le front tient. Aucun combattant n’est tombé.';setEvents(baseEvents);setBanner(baseEvents.length?'Le front s’embrase':'Le front tient');if(lethal||afterPlayerHp<=0||afterEnemyHp<=0){const finalState={...current,player:end.side,enemy:end.enemy,log:[...baseEvents.slice(-2).map(e=>e.text),line,...current.log].slice(0,6)};later(()=>patchState(finalState,{stats:nextStats,phase:'combat'}),900);return}const playerDraw=drawCard(end.side,'player','Pioche du tour'),player=beginTurn(playerDraw.side,end.enemy),nextTurn=current.turn+1,allEvents=[...baseEvents,playerDraw.event],next:BattleState={player,enemy:end.enemy,turn:nextTurn,log:[playerDraw.event.text,...allEvents.slice(-2).map(e=>e.text),line,`Tour ${nextTurn} : à toi de jouer.`,...current.log].slice(0,6)};if(nextTurn>MAX_TURNS){setEvents(allEvents);patchState(next,{stats:nextStats,phase:'combat'});later(()=>endMatch('draw',next),300);return}later(()=>{patchState(next,{stats:nextStats,phase:'player',checkpoint:'stable-player',checkpointState:next});setEvents(playerDraw.event.type==='fatigue'?[playerDraw.event]:[]);setSelected(null);setAiPlan('');setPhase('player');setBanner(playerDraw.event.type==='fatigue'?`Fatigue ${player.fatigue??0}`:`Tour ${nextTurn}`)},1050)}
- function endMatch(value:BattleResult,finalState:BattleState=state){if(rewarded.current)return;rewarded.current=true;setResult(value);setPhase('result');setSelected(null);setEvents([]);setAiPlan('');setSynergyFlash(null);finishBattle({...saved,state:finalState,phase:'result' as BattlePhase},value);if(value==='win')onWin();else if(value==='lose')onLose();else onDraw();setBanner(value==='win'?'Victoire':value==='lose'?'Défaite':'Égalité')}
- function abandon(){if(phase==='result')return;rewarded.current=true;finishBattle({...saved,state,phase:'result'},'lose');onLose();const fresh=createBattle(playerPool,enemyPool);setSaved(fresh);setResult(null);setEvents([]);setSelected(null);setMulligan([]);setAiPlan('');setSynergyFlash(null);setPhase('intro');setBanner('Partie abandonnée — nouveau duel prêt');rewarded.current=false}
- function newMatch(){clearBattle();rewarded.current=false;const fresh=createBattle(playerPool,enemyPool);setSaved(fresh);setResult(null);setSelected(null);setEvents([]);setMulligan([]);setAiPlan('');setSynergyFlash(null);setPhase('intro');setBanner('Prépare ton premier tour')}
- const duration=Date.now()-saved.startedAt,enemyHeroEvents=events.filter(e=>e.lane<0&&e.target==='enemy'),playerHeroEvents=events.filter(e=>e.lane<0&&e.target==='player');
- return <section className={`battle-screen cinematic-battle phase-${phase}`} style={{backgroundImage:`linear-gradient(rgba(4,9,20,.14),rgba(4,9,20,.38)),url('${battlefield}')`}}><div className="battle-vignette"/><div className="ai-readout">{difficultyLabel(difficulty)}</div><div className="battle-header-panel"><PlayerStatus name={`Rival · ${enemySpecies}s`} hp={state.enemy.heroHp} energy={state.enemy.energy} shield={state.enemy.shield} momentum={state.enemy.momentum} side="enemy" events={enemyHeroEvents}/><div className="turn-center"><span className="turn-label">Tour</span><strong>{state.turn}</strong><span className="phase-label">{banner}</span></div><PlayerStatus name={`Toi · ${playerSpecies}s`} hp={state.player.heroHp} energy={state.player.energy} shield={state.player.shield} momentum={state.player.momentum} side="player" events={playerHeroEvents}/></div><BattleDeckHud playerDeck={state.player.deck.length} enemyDeck={state.enemy.deck.length} playerHand={state.player.hand.length} enemyHand={state.enemy.hand.length}/><ProgressStrip title="Progression adverse" items={enemyProgress}/><SynergyStrip title="Synergies adverses" items={enemySyn}/><div className="enemy-zone battle-row">{state.enemy.board.map((u,i)=><ArenaSlot key={i} unit={u} index={i} side="enemy" events={events.filter(e=>e.lane===i&&e.target==='enemy')}/>)}</div><div className="arena-center cinematic-center">{synergyFlash&&<div className={`synergy-activation-banner ${familyClass(synergyFlash.family)} synergy-tier-${synergyFlash.tier}`}><small>{synergyFlash.owner==='player'?'Synergie activée':'Synergie adverse'}</small><strong>{synergyFlash.family} · {synergyFlash.label}</strong><span>Palier {synergyFlash.tier===2?'5/5':'3/3'}</span></div>}{aiPlan&&phase!=='player'&&<div className="ai-plan-feed">{aiPlan}</div>}<div className={`phase-banner ${phase}`}>{banner}</div>{events.length>0&&<div className="combat-event-feed">{events.slice(-4).map((e,i)=><span key={e.id} className={`feed-${e.type}`} style={{animationDelay:`${i*90}ms`}}>{e.text}</span>)}</div>}<div className="battle-log-panel">{state.log.slice(0,3).map((line,i)=><p key={`${line}-${i}`}>{line}</p>)}</div></div><div className="player-zone battle-row">{state.player.board.map((u,i)=><ArenaSlot key={i} unit={u} index={i} side="player" target={selected!==null&&phase==='player'} onClick={()=>place(i)} events={events.filter(e=>e.lane===i&&e.target==='player')}/>)}</div><ProgressStrip title="Progression des familles" items={playerProgress}/><SynergyStrip title="Tes synergies" items={playerSyn}/><div className="battle-command-bar"><div className="hand-title"><span>Main</span><small>{state.player.hand.length}/5 cartes · pioche {state.player.deck.length}{(state.player.fatigue??0)>0?` · fatigue ${state.player.fatigue}`:''}</small></div><div className="hand cinematic-hand">{state.player.hand.map((c,i)=><button key={`${c.id}-${i}`} className={`hand-card ${selected===i?'selected':''}`} onClick={()=>select(i)} disabled={phase!=='player'||c.cost>state.player.energy}><BattleCard card={c} hp={c.hp??1}/></button>)}</div><div className="battle-actions"><button className="end-turn-button" onClick={enemyTurn} disabled={phase!=='player'}>Terminer le tour</button><button className="abandon-button" onClick={abandon} disabled={phase==='result'}>Abandonner</button></div></div>{phase==='intro'&&<div className="battle-overlay intro-overlay"><div className="battle-modal versus-modal"><span className="modal-kicker">Arène classée</span><div className="versus-line"><strong>{playerSpecies.toUpperCase()}S</strong><span>VS</span><strong>{enemySpecies.toUpperCase()}S</strong></div><h2>Choisis ta main de départ</h2><p>Sélectionne jusqu’à 2 cartes à remplacer. La partie est limitée à {MAX_TURNS} tours ; une pioche vide déclenche une fatigue croissante.</p><div className="difficulty-picker">{(['easy','normal','hard'] as AIDifficulty[]).map(d=><button key={d} className={difficulty===d?'active':''} onClick={()=>setDifficulty(d)}>{difficultyLabel(d)}<span>{d==='easy'?'1 action, choix plus libre':d==='hard'?'jusqu’à 4 actions, lethal et synergies':'jusqu’à 2 actions, jeu équilibré'}</span></button>)}</div><div className="mulligan-hand">{state.player.hand.map((c,i)=><button key={`${c.id}-${i}`} className={`mulligan-card ${mulligan.includes(i)?'marked':''}`} onClick={()=>toggleMulligan(i)}><BattleCard card={c} hp={c.hp??1}/><span>{mulligan.includes(i)?'À remplacer':'Conserver'}</span></button>)}</div><div className="mulligan-footer"><small>{mulligan.length}/2 sélectionnée{mulligan.length>1?'s':''}</small><button className="primary" onClick={start}>Entrer dans l’arène</button></div></div></div>}{result&&<div className="battle-overlay result-overlay"><div className={`battle-modal result-card ${result}`}><span className="modal-kicker">Fin de partie</span><h2>{result==='win'?'Victoire dans l’arène':result==='lose'?'Le rival remporte le duel':'Égalité dans l’arène'}</h2><p>{result==='win'?'Récompenses : 80 pièces, 2 gemmes et 60 XP.':result==='lose'?'Récompenses : 25 pièces et 25 XP. Analyse ton placement puis relance un duel.':'Double K.O. ou limite de tours atteinte : 40 pièces et 35 XP.'}</p><div className="result-stats detailed"><span><small>Difficulté</small>{difficultyLabel(difficulty)}</span><span><small>Tours</small>{state.turn}</span><span><small>Durée</small>{formatDuration(duration)}</span><span><small>PV restants</small>{state.player.heroHp}</span><span><small>Dégâts infligés</small>{saved.stats.damageDealt}</span><span><small>Unités éliminées</small>{saved.stats.unitsDestroyed}</span><span><small>Synergies activées</small>{saved.stats.synergyActivations}</span><span><small>Momentum max</small>{saved.maxMomentum}/5</span><span><small>Cartes jouées</small>{saved.stats.cardsPlayed}</span><span><small>Pioche restante</small>{state.player.deck.length}</span><span><small>Fatigue</small>{state.player.fatigue??0}</span><span><small>Retournement</small>{saved.stats.comebackTriggered?'Déclenché':'Non déclenché'}</span></div><button className="primary" onClick={newMatch}>Nouvelle partie</button></div></div>}</section>
+const battlefield = "/assets/backgrounds/bg-battle-courtyard-2d-v9.webp";
+const AI_KEY = "paw-claw.ai.difficulty.v1";
+const MAX_TURNS = 40;
+type Phase = BattlePhase;
+type Result = BattleResult | null;
+type SynergyFlash = {
+  family: string;
+  label: string;
+  tier: number;
+  owner: "player" | "enemy";
+} | null;
+function rc(r: string) {
+  return r
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
 }
-function PlayerStatus({name,hp,energy,shield,momentum,side,events}:{name:string;hp:number;energy:number;shield:number;momentum:number;side:'player'|'enemy';events:CombatEvent[]}){return <div className={`status-card ${side} ${events.length?'status-reacting':''}`}><div className="status-name"><strong>{name}</strong><span>{momentumLabel(momentum)}</span></div><div className="status-bars"><Meter label="PV" value={hp} max={20}/><Meter label="Énergie" value={energy} max={8}/><Meter label="Momentum" value={momentum} max={5}/></div>{shield>0&&<span className="shield-badge">Bouclier {shield}</span>}<EventFloats events={events}/></div>}
-function Meter({label,value,max}:{label:string;value:number;max:number}){return <div className="meter"><div className="meter-label"><span>{label}</span><strong>{value}</strong></div><div className="meter-track"><span style={{width:`${Math.max(0,Math.min(100,value/max*100))}%`}}/></div></div>}
-function ProgressStrip({title,items}:{title:string;items:{family:string;count:number;next:number|null;tier:number;label:string}[]}){return <div className="progress-strip"><span className="synergy-strip-title">{title}</span>{items.length?items.slice(0,5).map(x=><div className={`progress-chip tier-${x.tier} ${familyClass(x.family)}`} key={x.family}><strong>{x.family}</strong><span>{x.next?`${x.count}/${x.next}`:'5/5'}</span><small>{x.tier===0?'Palier I':x.tier===1?'Palier II':x.label}</small></div>):<span className="synergy-empty">Aucune famille en jeu</span>}</div>}
-function SynergyStrip({title,items}:{title:string;items:{id:string;title:string;description:string;tier:number}[]}){return <div className="synergy-strip"><span className="synergy-strip-title">{title}</span>{items.length?items.slice(0,4).map(s=><div className={`synergy-chip tier-${s.tier}`} key={s.id}><strong>{s.title}</strong><span>{s.description}</span></div>):<span className="synergy-empty">Aucune synergie active</span>}</div>}
-function EventFloats({events}:{events:CombatEvent[]}){return <div className="event-floats">{events.filter(e=>e.type!=='clash').map((e,i)=><span key={e.id} className={`event-float event-${e.type}`} style={{animationDelay:`${i*90}ms`}}>{eventText(e)}</span>)}</div>}
-function ArenaSlot({unit,index,side,target,onClick,events}:{unit:BattleSideState['board'][number];index:number;side:'player'|'enemy';target?:boolean;onClick?:()=>void;events:CombatEvent[]}){const destroyed=events.some(e=>e.type==='unit-destroyed'),saved=events.some(e=>e.type==='unit-saved'),damaged=events.some(e=>e.type==='unit-damage'),buffed=events.some(e=>e.type==='buff-atk'||e.type==='buff-hp'),armored=events.some(e=>e.type==='armor'),lore=events.some(e=>e.type==='lore');const content=unit?<BattleCard card={unit} hp={unit.currentHp??unit.hp??1}/>:<span className="slot-number">{String(index+1).padStart(2,'0')}</span>,cls=`arena-slot ${side==='enemy'?'enemy':''} ${target&&!unit?'target':''} ${unit?'occupied':''} ${damaged?'event-damaged':''} ${destroyed?'event-destroyed':''} ${saved?'event-saved':''} ${buffed?'event-buffed':''} ${armored?'event-armored':''} ${lore?'event-lore':''}`;return side==='player'?<button className={cls} onClick={onClick} disabled={!target&&!!onClick}>{content}<EventFloats events={events}/></button>:<div className={cls}>{content}<EventFloats events={events}/></div>}
-function BattleCard({card,hp}:{card:CardData;hp:number}){const base=cards.find(c=>c.id===card.id),atkDelta=Math.max(0,(card.atk??0)-(base?.atk??card.atk??0)),hpDelta=Math.max(0,(card.hp??1)-(base?.hp??card.hp??1));return <GameCard card={card} variant="battle" currentHp={hp} atkBonus={atkDelta} hpBonus={hpDelta}/>}
+function familyClass(family: string) {
+  return `family-${rc(family).replace(/[^a-z0-9]+/g, "-")}`;
+}
+function emptyBoard() {
+  return Array(7).fill(null);
+}
+function shuffle<T>(input: T[]) {
+  const a = [...input];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function boardCount(side: BattleSideState) {
+  return side.board.filter(Boolean).length;
+}
+function createSide(pool: CardData[]): BattleSideState {
+  const deck = shuffle(pool);
+  return {
+    board: emptyBoard(),
+    heroHp: 20,
+    energy: 5,
+    hand: deck.slice(0, 5),
+    deck: deck.slice(5),
+    shield: 0,
+    momentum: 0,
+    survivalUsed: false,
+    pirateDrawUsed: false,
+    healerSaveUsed: false,
+    firstPlayDone: false,
+    fatigue: 0,
+    constructs: [],
+    comboMarks: [],
+  };
+}
+function createBattle(
+  playerPool: CardData[],
+  enemyPool: CardData[],
+): SavedBattle {
+  const state: BattleState = {
+    player: createSide(playerPool),
+    enemy: createSide(enemyPool),
+    turn: 1,
+    log: ["Le duel commence."],
+  };
+  return {
+    version: 3,
+    startedAt: Date.now(),
+    updatedAt: Date.now(),
+    maxMomentum: 0,
+    stats: emptyBattleStats(),
+    phase: "intro",
+    checkpoint: "intro",
+    checkpointState: state,
+    state,
+  };
+}
+function formatDuration(ms: number) {
+  const total = Math.max(0, Math.round(ms / 1000)),
+    m = Math.floor(total / 60),
+    s = total % 60;
+  return `${m} min ${String(s).padStart(2, "0")} s`;
+}
+function eventText(e: CombatEvent) {
+  if (
+    e.type === "unit-damage" ||
+    e.type === "direct-hit" ||
+    e.type === "fatigue"
+  )
+    return `-${e.value ?? 0}`;
+  if (e.type === "heal") return `+${e.value ?? 0} PV`;
+  if (e.type === "shield-block") return `BLOQUÉ ${e.value ?? 0}`;
+  if (e.type === "unit-destroyed") return "ÉLIMINÉ";
+  if (e.type === "unit-saved") return "SAUVÉ";
+  if (e.type === "momentum")
+    return `${(e.value ?? 0) > 0 ? "+" : ""}${e.value ?? 0} MOMENTUM`;
+  if (e.type === "buff-atk") return `+${e.value ?? 0} ATQ`;
+  if (e.type === "buff-hp") return `+${e.value ?? 0} PV MAX`;
+  if (e.type === "armor") return `ARMURE -${e.value ?? 0}`;
+  if (e.type === "shield-gain") return `+${e.value ?? 0} BOUCLIER`;
+  if (e.type === "energy") return `+${e.value ?? 0} ÉNERGIE`;
+  if (e.type === "draw")
+    return (e.value ?? 0) > 0 ? `+${e.value ?? 0} CARTE` : "MAIN PLEINE";
+  if (e.type === "lore") return "HISTOIRE";
+  if (e.type === "construct-summon") return "PET TANK";
+  if (e.type === "construct-fire") return `TIR ${e.value ?? 0}`;
+  if (e.type === "construct-damage") return `-${e.value ?? 0} STRUCTURE`;
+  if (e.type === "pirate-raid") return "ABORDAGE";
+  if (e.type === "family-combo") return `COMBO ${e.family ?? "GROUPE"}`;
+  if (e.type === "rarity-power") return `${e.rarity ?? "POUVOIR"}`;
+  if (e.type === "area-damage") return `ZONE -${e.value ?? 0}`;
+  if (e.type === "debuff-atk") return `-${e.value ?? 0} ATQ`;
+  return "";
+}
+function initialDifficulty(): AIDifficulty {
+  try {
+    const v = localStorage.getItem(AI_KEY);
+    return v === "easy" || v === "hard" ? v : "normal";
+  } catch {
+    return "normal";
+  }
+}
+function difficultyLabel(d: AIDifficulty) {
+  return d === "easy" ? "Facile" : d === "hard" ? "Difficile" : "Normal";
+}
+function thresholdEvents(
+  before: BattleSideState,
+  after: BattleSideState,
+  owner: "player" | "enemy",
+  family?: string,
+  tier?: number,
+): CombatEvent[] {
+  const out: CombatEvent[] = [];
+  after.board.forEach((unit, lane) => {
+    if (!unit) return;
+    const base = cards.find((c) => c.id === unit.id),
+      prev = before.board[lane],
+      oldAtk = prev?.atk ?? base?.atk ?? unit.atk ?? 0,
+      oldHp = prev?.hp ?? base?.hp ?? unit.hp ?? 1,
+      atkGain = (unit.atk ?? 0) - oldAtk,
+      hpGain = (unit.hp ?? 1) - oldHp;
+    if (atkGain > 0)
+      out.push({
+        id: `buff-atk-${owner}-${lane}-${Date.now()}`,
+        lane,
+        type: "buff-atk",
+        source: owner,
+        target: owner,
+        value: atkGain,
+        cardId: unit.id,
+        text: `${unit.name} gagne +${atkGain} ATQ.`,
+      });
+    if (hpGain > 0)
+      out.push({
+        id: `buff-hp-${owner}-${lane}-${Date.now()}`,
+        lane,
+        type: "buff-hp",
+        source: owner,
+        target: owner,
+        value: hpGain,
+        cardId: unit.id,
+        text: `${unit.name} gagne +${hpGain} PV max.`,
+      });
+    if (family === "Armée" && tier === 2 && unit.family === "Armée")
+      out.push({
+        id: `armor-${owner}-${lane}-${Date.now()}`,
+        lane,
+        type: "armor",
+        source: owner,
+        target: owner,
+        value: 1,
+        cardId: unit.id,
+        text: `${unit.name} gagne 1 armure grâce à Formation II.`,
+      });
+  });
+  return out;
+}
+
+export function BattleArena({
+  playerPool,
+  enemyPool: providedEnemyPool,
+  playerSpecies = "Chat",
+  enemySpecies = "Chien",
+  onWin,
+  onLose,
+  onDraw,
+}: {
+  playerPool: CardData[];
+  enemyPool?: CardData[];
+  playerSpecies?: Species;
+  enemySpecies?: Species;
+  onWin: () => void;
+  onLose: () => void;
+  onDraw: () => void;
+}) {
+  const enemyPool = useMemo(
+    () =>
+      providedEnemyPool?.length
+        ? providedEnemyPool
+        : cards.filter((c) => c.type === "Héros").slice(8, 36),
+    [providedEnemyPool],
+  );
+  const initial = useMemo(
+    () => loadBattle() || createBattle(playerPool, enemyPool),
+    [playerPool, enemyPool],
+  );
+  const [saved, setSaved] = useState<SavedBattle>(initial),
+    [phase, setPhase] = useState<Phase>(initial.phase || "intro"),
+    [selected, setSelected] = useState<number | null>(null),
+    [result, setResult] = useState<Result>(null),
+    [banner, setBanner] = useState(
+      initial.phase === "player"
+        ? "Partie reprise"
+        : "Prépare ton premier tour",
+    ),
+    [events, setEvents] = useState<CombatEvent[]>([]),
+    [mulligan, setMulligan] = useState<number[]>([]),
+    [difficulty, setDifficulty] = useState<AIDifficulty>(initialDifficulty),
+    [aiPlan, setAiPlan] = useState(""),
+    [synergyFlash, setSynergyFlash] = useState<SynergyFlash>(null);
+  const rewarded = useRef(false),
+    timers = useRef<number[]>([]);
+  const state = saved.state;
+  const playerSyn = synergies(state.player, state.enemy),
+    enemySyn = synergies(state.enemy, state.player),
+    playerProgress = synergyProgress(state.player),
+    enemyProgress = synergyProgress(state.enemy);
+  const later = (fn: () => void, ms: number) => {
+    const id = window.setTimeout(fn, ms);
+    timers.current.push(id);
+    return id;
+  };
+  useEffect(() => () => timers.current.forEach(window.clearTimeout), []);
+  useEffect(() => {
+    if (phase !== "result") saveBattle({ ...saved, phase });
+  }, [saved, phase]);
+  useEffect(() => {
+    try {
+      localStorage.setItem(AI_KEY, difficulty);
+    } catch {}
+  }, [difficulty]);
+  useEffect(() => {
+    if (result) return;
+    if (state.player.heroHp <= 0 && state.enemy.heroHp <= 0)
+      endMatch("draw", state);
+    else if (state.player.heroHp <= 0) endMatch("lose", state);
+    else if (state.enemy.heroHp <= 0) endMatch("win", state);
+  }, [state.player.heroHp, state.enemy.heroHp, result]);
+  function patchState(next: BattleState, extra?: Partial<SavedBattle>) {
+    const nextPhase = extra?.phase ?? phase,
+      stable = nextPhase === "player";
+    setSaved((prev) => ({
+      ...prev,
+      ...extra,
+      version: 3,
+      maxMomentum: Math.max(prev.maxMomentum, next.player.momentum),
+      state: next,
+      phase: nextPhase,
+      checkpoint: stable
+        ? "stable-player"
+        : (extra?.checkpoint ?? prev.checkpoint),
+      checkpointState: stable
+        ? next
+        : (extra?.checkpointState ?? prev.checkpointState),
+      updatedAt: Date.now(),
+    }));
+  }
+  function triggerSynergy(flash: Exclude<SynergyFlash, null>) {
+    setSynergyFlash(flash);
+    later(
+      () =>
+        setSynergyFlash((current) =>
+          current &&
+          current.family === flash.family &&
+          current.tier === flash.tier
+            ? null
+            : current,
+        ),
+      1450,
+    );
+  }
+  function toggleMulligan(index: number) {
+    if (phase !== "intro") return;
+    setMulligan((current) =>
+      current.includes(index)
+        ? current.filter((x) => x !== index)
+        : current.length < 2
+          ? [...current, index]
+          : current,
+    );
+  }
+  function start() {
+    let player = { ...state.player };
+    if (mulligan.length) {
+      const picks = [...mulligan].sort((a, b) => a - b),
+        replacements = player.deck.slice(0, picks.length),
+        returned = picks.map((i) => player.hand[i]).filter(Boolean),
+        hand = [...player.hand];
+      picks.forEach((idx, i) => {
+        if (replacements[i]) hand[idx] = replacements[i];
+      });
+      player = {
+        ...player,
+        hand,
+        deck: shuffle([...player.deck.slice(replacements.length), ...returned]),
+      };
+    }
+    player = beginTurn(player, state.enemy);
+    const next = {
+      ...state,
+      player,
+      log: [
+        mulligan.length
+          ? `${mulligan.length} carte${mulligan.length > 1 ? "s" : ""} remplacée${mulligan.length > 1 ? "s" : ""}.`
+          : "Main de départ conservée.",
+        `Difficulté IA : ${difficultyLabel(difficulty)}.`,
+        "Tour 1 : à toi de jouer.",
+      ],
+    };
+    patchState(next, {
+      phase: "player",
+      checkpoint: "stable-player",
+      checkpointState: next,
+    });
+    setMulligan([]);
+    setPhase("player");
+    setBanner("À toi de jouer");
+  }
+  function select(index: number) {
+    if (phase !== "player") return;
+    setSelected(selected === index ? null : index);
+  }
+  function place(slot: number) {
+    if (phase !== "player" || selected === null) return;
+    const card = state.player.hand[selected];
+    if (!card) return;
+    const beforeProgress = synergyProgress(state.player),
+      beforeSide = state.player,
+      nextPlayerRaw = playUnit(state.player, state.enemy, card, slot);
+    if (nextPlayerRaw === state.player) return;
+    const rarity = resolveRarityDeployAbility(
+        nextPlayerRaw,
+        state.enemy,
+        card,
+        slot,
+        "player",
+      ),
+      lore = resolveLoreSides(rarity.side, rarity.enemy),
+      combo = resolveComboDeployments(lore.player, lore.enemy, "player");
+    const nextPlayer = combo.side,
+      nextEnemy = combo.enemy,
+      after = synergyProgress(nextPlayer),
+      unlocked = after.find(
+        (x) =>
+          x.tier >
+          (beforeProgress.find((b) => b.family === x.family)?.tier ?? 0),
+      );
+    const nextStats = {
+      ...saved.stats,
+      cardsPlayed: saved.stats.cardsPlayed + 1,
+      synergyActivations:
+        saved.stats.synergyActivations +
+        (unlocked ? 1 : 0) +
+        combo.events.length,
+      maxBoard: Math.max(saved.stats.maxBoard, boardCount(nextPlayer)),
+      comebackTriggered:
+        saved.stats.comebackTriggered || nextPlayer.heroHp <= 10,
+    };
+    const feedback = [
+      ...thresholdEvents(
+        beforeSide,
+        nextPlayer,
+        "player",
+        unlocked?.family,
+        unlocked?.tier,
+      ),
+      ...rarity.events,
+      ...lore.events,
+      ...combo.events,
+    ];
+    const next = {
+      ...state,
+      player: nextPlayer,
+      enemy: nextEnemy,
+      log: [
+        ...combo.events.map((e) => e.text),
+        ...rarity.events.map((e) => e.text),
+        ...lore.events.map((e) => e.text),
+        unlocked
+          ? `${unlocked.family} atteint le palier ${unlocked.tier === 2 ? "5/5" : "3/3"} : ${unlocked.label} activée.`
+          : `${card.name} entre en jeu sur la ligne ${slot + 1}.`,
+        ...state.log,
+      ].slice(0, 6),
+    };
+    patchState(next, {
+      stats: nextStats,
+      phase: "player",
+      checkpoint: "stable-player",
+      checkpointState: next,
+    });
+    if (feedback.length) {
+      setEvents(feedback);
+      later(
+        () => setEvents((current) => (current === feedback ? [] : current)),
+        1800,
+      );
+    }
+    if (unlocked)
+      triggerSynergy({
+        family: unlocked.family,
+        label: unlocked.label,
+        tier: unlocked.tier,
+        owner: "player",
+      });
+    setSelected(null);
+    setBanner(
+      combo.events.length
+        ? "Combinaison spéciale"
+        : lore.events.length
+          ? "Histoire déclenchée"
+          : unlocked
+            ? `${unlocked.label} activée`
+            : `${card.name} est en position`,
+    );
+  }
+  function enemyTurn() {
+    if (phase !== "player") return;
+    setPhase("enemy");
+    setEvents([]);
+    setAiPlan("Analyse du plateau");
+    setBanner("Le rival prépare sa réponse");
+    patchState(state, {
+      phase: "enemy",
+      checkpoint: "stable-player",
+      checkpointState: state,
+    });
+    later(() => {
+      const started = beginTurn(state.enemy, state.player),
+        draw = drawCard(started, "enemy", "Pioche du rival");
+      let enemy = draw.side;
+      if (enemy.heroHp <= 0) {
+        const dead = {
+          ...state,
+          enemy,
+          log: [draw.event.text, ...state.log].slice(0, 6),
+        };
+        setEvents([draw.event]);
+        patchState(dead, { phase: "combat" });
+        return;
+      }
+      const beforeProgress = synergyProgress(enemy),
+        beforeSide = enemy,
+        plan = chooseEnemyPlan(enemy, state.player, difficulty);
+      enemy = plan.side;
+      let abilityEnemy = state.player;
+      const rarityEvents: CombatEvent[] = [];
+      for (const move of plan.moves) {
+        const rarity = resolveRarityDeployAbility(
+          enemy,
+          abilityEnemy,
+          move.card,
+          move.slot,
+          "enemy",
+        );
+        enemy = rarity.side;
+        abilityEnemy = rarity.enemy;
+        rarityEvents.push(...rarity.events);
+      }
+      const lore = resolveLoreSides(abilityEnemy, enemy),
+        combo = resolveComboDeployments(lore.enemy, lore.player, "enemy");
+      const nextPlayer = combo.enemy;
+      enemy = combo.side;
+      const after = synergyProgress(enemy),
+        unlocked = after.find(
+          (x) =>
+            x.tier >
+            (beforeProgress.find((b) => b.family === x.family)?.tier ?? 0),
+        ),
+        feedback = [
+          draw.event,
+          ...thresholdEvents(
+            beforeSide,
+            enemy,
+            "enemy",
+            unlocked?.family,
+            unlocked?.tier,
+          ),
+          ...rarityEvents,
+          ...lore.events,
+          ...combo.events,
+        ];
+      if (feedback.length) setEvents(feedback);
+      if (unlocked)
+        triggerSynergy({
+          family: unlocked.family,
+          label: unlocked.label,
+          tier: unlocked.tier,
+          owner: "enemy",
+        });
+      setAiPlan(plan.label);
+      const moveText = plan.moves.length
+          ? plan.moves
+              .map((m) => `${m.card.name} · ligne ${m.slot + 1}`)
+              .join(" / ")
+          : "Aucune carte jouée",
+        staged = {
+          ...state,
+          player: nextPlayer,
+          enemy,
+          log: [
+            ...combo.events.map((e) => e.text),
+            ...rarityEvents.map((e) => e.text),
+            ...lore.events.map((e) => e.text),
+            unlocked
+              ? `Rival : ${unlocked.family} atteint ${unlocked.tier === 2 ? "5/5" : "3/3"} — ${unlocked.label}.`
+              : `${difficultyLabel(difficulty)} : ${plan.label}.`,
+            moveText,
+            ...state.log,
+          ].slice(0, 6),
+        };
+      patchState(staged, {
+        phase: "combat",
+        checkpoint: "stable-player",
+        checkpointState: state,
+      });
+      setPhase("combat");
+      setBanner(
+        combo.events.length
+          ? "Combinaison spéciale adverse"
+          : lore.events.length
+            ? "Histoire déclenchée"
+            : unlocked
+              ? `${unlocked.label} adverse activée`
+              : "Résolution du combat",
+      );
+      later(() => resolveRound(staged), combo.events.length ? 1250 : 750);
+    }, 650);
+  }
+  function resolveRound(current: BattleState) {
+    const beforePlayerHp = current.player.heroHp,
+      beforeEnemyHp = current.enemy.heroHp,
+      clash = resolveCombat(current.player, current.enemy),
+      lethal = clash.attacker.heroHp <= 0 || clash.defender.heroHp <= 0,
+      end = lethal
+        ? {
+            side: clash.attacker,
+            enemy: clash.defender,
+            events: [] as CombatEvent[],
+          }
+        : resolveEndTurn(clash.attacker, clash.defender),
+      baseEvents = [...clash.events, ...end.events],
+      afterPlayerHp = end.side.heroHp,
+      afterEnemyHp = end.enemy.heroHp,
+      damageDealt = Math.max(0, beforeEnemyHp - afterEnemyHp),
+      damageTaken = Math.max(0, beforePlayerHp - afterPlayerHp),
+      healingDone = Math.max(0, afterPlayerHp - beforePlayerHp),
+      nextStats = {
+        ...saved.stats,
+        unitsDestroyed: saved.stats.unitsDestroyed + clash.attackerKills,
+        unitsLost: saved.stats.unitsLost + clash.defenderKills,
+        damageDealt: saved.stats.damageDealt + damageDealt,
+        damageTaken: saved.stats.damageTaken + damageTaken,
+        healingDone: saved.stats.healingDone + healingDone,
+        comebackTriggered:
+          saved.stats.comebackTriggered ||
+          end.side.survivalUsed ||
+          end.side.momentum >= 3,
+        maxBoard: Math.max(saved.stats.maxBoard, boardCount(end.side)),
+      },
+      line =
+        clash.attackerKills || clash.defenderKills
+          ? `${clash.attackerKills} unité adverse éliminée, ${clash.defenderKills} unité alliée perdue.`
+          : "Le front tient. Aucun combattant n’est tombé.";
+    setEvents(baseEvents);
+    setBanner(baseEvents.length ? "Le front s’embrase" : "Le front tient");
+    if (lethal || afterPlayerHp <= 0 || afterEnemyHp <= 0) {
+      const finalState = {
+        ...current,
+        player: end.side,
+        enemy: end.enemy,
+        log: [
+          ...baseEvents.slice(-2).map((e) => e.text),
+          line,
+          ...current.log,
+        ].slice(0, 6),
+      };
+      later(
+        () => patchState(finalState, { stats: nextStats, phase: "combat" }),
+        900,
+      );
+      return;
+    }
+    const playerDraw = drawCard(end.side, "player", "Pioche du tour"),
+      player = beginTurn(playerDraw.side, end.enemy),
+      nextTurn = current.turn + 1,
+      allEvents = [...baseEvents, playerDraw.event],
+      next: BattleState = {
+        player,
+        enemy: end.enemy,
+        turn: nextTurn,
+        log: [
+          playerDraw.event.text,
+          ...allEvents.slice(-2).map((e) => e.text),
+          line,
+          `Tour ${nextTurn} : à toi de jouer.`,
+          ...current.log,
+        ].slice(0, 6),
+      };
+    if (nextTurn > MAX_TURNS) {
+      setEvents(allEvents);
+      patchState(next, { stats: nextStats, phase: "combat" });
+      later(() => endMatch("draw", next), 300);
+      return;
+    }
+    later(() => {
+      patchState(next, {
+        stats: nextStats,
+        phase: "player",
+        checkpoint: "stable-player",
+        checkpointState: next,
+      });
+      setEvents(playerDraw.event.type === "fatigue" ? [playerDraw.event] : []);
+      setSelected(null);
+      setAiPlan("");
+      setPhase("player");
+      setBanner(
+        playerDraw.event.type === "fatigue"
+          ? `Fatigue ${player.fatigue ?? 0}`
+          : `Tour ${nextTurn}`,
+      );
+    }, 1050);
+  }
+  function endMatch(value: BattleResult, finalState: BattleState = state) {
+    if (rewarded.current) return;
+    rewarded.current = true;
+    setResult(value);
+    setPhase("result");
+    setSelected(null);
+    setEvents([]);
+    setAiPlan("");
+    setSynergyFlash(null);
+    finishBattle(
+      { ...saved, state: finalState, phase: "result" as BattlePhase },
+      value,
+    );
+    if (value === "win") onWin();
+    else if (value === "lose") onLose();
+    else onDraw();
+    setBanner(
+      value === "win" ? "Victoire" : value === "lose" ? "Défaite" : "Égalité",
+    );
+  }
+  function abandon() {
+    if (phase === "result") return;
+    rewarded.current = true;
+    finishBattle({ ...saved, state, phase: "result" }, "lose");
+    onLose();
+    const fresh = createBattle(playerPool, enemyPool);
+    setSaved(fresh);
+    setResult(null);
+    setEvents([]);
+    setSelected(null);
+    setMulligan([]);
+    setAiPlan("");
+    setSynergyFlash(null);
+    setPhase("intro");
+    setBanner("Partie abandonnée — nouveau duel prêt");
+    rewarded.current = false;
+  }
+  function newMatch() {
+    clearBattle();
+    rewarded.current = false;
+    const fresh = createBattle(playerPool, enemyPool);
+    setSaved(fresh);
+    setResult(null);
+    setSelected(null);
+    setEvents([]);
+    setMulligan([]);
+    setAiPlan("");
+    setSynergyFlash(null);
+    setPhase("intro");
+    setBanner("Prépare ton premier tour");
+  }
+  const duration = Date.now() - saved.startedAt,
+    enemyHeroEvents = events.filter((e) => e.lane < 0 && e.target === "enemy"),
+    playerHeroEvents = events.filter(
+      (e) => e.lane < 0 && e.target === "player",
+    ),
+    comboCinematic = events.find(
+      (e) =>
+        e.type === "construct-summon" ||
+        e.type === "pirate-raid" ||
+        e.type === "construct-fire" ||
+        e.type === "family-combo",
+    );
+  return (
+    <section
+      className={`battle-screen cinematic-battle phase-${phase}`}
+      style={{
+        backgroundImage: `linear-gradient(rgba(4,9,20,.14),rgba(4,9,20,.38)),url('${battlefield}')`,
+      }}
+    >
+      <div className="battle-vignette" />
+      <div className="ai-readout">{difficultyLabel(difficulty)}</div>
+      <div className="battle-header-panel">
+        <PlayerStatus
+          name={`Rival · ${enemySpecies}s`}
+          hp={state.enemy.heroHp}
+          energy={state.enemy.energy}
+          shield={state.enemy.shield}
+          momentum={state.enemy.momentum}
+          side="enemy"
+          events={enemyHeroEvents}
+        />
+        <div className="turn-center">
+          <span className="turn-label">Tour</span>
+          <strong>{state.turn}</strong>
+          <span className="phase-label">{banner}</span>
+        </div>
+        <PlayerStatus
+          name={`Toi · ${playerSpecies}s`}
+          hp={state.player.heroHp}
+          energy={state.player.energy}
+          shield={state.player.shield}
+          momentum={state.player.momentum}
+          side="player"
+          events={playerHeroEvents}
+        />
+      </div>
+      <BattleDeckHud
+        playerDeck={state.player.deck.length}
+        enemyDeck={state.enemy.deck.length}
+        playerHand={state.player.hand.length}
+        enemyHand={state.enemy.hand.length}
+      />
+      <ProgressStrip title="Progression adverse" items={enemyProgress} />
+      <SynergyStrip title="Synergies adverses" items={enemySyn} />
+      <ConstructDock constructs={state.enemy.constructs ?? []} side="enemy" />
+      <div className="enemy-zone battle-row">
+        {state.enemy.board.map((u, i) => (
+          <ArenaSlot
+            key={i}
+            unit={u}
+            index={i}
+            side="enemy"
+            events={events.filter((e) => e.lane === i && e.target === "enemy")}
+          />
+        ))}
+      </div>
+      <div className="arena-center cinematic-center">
+        {comboCinematic && <ComboCinematic event={comboCinematic} />}
+        {synergyFlash && (
+          <div
+            className={`synergy-activation-banner ${familyClass(synergyFlash.family)} synergy-tier-${synergyFlash.tier}`}
+          >
+            <small>
+              {synergyFlash.owner === "player"
+                ? "Synergie activée"
+                : "Synergie adverse"}
+            </small>
+            <strong>
+              {synergyFlash.family} · {synergyFlash.label}
+            </strong>
+            <span>Palier {synergyFlash.tier === 2 ? "5/5" : "3/3"}</span>
+          </div>
+        )}
+        {aiPlan && phase !== "player" && (
+          <div className="ai-plan-feed">{aiPlan}</div>
+        )}
+        <div className={`phase-banner ${phase}`}>{banner}</div>
+        {events.length > 0 && (
+          <div className="combat-event-feed">
+            {events.slice(-4).map((e, i) => (
+              <span
+                key={e.id}
+                className={`feed-${e.type}`}
+                style={{ animationDelay: `${i * 90}ms` }}
+              >
+                {e.text}
+              </span>
+            ))}
+          </div>
+        )}
+        <div className="battle-log-panel">
+          {state.log.slice(0, 3).map((line, i) => (
+            <p key={`${line}-${i}`}>{line}</p>
+          ))}
+        </div>
+      </div>
+      <div className="player-zone battle-row">
+        {state.player.board.map((u, i) => (
+          <ArenaSlot
+            key={i}
+            unit={u}
+            index={i}
+            side="player"
+            target={selected !== null && phase === "player"}
+            onClick={() => place(i)}
+            events={events.filter((e) => e.lane === i && e.target === "player")}
+          />
+        ))}
+      </div>
+      <ConstructDock constructs={state.player.constructs ?? []} side="player" />
+      <ProgressStrip title="Progression des familles" items={playerProgress} />
+      <SynergyStrip title="Tes synergies" items={playerSyn} />
+      <div className="battle-command-bar">
+        <div className="hand-title">
+          <span>Main</span>
+          <small>
+            {state.player.hand.length}/5 cartes · pioche{" "}
+            {state.player.deck.length}
+            {(state.player.fatigue ?? 0) > 0
+              ? ` · fatigue ${state.player.fatigue}`
+              : ""}
+          </small>
+        </div>
+        <div className="hand cinematic-hand">
+          {state.player.hand.map((c, i) => (
+            <button
+              key={`${c.id}-${i}`}
+              className={`hand-card ${selected === i ? "selected" : ""}`}
+              onClick={() => select(i)}
+              disabled={phase !== "player" || c.cost > state.player.energy}
+            >
+              <BattleCard card={c} hp={c.hp ?? 1} />
+            </button>
+          ))}
+        </div>
+        <div className="battle-actions">
+          <button
+            className="end-turn-button"
+            onClick={enemyTurn}
+            disabled={phase !== "player"}
+          >
+            Terminer le tour
+          </button>
+          <button
+            className="abandon-button"
+            onClick={abandon}
+            disabled={phase === "result"}
+          >
+            Abandonner
+          </button>
+        </div>
+      </div>
+      {phase === "intro" && (
+        <div className="battle-overlay intro-overlay">
+          <div className="battle-modal versus-modal">
+            <span className="modal-kicker">Arène classée</span>
+            <div className="versus-line">
+              <strong>{playerSpecies.toUpperCase()}S</strong>
+              <span>VS</span>
+              <strong>{enemySpecies.toUpperCase()}S</strong>
+            </div>
+            <h2>Choisis ta main de départ</h2>
+            <p>
+              Sélectionne jusqu’à 2 cartes à remplacer. La partie est limitée à{" "}
+              {MAX_TURNS} tours ; une pioche vide déclenche une fatigue
+              croissante.
+            </p>
+            <div className="difficulty-picker">
+              {(["easy", "normal", "hard"] as AIDifficulty[]).map((d) => (
+                <button
+                  key={d}
+                  className={difficulty === d ? "active" : ""}
+                  onClick={() => setDifficulty(d)}
+                >
+                  {difficultyLabel(d)}
+                  <span>
+                    {d === "easy"
+                      ? "1 action, choix plus libre"
+                      : d === "hard"
+                        ? "jusqu’à 4 actions, lethal et synergies"
+                        : "jusqu’à 2 actions, jeu équilibré"}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <div className="mulligan-hand">
+              {state.player.hand.map((c, i) => (
+                <button
+                  key={`${c.id}-${i}`}
+                  className={`mulligan-card ${mulligan.includes(i) ? "marked" : ""}`}
+                  onClick={() => toggleMulligan(i)}
+                >
+                  <BattleCard card={c} hp={c.hp ?? 1} />
+                  <span>
+                    {mulligan.includes(i) ? "À remplacer" : "Conserver"}
+                  </span>
+                </button>
+              ))}
+            </div>
+            <div className="mulligan-footer">
+              <small>
+                {mulligan.length}/2 sélectionnée{mulligan.length > 1 ? "s" : ""}
+              </small>
+              <button className="primary" onClick={start}>
+                Entrer dans l’arène
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+      {result && (
+        <div className="battle-overlay result-overlay">
+          <div className={`battle-modal result-card ${result}`}>
+            <span className="modal-kicker">Fin de partie</span>
+            <h2>
+              {result === "win"
+                ? "Victoire dans l’arène"
+                : result === "lose"
+                  ? "Le rival remporte le duel"
+                  : "Égalité dans l’arène"}
+            </h2>
+            <p>
+              {result === "win"
+                ? `Récompenses : ${ECONOMY.winCoins} pièces et 60 XP.`
+                : result === "lose"
+                  ? `Récompenses : ${ECONOMY.lossCoins} pièces et 25 XP. Analyse ton placement puis relance un duel.`
+                  : `Double K.O. ou limite de tours atteinte : ${ECONOMY.drawCoins} pièces et 35 XP.`}
+            </p>
+            <div className="result-stats detailed">
+              <span>
+                <small>Difficulté</small>
+                {difficultyLabel(difficulty)}
+              </span>
+              <span>
+                <small>Tours</small>
+                {state.turn}
+              </span>
+              <span>
+                <small>Durée</small>
+                {formatDuration(duration)}
+              </span>
+              <span>
+                <small>PV restants</small>
+                {state.player.heroHp}
+              </span>
+              <span>
+                <small>Dégâts infligés</small>
+                {saved.stats.damageDealt}
+              </span>
+              <span>
+                <small>Unités éliminées</small>
+                {saved.stats.unitsDestroyed}
+              </span>
+              <span>
+                <small>Synergies activées</small>
+                {saved.stats.synergyActivations}
+              </span>
+              <span>
+                <small>Momentum max</small>
+                {saved.maxMomentum}/5
+              </span>
+              <span>
+                <small>Cartes jouées</small>
+                {saved.stats.cardsPlayed}
+              </span>
+              <span>
+                <small>Pioche restante</small>
+                {state.player.deck.length}
+              </span>
+              <span>
+                <small>Fatigue</small>
+                {state.player.fatigue ?? 0}
+              </span>
+              <span>
+                <small>Retournement</small>
+                {saved.stats.comebackTriggered ? "Déclenché" : "Non déclenché"}
+              </span>
+            </div>
+            <button className="primary" onClick={newMatch}>
+              Nouvelle partie
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+function ConstructDock({
+  constructs,
+  side,
+}: {
+  constructs: ArenaConstruct[];
+  side: "player" | "enemy";
+}) {
+  if (!constructs.length) return null;
+  return (
+    <div
+      className={`construct-dock ${side}`}
+      aria-label={`Constructions ${side}`}
+    >
+      {constructs.map((construct) => (
+        <div
+          className={`arena-construct construct-${construct.kind}`}
+          key={construct.id}
+        >
+          <span className="construct-silhouette" aria-hidden="true">
+            <i />
+          </span>
+          <span>
+            <strong>{construct.name}</strong>
+            <small>
+              Structure {construct.hp}/{construct.maxHp} PV · Puissance{" "}
+              {construct.power}
+            </small>
+          </span>
+        </div>
+      ))}
+    </div>
+  );
+}
+function ComboCinematic({ event }: { event: CombatEvent }) {
+  const pirate = event.type === "pirate-raid";
+  const robot =
+    event.type === "construct-summon" || event.type === "construct-fire";
+  const family = event.family ?? (pirate ? "Pirates" : "Robots");
+  const title = event.text.split(" — ")[0];
+  return (
+    <div
+      className={`combo-cinematic ${pirate ? "combo-pirate" : robot ? "combo-robot" : `combo-family ${familyClass(family)}`} combo-${event.source}`}
+      role="status"
+    >
+      {pirate || robot ? (
+        <span className="combo-vehicle" aria-hidden="true">
+          <i />
+        </span>
+      ) : (
+        <span className="combo-sigil" aria-hidden="true">
+          <i>{family.slice(0, 2).toUpperCase()}</i>
+        </span>
+      )}
+      <span>
+        <small>
+          {pirate
+            ? "COMBINAISON PIRATE"
+            : robot
+              ? "COMBINAISON ROBOT"
+              : `COMBINAISON ${family.toUpperCase()}`}
+        </small>
+        <strong>
+          {pirate ? "Raid du navire" : robot ? "Pet Tank déployé" : title}
+        </strong>
+      </span>
+    </div>
+  );
+}
+function PlayerStatus({
+  name,
+  hp,
+  energy,
+  shield,
+  momentum,
+  side,
+  events,
+}: {
+  name: string;
+  hp: number;
+  energy: number;
+  shield: number;
+  momentum: number;
+  side: "player" | "enemy";
+  events: CombatEvent[];
+}) {
+  return (
+    <div
+      className={`status-card ${side} ${events.length ? "status-reacting" : ""}`}
+    >
+      <div className="status-name">
+        <strong>{name}</strong>
+        <span>{momentumLabel(momentum)}</span>
+      </div>
+      <div className="status-bars">
+        <Meter label="PV" value={hp} max={20} />
+        <Meter label="Énergie" value={energy} max={8} />
+        <Meter label="Momentum" value={momentum} max={5} />
+      </div>
+      {shield > 0 && <span className="shield-badge">Bouclier {shield}</span>}
+      <EventFloats events={events} />
+    </div>
+  );
+}
+function Meter({
+  label,
+  value,
+  max,
+}: {
+  label: string;
+  value: number;
+  max: number;
+}) {
+  return (
+    <div className="meter">
+      <div className="meter-label">
+        <span>{label}</span>
+        <strong>{value}</strong>
+      </div>
+      <div className="meter-track">
+        <span
+          style={{
+            width: `${Math.max(0, Math.min(100, (value / max) * 100))}%`,
+          }}
+        />
+      </div>
+    </div>
+  );
+}
+function ProgressStrip({
+  title,
+  items,
+}: {
+  title: string;
+  items: {
+    family: string;
+    count: number;
+    next: number | null;
+    tier: number;
+    label: string;
+  }[];
+}) {
+  return (
+    <div className="progress-strip">
+      <span className="synergy-strip-title">{title}</span>
+      {items.length ? (
+        items.slice(0, 5).map((x) => (
+          <div
+            className={`progress-chip tier-${x.tier} ${familyClass(x.family)}`}
+            key={x.family}
+          >
+            <strong>{x.family}</strong>
+            <span>{x.next ? `${x.count}/${x.next}` : "5/5"}</span>
+            <small>
+              {x.tier === 0 ? "Palier I" : x.tier === 1 ? "Palier II" : x.label}
+            </small>
+          </div>
+        ))
+      ) : (
+        <span className="synergy-empty">Aucune famille en jeu</span>
+      )}
+    </div>
+  );
+}
+function SynergyStrip({
+  title,
+  items,
+}: {
+  title: string;
+  items: { id: string; title: string; description: string; tier: number }[];
+}) {
+  return (
+    <div className="synergy-strip">
+      <span className="synergy-strip-title">{title}</span>
+      {items.length ? (
+        items.slice(0, 4).map((s) => (
+          <div className={`synergy-chip tier-${s.tier}`} key={s.id}>
+            <strong>{s.title}</strong>
+            <span>{s.description}</span>
+          </div>
+        ))
+      ) : (
+        <span className="synergy-empty">Aucune synergie active</span>
+      )}
+    </div>
+  );
+}
+function EventFloats({ events }: { events: CombatEvent[] }) {
+  return (
+    <div className="event-floats">
+      {events
+        .filter((e) => e.type !== "clash")
+        .map((e, i) => (
+          <span
+            key={e.id}
+            className={`event-float event-${e.type}`}
+            style={{ animationDelay: `${i * 90}ms` }}
+          >
+            {eventText(e)}
+          </span>
+        ))}
+    </div>
+  );
+}
+function ArenaSlot({
+  unit,
+  index,
+  side,
+  target,
+  onClick,
+  events,
+}: {
+  unit: BattleSideState["board"][number];
+  index: number;
+  side: "player" | "enemy";
+  target?: boolean;
+  onClick?: () => void;
+  events: CombatEvent[];
+}) {
+  const destroyed = events.some((e) => e.type === "unit-destroyed"),
+    saved = events.some((e) => e.type === "unit-saved"),
+    damaged = events.some((e) => e.type === "unit-damage"),
+    buffed = events.some((e) => e.type === "buff-atk" || e.type === "buff-hp"),
+    armored = events.some((e) => e.type === "armor"),
+    lore = events.some((e) => e.type === "lore");
+  const content = unit ? (
+      <BattleCard card={unit} hp={unit.currentHp ?? unit.hp ?? 1} />
+    ) : (
+      <span className="slot-number">{String(index + 1).padStart(2, "0")}</span>
+    ),
+    cls = `arena-slot ${side === "enemy" ? "enemy" : ""} ${target && !unit ? "target" : ""} ${unit ? "occupied" : ""} ${damaged ? "event-damaged" : ""} ${destroyed ? "event-destroyed" : ""} ${saved ? "event-saved" : ""} ${buffed ? "event-buffed" : ""} ${armored ? "event-armored" : ""} ${lore ? "event-lore" : ""}`;
+  return side === "player" ? (
+    <button className={cls} onClick={onClick} disabled={!target && !!onClick}>
+      {content}
+      <EventFloats events={events} />
+    </button>
+  ) : (
+    <div className={cls}>
+      {content}
+      <EventFloats events={events} />
+    </div>
+  );
+}
+function BattleCard({ card, hp }: { card: CardData; hp: number }) {
+  const base = cards.find((c) => c.id === card.id),
+    atkDelta = Math.max(0, (card.atk ?? 0) - (base?.atk ?? card.atk ?? 0)),
+    hpDelta = Math.max(0, (card.hp ?? 1) - (base?.hp ?? card.hp ?? 1));
+  return (
+    <GameCard
+      card={card}
+      variant="battle"
+      currentHp={hp}
+      atkBonus={atkDelta}
+      hpBonus={hpDelta}
+    />
+  );
+}
