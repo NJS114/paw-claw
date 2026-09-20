@@ -1,0 +1,101 @@
+.collection-card-sheet {
+  max-height: calc(100svh - 86px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+.card-sheet-copy {
+  align-self: start !important;
+  padding-top: 8px;
+  padding-bottom: 18px;
+}
+.character-profile {
+  display: grid;
+  gap: 7px;
+  margin: 10px 0 8px;
+  color: #e9dfcf;
+}
+.character-profile-summary,
+.character-ability,
+.character-combo,
+.character-evolution {
+  padding: 8px;
+  border: 1px solid #bb955b55;
+  border-radius: 8px;
+  background: #071321d9;
+}
+.character-profile-summary {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 2px 7px;
+  align-items: baseline;
+}
+.character-profile-summary span,
+.character-ability > span {
+  color: #e9bd70;
+  font-size: 7px;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.character-profile-summary strong {
+  font-size: 12px;
+  color: #fff0c4;
+}
+.character-profile-summary small {
+  grid-column: 1/-1;
+  font-size: 8px;
+  color: #aebccd;
+}
+.character-ability {
+  display: grid;
+  gap: 3px;
+}
+.character-ability strong,
+.character-combo strong {
+  font-size: 10px;
+  color: #f6dfb0;
+}
+.character-ability p,
+.character-combo p,
+.character-evolution p {
+  margin: 0 !important;
+  font-size: 8px !important;
+  line-height: 1.45 !important;
+  color: #c8d2de !important;
+}
+.character-ability.signature {
+  border-color: #6eaecb66;
+  background: linear-gradient(145deg, #092236db, #071321e8);
+}
+.character-evolution summary {
+  cursor: pointer;
+  color: #efca84;
+  font-size: 9px;
+  font-weight: 800;
+}
+.character-evolution ol {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding-left: 17px;
+}
+.character-evolution li {
+  font-size: 8px;
+  line-height: 1.35;
+  color: #bfcbd8;
+}
+.character-evolution b {
+  color: #f0c87b;
+}
+@media (max-width: 390px) {
+  .collection-card-sheet {
+    grid-template-columns: 108px 1fr;
+    gap: 9px;
+    padding-inline: 10px;
+  }
+  .character-ability p,
+  .character-combo p,
+  .character-evolution li {
+    font-size: 7px !important;
+  }
+}

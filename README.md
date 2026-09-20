@@ -2,6 +2,8 @@
 
 Prototype jouable du jeu de cartes Paw & Claw.
 
+Le plan produit complet — direction artistique minimaliste, écrans, histoire, catalogue de 200 héros, évolution, économie, monétisation et feuille de route — se trouve dans [`docs/GAME_DESIGN_BIBLE.md`](docs/GAME_DESIGN_BIBLE.md).
+
 ## Lancer le projet
 
 ```bash
@@ -13,11 +15,13 @@ Le ZIP `paw-claw-assets-optimized.zip` présent à la racine est extrait automat
 
 ## Écrans disponibles
 
-- Accueil paysage
+- Accueil mobile portrait
 - Combat 7 emplacements
 - Collection avec filtres famille / rareté / recherche
 - Booster avec tirage de cartes
 - Deck builder
+- Combinaisons tactiques, constructions, Pet Tank Robot et raid Pirate
+- Profils de compétences et cinq paliers de maîtrise pour chaque héros
 - Bibliothèque `assets` affichant tous les visuels générés extraits du ZIP
 
 Les cartes utilisent en priorité leur illustration individuelle lorsqu'elle existe, puis une planche Paw & Claw de leur famille comme visuel de secours.
