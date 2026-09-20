@@ -77,13 +77,13 @@ export function CompanionStudio({
               loading="eager"
             />
             <span className={`outfit-mark outfit-${COMPANION_OUTFITS.indexOf(draft.outfit)}`} aria-hidden="true">
-              {draft.outfit === "Cape royale" ? "♛" : draft.outfit === "Tenue de pirate" ? "☠" : draft.outfit === "Atelier robot" ? "⚙" : "✦"}
+              {draft.outfit === "Cape royale" ? "CR" : draft.outfit === "Tenue de pirate" ? "PI" : draft.outfit === "Atelier robot" ? "RO" : "PC"}
             </span>
           </div>
           <div className="companion-card-foot">
-            <span>⚔ <b>{stats.attack}</b></span>
-            <span>♥ <b>{stats.health}</b></span>
-            <span>✦ <b>{stats.cost}</b></span>
+            <span><small>ATQ</small><b>{stats.attack}</b></span>
+            <span><small>PV</small><b>{stats.health}</b></span>
+            <span><small>COÛT</small><b>{stats.cost}</b></span>
           </div>
         </div>
         <button
@@ -91,7 +91,8 @@ export function CompanionStudio({
           onClick={() => setAffection((value) => value + 1)}
           aria-label={`Faire un câlin à ${draft.name}`}
         >
-          ♥ <span>{affection ? `Câlin ×${affection}` : "Câlin"}</span>
+          <GameAsset assetId="icon.health" decorative />
+          <span>{affection ? `Câlin ×${affection}` : "Câlin"}</span>
         </button>
         <div className="companion-evolution-meter">
           <span><b>{rarity}</b> · Niveau {level}</span>
@@ -138,7 +139,7 @@ export function CompanionStudio({
         {tab === "skills" && (
           <div className="companion-panel">
             <div className="creator-title"><div><small>GROUPE {draft.family.toUpperCase()}</small><h2>Compétences</h2></div><span>{FAMILY_POWERS[draft.family].role}</span></div>
-            <div className="power-list">{powers.map((power) => <article key={power.level} className={power.unlocked ? "unlocked" : "locked"}><span>{power.unlocked ? "✓" : "🔒"}</span><div><small>NIV. {power.level} · {power.rarity}</small><strong>{power.name}</strong><p>{power.description}</p></div></article>)}</div>
+            <div className="power-list">{powers.map((power) => <article key={power.level} className={power.unlocked ? "unlocked" : "locked"}><span>{power.unlocked ? "OUVERT" : `NIV. ${power.level}`}</span><div><small>NIV. {power.level} · {power.rarity}</small><strong>{power.name}</strong><p>{power.description}</p></div></article>)}</div>
           </div>
         )}
 
