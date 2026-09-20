@@ -5,6 +5,7 @@ import {
   resolveComboDeployments,
   resolveEndTurn,
   resolveLoreSides,
+  resolveRarityDeployAbility,
   type BattleSideState,
 } from "./battleEngine";
 import type { CardData } from "./gameCards";
@@ -96,6 +97,37 @@ describe("combat resolution", () => {
 });
 
 describe("composition combos", () => {
+  it.each([
+    "Armée",
+    "Magiciens",
+    "Nobles",
+    "Ombres",
+    "Nature",
+    "Éléments",
+    "Guérisseurs",
+    "Créatures",
+  ])("activates a unique four-card combo for %s", (family) => {
+    const group = Array.from({ length: 4 }, (_, index) => ({
+      ...card(`${family}-${index}`, `${family} ${index}`, family, 2, 4),
+      currentHp: 3,
+    }));
+    const rival = side({
+      board: Array.from({ length: 3 }, (_, index) => ({
+        ...card(`foe-${index}`, `Rival ${index}`, "Armée", 3, 6),
+        currentHp: 6,
+      })).concat(Array(4).fill(null)),
+    });
+    const result = resolveComboDeployments(
+      side({ board: [...group, ...Array(3).fill(null)] }),
+      rival,
+      "player",
+    );
+    expect(result.events).toEqual([
+      expect.objectContaining({ type: "family-combo", family }),
+    ]);
+    expect(result.side.comboMarks).toHaveLength(1);
+  });
+
   it("deploys one Pet Tank for three defensive robots and one attacker", () => {
     const robots = [
       card("r1", "Robot Gardien", "Robots", 2, 5),
@@ -143,5 +175,58 @@ describe("composition combos", () => {
     expect(result.events[0]).toEqual(
       expect.objectContaining({ type: "pirate-raid", value: 3 }),
     );
+  });
+});
+
+describe("rarity deploy abilities", () => {
+  it("scales elemental area damage from Rare to Legendary", () => {
+    const enemy = side({
+      board: Array.from({ length: 3 }, (_, index) => ({
+        ...card(`target-${index}`, `Cible ${index}`, "Armée", 2, 6),
+        currentHp: 6,
+      })).concat(Array(4).fill(null)),
+    });
+    const makeCaster = (rarity: CardData["rarity"]) => ({
+      ...card(`caster-${rarity}`, `Mage ${rarity}`, "Éléments", 4, 4),
+      rarity,
+      currentHp: 4,
+    });
+    const rare = makeCaster("Rare"),
+      legendary = makeCaster("Légendaire");
+    const rareResult = resolveRarityDeployAbility(
+      side({ board: [rare, ...Array(6).fill(null)] }),
+      enemy,
+      rare,
+      0,
+      "player",
+    );
+    const legendaryResult = resolveRarityDeployAbility(
+      side({ board: [legendary, ...Array(6).fill(null)] }),
+      enemy,
+      legendary,
+      0,
+      "player",
+    );
+    expect(rareResult.events[0]).toEqual(
+      expect.objectContaining({ type: "area-damage", value: 1 }),
+    );
+    expect(legendaryResult.events[0]).toEqual(
+      expect.objectContaining({ type: "area-damage", value: 6 }),
+    );
+    expect(
+      legendaryResult.enemy.board.slice(0, 3).map((unit) => unit?.currentHp),
+    ).toEqual([4, 4, 4]);
+  });
+
+  it("keeps Commons focused on base family synergies", () => {
+    const common = card("common", "Recrue", "Armée", 2, 3);
+    const result = resolveRarityDeployAbility(
+      side({ board: [{ ...common, currentHp: 3 }, ...Array(6).fill(null)] }),
+      side(),
+      common,
+      0,
+      "player",
+    );
+    expect(result.events).toHaveLength(0);
   });
 });

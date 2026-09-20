@@ -67,6 +67,41 @@
   border-color: #6eaecb66;
   background: linear-gradient(145deg, #092236db, #071321e8);
 }
+.character-ability.rarity-power {
+  position: relative;
+  overflow: hidden;
+  border-color: #9d7b5266;
+  background: #201913e6;
+}
+.character-ability.rarity-power:before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: #765e44;
+}
+.character-ability.rarity-power-1 {
+  border-color: #5f9dd688;
+  background: #0b2035e8;
+}
+.character-ability.rarity-power-1:before {
+  background: #61a7e7;
+}
+.character-ability.rarity-power-2 {
+  border-color: #9b68d699;
+  background: #21163ae8;
+}
+.character-ability.rarity-power-2:before {
+  background: #a979e5;
+}
+.character-ability.rarity-power-3 {
+  border-color: #e0b85baa;
+  background: #32230fe8;
+}
+.character-ability.rarity-power-3:before {
+  background: #f0c76b;
+  box-shadow: 0 0 12px #f0c76b88;
+}
 .character-evolution summary {
   cursor: pointer;
   color: #efca84;

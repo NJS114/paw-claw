@@ -9,6 +9,7 @@ import {
   resolveComboDeployments,
   resolveEndTurn,
   resolveLoreSides,
+  resolveRarityDeployAbility,
   type ArenaConstruct,
   type BattleSideState,
   type BattleState,
@@ -137,6 +138,10 @@ function eventText(e: CombatEvent) {
   if (e.type === "construct-fire") return `TIR ${e.value ?? 0}`;
   if (e.type === "construct-damage") return `-${e.value ?? 0} STRUCTURE`;
   if (e.type === "pirate-raid") return "ABORDAGE";
+  if (e.type === "family-combo") return `COMBO ${e.family ?? "GROUPE"}`;
+  if (e.type === "rarity-power") return `${e.rarity ?? "POUVOIR"}`;
+  if (e.type === "area-damage") return `ZONE -${e.value ?? 0}`;
+  if (e.type === "debuff-atk") return `-${e.value ?? 0} ATQ`;
   return "";
 }
 function initialDifficulty(): AIDifficulty {
@@ -365,7 +370,14 @@ export function BattleArena({
       beforeSide = state.player,
       nextPlayerRaw = playUnit(state.player, state.enemy, card, slot);
     if (nextPlayerRaw === state.player) return;
-    const lore = resolveLoreSides(nextPlayerRaw, state.enemy),
+    const rarity = resolveRarityDeployAbility(
+        nextPlayerRaw,
+        state.enemy,
+        card,
+        slot,
+        "player",
+      ),
+      lore = resolveLoreSides(rarity.side, rarity.enemy),
       combo = resolveComboDeployments(lore.player, lore.enemy, "player");
     const nextPlayer = combo.side,
       nextEnemy = combo.enemy,
@@ -394,6 +406,7 @@ export function BattleArena({
         unlocked?.family,
         unlocked?.tier,
       ),
+      ...rarity.events,
       ...lore.events,
       ...combo.events,
     ];
@@ -403,6 +416,7 @@ export function BattleArena({
       enemy: nextEnemy,
       log: [
         ...combo.events.map((e) => e.text),
+        ...rarity.events.map((e) => e.text),
         ...lore.events.map((e) => e.text),
         unlocked
           ? `${unlocked.family} atteint le palier ${unlocked.tier === 2 ? "5/5" : "3/3"} : ${unlocked.label} activée.`
@@ -470,7 +484,21 @@ export function BattleArena({
         beforeSide = enemy,
         plan = chooseEnemyPlan(enemy, state.player, difficulty);
       enemy = plan.side;
-      const lore = resolveLoreSides(state.player, enemy),
+      let abilityEnemy = state.player;
+      const rarityEvents: CombatEvent[] = [];
+      for (const move of plan.moves) {
+        const rarity = resolveRarityDeployAbility(
+          enemy,
+          abilityEnemy,
+          move.card,
+          move.slot,
+          "enemy",
+        );
+        enemy = rarity.side;
+        abilityEnemy = rarity.enemy;
+        rarityEvents.push(...rarity.events);
+      }
+      const lore = resolveLoreSides(abilityEnemy, enemy),
         combo = resolveComboDeployments(lore.enemy, lore.player, "enemy");
       const nextPlayer = combo.enemy;
       enemy = combo.side;
@@ -489,6 +517,7 @@ export function BattleArena({
             unlocked?.family,
             unlocked?.tier,
           ),
+          ...rarityEvents,
           ...lore.events,
           ...combo.events,
         ];
@@ -512,6 +541,7 @@ export function BattleArena({
           enemy,
           log: [
             ...combo.events.map((e) => e.text),
+            ...rarityEvents.map((e) => e.text),
             ...lore.events.map((e) => e.text),
             unlocked
               ? `Rival : ${unlocked.family} atteint ${unlocked.tier === 2 ? "5/5" : "3/3"} — ${unlocked.label}.`
@@ -692,7 +722,8 @@ export function BattleArena({
       (e) =>
         e.type === "construct-summon" ||
         e.type === "pirate-raid" ||
-        e.type === "construct-fire",
+        e.type === "construct-fire" ||
+        e.type === "family-combo",
     );
   return (
     <section
@@ -1014,17 +1045,35 @@ function ConstructDock({
 }
 function ComboCinematic({ event }: { event: CombatEvent }) {
   const pirate = event.type === "pirate-raid";
+  const robot =
+    event.type === "construct-summon" || event.type === "construct-fire";
+  const family = event.family ?? (pirate ? "Pirates" : "Robots");
+  const title = event.text.split(" — ")[0];
   return (
     <div
-      className={`combo-cinematic ${pirate ? "combo-pirate" : "combo-robot"} combo-${event.source}`}
+      className={`combo-cinematic ${pirate ? "combo-pirate" : robot ? "combo-robot" : `combo-family ${familyClass(family)}`} combo-${event.source}`}
       role="status"
     >
-      <span className="combo-vehicle" aria-hidden="true">
-        <i />
-      </span>
+      {pirate || robot ? (
+        <span className="combo-vehicle" aria-hidden="true">
+          <i />
+        </span>
+      ) : (
+        <span className="combo-sigil" aria-hidden="true">
+          <i>{family.slice(0, 2).toUpperCase()}</i>
+        </span>
+      )}
       <span>
-        <small>{pirate ? "COMBINAISON PIRATE" : "COMBINAISON ROBOT"}</small>
-        <strong>{pirate ? "Raid du navire" : "Pet Tank déployé"}</strong>
+        <small>
+          {pirate
+            ? "COMBINAISON PIRATE"
+            : robot
+              ? "COMBINAISON ROBOT"
+              : `COMBINAISON ${family.toUpperCase()}`}
+        </small>
+        <strong>
+          {pirate ? "Raid du navire" : robot ? "Pet Tank déployé" : title}
+        </strong>
       </span>
     </div>
   );

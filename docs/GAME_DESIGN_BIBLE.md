@@ -82,6 +82,26 @@ Les 10 familles donnent donc **200 héros normaux**, auxquels s’ajoutent 10 Ul
 - Légendaire : or antique, brillance locale lente sur les bords.
 - Ultra Rare : traitement propre à la carte. Aucun arc-en-ciel générique et aucune étoile multicolore.
 
+La rareté modifie aussi le gameplay d’entrée en jeu, sans remplacer le rôle :
+
+| Rareté | Portée supplémentaire | Puissance attendue |
+|---|---|---|
+| Commune | aucune capacité d’entrée supplémentaire | statistiques lisibles, passif et synergie de famille |
+| Rare | 1 cible | buff, debuff, soin ou dégât tactique de valeur 1 |
+| Épique | jusqu’à 2 cibles | version renforcée ou double bénéfice |
+| Légendaire | équipe ou zone entière | valeur 2, effet de zone, limitée à l’entrée en jeu |
+
+La famille choisit la nature de l’effet ; le profil l’oriente : Attaque favorise dégâts/ATQ, Défense PV/Bouclier, Soutien soin/alliés, Contrôle malus et perturbation.
+
+### Alignement entre illustrations et écrans
+
+- Reprendre le bleu cobalt, l’or chaud, l’ivoire et les accents propres aux familles présents dans les illustrations.
+- Utiliser des surfaces mates et des liserés peints ; supprimer les grands panneaux de verre, le chrome et les ombres volumétriques.
+- Laisser les décors illustrés visibles : le voile sert uniquement à garantir la lecture et ne doit pas noircir les deux tiers de l’écran.
+- Conserver le même degré de détail dans les personnages d’écran et les cartes : silhouette expressive, fourrure dessinée, lumière chaude, sans plastique 3D.
+- Employer les cadres bleu/or comme langage commun entre accueil, collection, deck, boutique, matchmaking et combat.
+- Les animations restent en aplats 2D : sceaux, traits de peinture, vagues, feuilles, fanions et glyphes.
+
 ### Typographie et grille
 
 - Titres : serif ronde ou display royale, deux graisses maximum.
@@ -305,7 +325,24 @@ Le joueur est le **Gardien des Liens**, capable de voir les résonances entre le
 
 L’animation ne déplace pas réellement les cartes et n’utilise ni fumée réaliste ni secousse longue.
 
-### Autres recettes à développer
+### Combinaisons de groupe intégrées
+
+Chaque combinaison se déclenche une seule fois par combat à quatre unités. Robot conserve une recette de rôles plus exigeante.
+
+| Groupe | Combinaison | Effet |
+|---|---|---|
+| Armée | Ordre de bataille | tous les alliés +1 ATQ/+1 PV ; héros +2 Boucliers |
+| Magiciens | Tempête arcanique | 1 dégât à toute la zone adverse ; +1 énergie |
+| Nobles | Couronne unifiée | tous les alliés +1 PV max ; héros +3 Boucliers |
+| Ombres | Nuit totale | les deux adversaires les plus solides perdent 2 ATQ |
+| Robots | Atelier Pet Tank | avec 3 Défense + 1 Attaque : Pet Tank 6 PV, tir de puissance 2 |
+| Nature | Grande floraison | tous les alliés +1 PV max et jusqu’à 2 soins |
+| Éléments | Cataclysme maîtrisé | 2 dégâts aux trois adversaires les plus solides |
+| Guérisseurs | Grand miracle | héros +4 PV ; tous les alliés jusqu’à +2 PV |
+| Pirates | Raid du navire | 3 dégâts à une construction, sinon 1 dégât direct |
+| Créatures | Éveil primal | toutes les Créatures +2 ATQ/+1 PV |
+
+### Recettes croisées à développer
 
 | Nom | Composition | Effet | Contre-jeu |
 |---|---|---|---|

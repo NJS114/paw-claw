@@ -9,6 +9,7 @@ describe("character design profiles", () => {
     for (const { profile } of profiles) {
       expect(profile.passive.description.length).toBeGreaterThan(20);
       expect(profile.signature.description.length).toBeGreaterThan(20);
+      expect(profile.rarityAbility.description.length).toBeGreaterThan(20);
       expect(profile.comboHint.length).toBeGreaterThan(20);
       expect(profile.evolution.map((step) => step.level)).toEqual([
         1, 3, 5, 7, 10,

@@ -1,4 +1,5 @@
 import type { CardData, Rarity } from "./cards";
+import { deployAbilityFor } from "./abilitySystem";
 
 export type CombatRole = "Attaque" | "Défense" | "Soutien" | "Contrôle";
 export type AbilityDetail = {
@@ -17,6 +18,7 @@ export type CharacterProfile = {
   fantasy: string;
   passive: AbilityDetail;
   signature: AbilityDetail;
+  rarityAbility: AbilityDetail & { rarityLabel: string; power: number };
   comboHint: string;
   entranceAnimation: string;
   attackAnimation: string;
@@ -58,7 +60,8 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
       Contrôle:
         "Verrouille la ligne opposée : aucune nouvelle unité ne peut y être posée ce tour.",
     },
-    comboHint: "3 Armée + 2 Nobles : construction Bastion royal.",
+    comboHint:
+      "4 Armée : Ordre de bataille (+1 ATQ/+1 PV à tous les alliés et 2 Boucliers). Variante croisée : 3 Armée + 2 Nobles pour le Bastion royal.",
     entrance:
       "Un fanion se plante dans la ligne puis une onde rouge-bordeaux révèle le personnage.",
     attack: "Course courte, impact d’écu et retour immédiat sur la carte.",
@@ -87,7 +90,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Suspend l’effet passif de la cible opposée jusqu’à la prochaine fin de tour.",
     },
     comboHint:
-      "3 Magiciens + 2 Éléments : Tempête arcanique, 2 dégâts répartis sur le front adverse.",
+      "4 Magiciens : Tempête arcanique, 1 dégât à toute la zone adverse et +1 énergie. Variante croisée : 3 Magiciens + 2 Éléments.",
     entrance:
       "Un cercle de craie lumineuse se trace en deux gestes, sans particules envahissantes.",
     attack:
@@ -115,7 +118,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Retire 1 Bouclier adverse puis bloque sa régénération jusqu’au prochain tour.",
     },
     comboHint:
-      "3 Nobles + 2 Armée : Bastion royal, 7 PV et 1 Bouclier par fin de tour.",
+      "4 Nobles : Couronne unifiée (+1 PV max à tous les alliés et 3 Boucliers). Variante croisée : 3 Nobles + 2 Armée pour le Bastion royal.",
     entrance:
       "Un sceau d’or antique descend derrière le personnage, puis s’efface en 400 ms.",
     attack:
@@ -143,7 +146,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Pose un Voile : la ligne opposée ne bénéficie pas de bonus de rôle ce tour.",
     },
     comboHint:
-      "3 Ombres + 2 Créatures : Chasse nocturne, la cible la plus faible perd 2 ATQ.",
+      "4 Ombres : Nuit totale, les deux adversaires les plus solides perdent 2 ATQ. Variante croisée : 3 Ombres + 2 Créatures.",
     entrance:
       "La silhouette apparaît par masque découpé bleu nuit, jamais par fumée réaliste.",
     attack:
@@ -200,7 +203,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Réduit de 1 l’ATQ de la cible et soigne ce personnage de 1 PV.",
     },
     comboHint:
-      "3 Nature + 2 Guérisseurs : Jardin sanctuaire, soigne 1 PV à l’unité la plus faible à chaque fin de tour.",
+      "4 Nature : Grande floraison (+1 PV max et jusqu’à 2 soins à tous les alliés). Variante croisée : 3 Nature + 2 Guérisseurs.",
     entrance:
       "Deux feuilles plates tournent autour des pattes, puis une pousse apparaît sous la carte.",
     attack:
@@ -227,7 +230,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Gèle, brûle ou repousse la ligne selon l’élément visuel du personnage.",
     },
     comboHint:
-      "3 Éléments + 2 Magiciens : Tempête arcanique sur deux lignes adverses.",
+      "4 Éléments : Cataclysme maîtrisé, 2 dégâts aux trois adversaires les plus solides. Variante croisée : 3 Éléments + 2 Magiciens.",
     entrance:
       "Un seul symbole élémentaire grand et lisible remplace les multiples effets.",
     attack:
@@ -254,7 +257,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
       Contrôle: "Apaise la ligne opposée : sa cible perd 1 ATQ pour ce combat.",
     },
     comboHint:
-      "3 Guérisseurs + 2 Nature : Jardin sanctuaire et animation de floraison turquoise.",
+      "4 Guérisseurs : Grand miracle, 4 soins au héros et jusqu’à 2 par allié. Variante croisée : 3 Guérisseurs + 2 Nature.",
     entrance:
       "Un anneau menthe s’ouvre sous les pattes et remonte en aplats translucides.",
     attack:
@@ -308,7 +311,7 @@ const FAMILY_KITS: Record<string, FamilyKit> = {
         "Rugissement : annule le prochain bonus d’entrée de la ligne opposée.",
     },
     comboHint:
-      "3 Créatures + 2 Ombres : Chasse nocturne et malus d’ATQ sur la cible la plus faible.",
+      "4 Créatures : Éveil primal (+2 ATQ/+1 PV à toutes les Créatures). Variante croisée : 3 Créatures + 2 Ombres.",
     entrance:
       "Une ombre animale se déploie derrière la carte puis rejoint la silhouette.",
     attack:
@@ -378,6 +381,7 @@ export function getCharacterProfile(card: CardData): CharacterProfile {
   const role = roleOf(card);
   const kit = FAMILY_KITS[card.family] ?? FAMILY_KITS.Créatures;
   const name = card.name;
+  const rarityAbility = deployAbilityFor(card, role);
   return {
     role,
     archetype: kit.archetype,
@@ -396,6 +400,13 @@ export function getCharacterProfile(card: CardData): CharacterProfile {
             ? "Entrée"
             : "Combat",
       description: kit.signature[role],
+    },
+    rarityAbility: {
+      name: `${name} · ${rarityAbility.name}`,
+      timing: "Entrée",
+      description: rarityAbility.description,
+      rarityLabel: rarityAbility.rarityLabel,
+      power: rarityAbility.rank,
     },
     comboHint: kit.comboHint,
     entranceAnimation: kit.entrance,

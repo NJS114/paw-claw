@@ -14,6 +14,7 @@ import {
   type LoreBond,
 } from "./loreSynergies";
 import { roleOf } from "./characterDesign";
+import { deployAbilityFor } from "./abilitySystem";
 
 export type ArenaConstruct = {
   id: string;
@@ -66,12 +67,18 @@ export type CombatEvent = {
     | "construct-summon"
     | "construct-fire"
     | "construct-damage"
-    | "pirate-raid";
+    | "pirate-raid"
+    | "family-combo"
+    | "rarity-power"
+    | "area-damage"
+    | "debuff-atk";
   source: "player" | "enemy";
   target: "player" | "enemy";
   value?: number;
   cardId?: string;
   constructId?: string;
+  family?: string;
+  rarity?: CardData["rarity"];
   text: string;
 };
 const alive = (board: (BoardCard | null)[]) =>
@@ -257,6 +264,337 @@ function withBattleDefaults(side: BattleSideState): BattleSideState {
   };
 }
 
+function orderedIndexes(
+  board: (BoardCard | null)[],
+  predicate: (card: BoardCard) => boolean,
+  weakestFirst = true,
+) {
+  return board
+    .map((card, index) => ({ card, index }))
+    .filter((entry): entry is { card: BoardCard; index: number } =>
+      Boolean(entry.card && predicate(entry.card)),
+    )
+    .sort((a, b) => {
+      const left = a.card.currentHp ?? a.card.hp ?? 1;
+      const right = b.card.currentHp ?? b.card.hp ?? 1;
+      return weakestFirst ? left - right : right - left;
+    })
+    .map((entry) => entry.index);
+}
+
+function damageBoard(
+  board: (BoardCard | null)[],
+  indexes: number[],
+  amount: number,
+) {
+  const next = cloneBoard(board);
+  let damage = 0;
+  for (const index of indexes) {
+    const card = next[index];
+    if (!card) continue;
+    const current = card.currentHp ?? card.hp ?? 1;
+    const dealt = Math.min(amount, current);
+    damage += dealt;
+    const remaining = current - dealt;
+    next[index] = remaining <= 0 ? null : { ...card, currentHp: remaining };
+  }
+  return { board: next, damage };
+}
+
+function buffBoard(
+  board: (BoardCard | null)[],
+  indexes: number[],
+  attack: number,
+  health: number,
+) {
+  const next = cloneBoard(board);
+  for (const index of indexes) {
+    const card = next[index];
+    if (!card) continue;
+    next[index] = {
+      ...card,
+      atk: Math.max(0, (card.atk ?? 0) + attack),
+      hp: Math.max(1, (card.hp ?? 1) + health),
+      currentHp: Math.max(
+        1,
+        (card.currentHp ?? card.hp ?? 1) + Math.max(0, health),
+      ),
+    };
+  }
+  return next;
+}
+
+function healBoard(
+  board: (BoardCard | null)[],
+  indexes: number[],
+  amount: number,
+) {
+  const next = cloneBoard(board);
+  let healed = 0;
+  for (const index of indexes) {
+    const card = next[index];
+    if (!card) continue;
+    const before = card.currentHp ?? card.hp ?? 1;
+    const after = Math.min(card.hp ?? 1, before + amount);
+    healed += after - before;
+    next[index] = { ...card, currentHp: after };
+  }
+  return { board: next, healed };
+}
+
+/**
+ * Pouvoir d'entrée lié à la rareté. La famille détermine la nature de
+ * l'effet, le rôle sa priorité et la rareté son ampleur.
+ */
+export function resolveRarityDeployAbility(
+  side: BattleSideState,
+  enemy: BattleSideState,
+  card: CardData,
+  slot: number,
+  source: "player" | "enemy",
+) {
+  let nextSide = withBattleDefaults(side),
+    nextEnemy = withBattleDefaults(enemy);
+  const role = roleOf(card),
+    spec = deployAbilityFor(card, role),
+    target = source === "player" ? "enemy" : "player";
+  const events: CombatEvent[] = [];
+  if (!spec.active || !nextSide.board[slot])
+    return { side: nextSide, enemy: nextEnemy, events };
+
+  const ownFamily = orderedIndexes(
+      nextSide.board,
+      (unit) => unit.family === card.family,
+    ),
+    ownAll = orderedIndexes(nextSide.board, () => true),
+    enemyWeak = orderedIndexes(nextEnemy.board, () => true),
+    enemyStrong = orderedIndexes(nextEnemy.board, () => true, false),
+    limit = (indexes: number[]) => indexes.slice(0, spec.targetCount),
+    ownTargets = limit([
+      ...ownFamily,
+      ...ownAll.filter((i) => !ownFamily.includes(i)),
+    ]);
+  let text = `${spec.rarityLabel} — ${card.name} déclenche ${spec.name}.`;
+  let value = spec.magnitude;
+
+  switch (spec.effect) {
+    case "formation": {
+      if (role === "Défense") {
+        nextSide = {
+          ...nextSide,
+          board: buffBoard(nextSide.board, ownTargets, 0, spec.magnitude),
+          shield: nextSide.shield + spec.rank,
+        };
+        text += ` ${ownTargets.length} allié${ownTargets.length > 1 ? "s gagnent" : " gagne"} ${spec.magnitude} PV et le héros gagne ${spec.rank} Bouclier.`;
+      } else {
+        nextSide = {
+          ...nextSide,
+          board: buffBoard(
+            nextSide.board,
+            ownTargets,
+            spec.magnitude,
+            role === "Soutien" ? 1 : 0,
+          ),
+        };
+        text += ` ${ownTargets.length} allié${ownTargets.length > 1 ? "s gagnent" : " gagne"} ${spec.magnitude} ATQ${role === "Soutien" ? " et 1 PV" : ""}.`;
+      }
+      break;
+    }
+    case "arcane": {
+      const targets = limit(enemyWeak),
+        hit = damageBoard(nextEnemy.board, targets, spec.magnitude);
+      nextEnemy = { ...nextEnemy, board: hit.board };
+      nextSide = {
+        ...nextSide,
+        energy: nextSide.energy + (role === "Soutien" ? 1 : 0),
+        shield: nextSide.shield + (role === "Défense" ? spec.rank : 0),
+      };
+      value = hit.damage;
+      text += ` ${targets.length} cible${targets.length > 1 ? "s subissent" : " subit"} ${spec.magnitude} dégât${spec.magnitude > 1 ? "s" : ""}.`;
+      if (role === "Soutien") text += " 1 énergie est rendue.";
+      if (role === "Défense") text += ` Le héros gagne ${spec.rank} Bouclier.`;
+      break;
+    }
+    case "command": {
+      nextSide = {
+        ...nextSide,
+        board: buffBoard(
+          nextSide.board,
+          ownTargets,
+          role === "Attaque" ? 1 : 0,
+          1,
+        ),
+        shield: nextSide.shield + spec.rank,
+      };
+      value = spec.rank;
+      text += ` ${ownTargets.length} allié${ownTargets.length > 1 ? "s gagnent" : " gagne"} 1 PV max et le héros gagne ${spec.rank} Bouclier.`;
+      break;
+    }
+    case "ambush": {
+      const targets = limit(enemyStrong);
+      nextEnemy = {
+        ...nextEnemy,
+        board: buffBoard(nextEnemy.board, targets, -spec.magnitude, 0),
+      };
+      if (role === "Attaque" && enemyWeak[0] !== undefined) {
+        const hit = damageBoard(
+          nextEnemy.board,
+          [enemyWeak[0]],
+          spec.magnitude,
+        );
+        nextEnemy = { ...nextEnemy, board: hit.board };
+      }
+      value = spec.magnitude;
+      text += ` ${targets.length} adversaire${targets.length > 1 ? "s perdent" : " perd"} ${spec.magnitude} ATQ${role === "Attaque" ? " et la cible la plus faible est blessée" : ""}.`;
+      break;
+    }
+    case "repair": {
+      const repaired = healBoard(nextSide.board, ownTargets, spec.rank);
+      nextSide = {
+        ...nextSide,
+        board: repaired.board,
+        shield: nextSide.shield + (role === "Défense" ? spec.rank : 0),
+      };
+      if (role === "Attaque" && enemyWeak[0] !== undefined) {
+        const hit = damageBoard(
+          nextEnemy.board,
+          [enemyWeak[0]],
+          spec.magnitude,
+        );
+        nextEnemy = { ...nextEnemy, board: hit.board };
+      }
+      value = repaired.healed;
+      text += ` Les Robots récupèrent ${repaired.healed} PV au total${role === "Défense" ? ` et le héros gagne ${spec.rank} Bouclier` : ""}${role === "Attaque" ? " ; un tir touche la cible la plus faible" : ""}.`;
+      break;
+    }
+    case "growth": {
+      const grown =
+        spec.rank === 3
+          ? buffBoard(nextSide.board, ownTargets, 0, 1)
+          : nextSide.board;
+      const healed = healBoard(grown, ownTargets, spec.rank);
+      nextSide = { ...nextSide, board: healed.board };
+      value = healed.healed;
+      text += ` ${ownTargets.length} allié${ownTargets.length > 1 ? "s récupèrent" : " récupère"} jusqu’à ${spec.rank} PV${spec.rank === 3 ? " et gagne 1 PV max" : ""}.`;
+      break;
+    }
+    case "reaction": {
+      const targets = limit(enemyWeak),
+        hit = damageBoard(nextEnemy.board, targets, spec.magnitude);
+      nextEnemy = { ...nextEnemy, board: hit.board };
+      value = hit.damage;
+      text += ` La réaction inflige ${spec.magnitude} dégât${spec.magnitude > 1 ? "s" : ""} à ${targets.length} cible${targets.length > 1 ? "s" : ""}.`;
+      break;
+    }
+    case "miracle": {
+      const healed = healBoard(nextSide.board, ownTargets, spec.magnitude);
+      const heroHeal = spec.rank + 1;
+      nextSide = {
+        ...nextSide,
+        board: healed.board,
+        heroHp: clampHp(nextSide.heroHp + heroHeal),
+        shield: nextSide.shield + (role === "Défense" ? spec.rank : 0),
+      };
+      value = healed.healed + heroHeal;
+      text += ` Le héros récupère ${heroHeal} PV et les alliés ${healed.healed} PV au total${role === "Défense" ? `, avec ${spec.rank} Bouclier` : ""}.`;
+      break;
+    }
+    case "sabotage": {
+      const constructs = [...(nextEnemy.constructs ?? [])];
+      if (constructs.length) {
+        const index = constructs.reduce(
+          (best, current, i) => (current.hp > constructs[best].hp ? i : best),
+          0,
+        );
+        const hit = constructs[index],
+          damage = Math.min(spec.rank, hit.hp),
+          remaining = hit.hp - damage;
+        if (remaining <= 0) constructs.splice(index, 1);
+        else constructs[index] = { ...hit, hp: remaining };
+        nextEnemy = { ...nextEnemy, constructs };
+        value = damage;
+        text += ` ${hit.name} subit ${damage} dégâts de sabotage.`;
+      } else {
+        const targets = limit(enemyWeak),
+          hit = damageBoard(nextEnemy.board, targets, spec.magnitude);
+        nextEnemy = { ...nextEnemy, board: hit.board };
+        value = hit.damage;
+        text += ` ${targets.length} adversaire${targets.length > 1 ? "s sont touchés" : " est touché"}.`;
+      }
+      if (role === "Soutien") {
+        nextSide = { ...nextSide, energy: nextSide.energy + 1 };
+        text += " Le butin rend 1 énergie.";
+      }
+      break;
+    }
+    case "instinct": {
+      const wounded = orderedIndexes(
+        nextSide.board,
+        (unit) => (unit.currentHp ?? unit.hp ?? 1) < (unit.hp ?? 1),
+      );
+      const targets = limit(wounded.length ? wounded : ownTargets);
+      nextSide = {
+        ...nextSide,
+        board: buffBoard(
+          nextSide.board,
+          targets,
+          spec.magnitude,
+          role === "Défense" || spec.rank === 3 ? 1 : 0,
+        ),
+      };
+      text += ` ${targets.length} allié${targets.length > 1 ? "s gagnent" : " gagne"} ${spec.magnitude} ATQ${role === "Défense" || spec.rank === 3 ? " et 1 PV" : ""}.`;
+      break;
+    }
+  }
+
+  if (role === "Attaque" && nextSide.board[slot]) {
+    nextSide = {
+      ...nextSide,
+      board: buffBoard(nextSide.board, [slot], 1, 0),
+    };
+    text += " Son profil Attaque lui accorde aussi +1 ATQ.";
+  } else if (role === "Défense") {
+    nextSide = { ...nextSide, shield: nextSide.shield + 1 };
+    text += " Son profil Défense ajoute 1 Bouclier.";
+  } else if (role === "Soutien") {
+    const weakest = orderedIndexes(nextSide.board, () => true).slice(0, 1),
+      healed = healBoard(nextSide.board, weakest, 1);
+    nextSide = { ...nextSide, board: healed.board };
+    text += ` Son profil Soutien soigne ${healed.healed} PV supplémentaire.`;
+  } else if (role === "Contrôle") {
+    const strongest = orderedIndexes(nextEnemy.board, () => true, false).slice(
+      0,
+      1,
+    );
+    nextEnemy = {
+      ...nextEnemy,
+      board: buffBoard(nextEnemy.board, strongest, -1, 0),
+    };
+    text += ` Son profil Contrôle retire 1 ATQ à ${strongest.length ? "la cible la plus solide" : "aucune cible"}.`;
+  }
+
+  events.push({
+    id: eventId(`rarity-${card.id}`, slot),
+    lane: slot,
+    type:
+      spec.effect === "reaction" || spec.effect === "arcane"
+        ? "area-damage"
+        : spec.effect === "ambush"
+          ? "debuff-atk"
+          : "rarity-power",
+    source,
+    target: ["arcane", "ambush", "reaction", "sabotage"].includes(spec.effect)
+      ? target
+      : source,
+    value,
+    cardId: card.id,
+    family: card.family,
+    rarity: card.rarity,
+    text,
+  });
+  return { side: nextSide, enemy: nextEnemy, events };
+}
+
 /**
  * Combinaisons de composition : elles s'ajoutent aux paliers de famille 3/5.
  * Un marqueur persistant empêche une cinématique ou une récompense de se répéter.
@@ -352,6 +690,163 @@ export function resolveComboDeployments(
         text: "Raid pirate : aucune construction à saboter, le navire inflige 1 dégât direct au héros adverse.",
       });
     }
+  }
+  const triggerFamilyCombo = (
+    family: string,
+    mark: string,
+    title: string,
+    text: string,
+    eventTarget: "player" | "enemy" = source,
+    value = 1,
+  ) => {
+    nextSide = {
+      ...nextSide,
+      comboMarks: [...nextSide.comboMarks!, mark],
+    };
+    events.push({
+      id: eventId(`family-${mark}`, -1),
+      lane: -1,
+      type: "family-combo",
+      source,
+      target: eventTarget,
+      value,
+      family,
+      text: `${title} — ${text}`,
+    });
+  };
+  const comboReady = (family: string, mark: string) =>
+    count(nextSide.board, family) >= 4 && !nextSide.comboMarks!.includes(mark);
+
+  if (comboReady("Armée", "army-battle-order")) {
+    const targets = orderedIndexes(nextSide.board, () => true);
+    nextSide = {
+      ...nextSide,
+      board: buffBoard(nextSide.board, targets, 1, 1),
+      shield: nextSide.shield + 2,
+    };
+    triggerFamilyCombo(
+      "Armée",
+      "army-battle-order",
+      "Ordre de bataille",
+      "tous les alliés gagnent +1 ATQ/+1 PV et le héros reçoit 2 Boucliers.",
+      source,
+      targets.length,
+    );
+  }
+  if (comboReady("Magiciens", "mage-arcane-storm")) {
+    const targets = orderedIndexes(nextEnemy.board, () => true),
+      hit = damageBoard(nextEnemy.board, targets, 1);
+    nextEnemy = { ...nextEnemy, board: hit.board };
+    nextSide = { ...nextSide, energy: nextSide.energy + 1 };
+    triggerFamilyCombo(
+      "Magiciens",
+      "mage-arcane-storm",
+      "Tempête arcanique",
+      `toute la ligne adverse subit 1 dégât (${hit.damage} au total) et 1 énergie est rendue.`,
+      target,
+      hit.damage,
+    );
+  }
+  if (comboReady("Nobles", "noble-united-crown")) {
+    const targets = orderedIndexes(nextSide.board, () => true);
+    nextSide = {
+      ...nextSide,
+      board: buffBoard(nextSide.board, targets, 0, 1),
+      shield: nextSide.shield + 3,
+    };
+    triggerFamilyCombo(
+      "Nobles",
+      "noble-united-crown",
+      "Couronne unifiée",
+      "tous les alliés gagnent +1 PV max et le héros reçoit 3 Boucliers.",
+      source,
+      targets.length,
+    );
+  }
+  if (comboReady("Ombres", "shadow-total-night")) {
+    const targets = orderedIndexes(nextEnemy.board, () => true, false).slice(
+      0,
+      2,
+    );
+    nextEnemy = {
+      ...nextEnemy,
+      board: buffBoard(nextEnemy.board, targets, -2, 0),
+    };
+    triggerFamilyCombo(
+      "Ombres",
+      "shadow-total-night",
+      "Nuit totale",
+      `${targets.length} unité${targets.length > 1 ? "s adverses perdent" : " adverse perd"} 2 ATQ.`,
+      target,
+      2,
+    );
+  }
+  if (comboReady("Nature", "nature-great-bloom")) {
+    const targets = orderedIndexes(nextSide.board, () => true),
+      grown = buffBoard(nextSide.board, targets, 0, 1),
+      healed = healBoard(grown, targets, 2);
+    nextSide = { ...nextSide, board: healed.board };
+    triggerFamilyCombo(
+      "Nature",
+      "nature-great-bloom",
+      "Grande floraison",
+      `tous les alliés gagnent +1 PV max et récupèrent jusqu’à 2 PV (${healed.healed} soignés).`,
+      source,
+      healed.healed,
+    );
+  }
+  if (comboReady("Éléments", "elements-cataclysm")) {
+    const targets = orderedIndexes(nextEnemy.board, () => true, false).slice(
+        0,
+        3,
+      ),
+      hit = damageBoard(nextEnemy.board, targets, 2);
+    nextEnemy = { ...nextEnemy, board: hit.board };
+    triggerFamilyCombo(
+      "Éléments",
+      "elements-cataclysm",
+      "Cataclysme maîtrisé",
+      `${targets.length} cible${targets.length > 1 ? "s subissent" : " subit"} 2 dégâts de zone (${hit.damage} au total).`,
+      target,
+      hit.damage,
+    );
+  }
+  if (comboReady("Guérisseurs", "healers-great-miracle")) {
+    const targets = orderedIndexes(nextSide.board, () => true),
+      healed = healBoard(nextSide.board, targets, 2),
+      before = nextSide.heroHp;
+    nextSide = {
+      ...nextSide,
+      board: healed.board,
+      heroHp: clampHp(nextSide.heroHp + 4),
+    };
+    const total = healed.healed + (nextSide.heroHp - before);
+    triggerFamilyCombo(
+      "Guérisseurs",
+      "healers-great-miracle",
+      "Grand miracle",
+      `le héros récupère 4 PV et les alliés jusqu’à 2 PV (${total} soins effectifs).`,
+      source,
+      total,
+    );
+  }
+  if (comboReady("Créatures", "creatures-primal-awakening")) {
+    const creatures = orderedIndexes(
+      nextSide.board,
+      (unit) => unit.family === "Créatures",
+    );
+    nextSide = {
+      ...nextSide,
+      board: buffBoard(nextSide.board, creatures, 2, 1),
+    };
+    triggerFamilyCombo(
+      "Créatures",
+      "creatures-primal-awakening",
+      "Éveil primal",
+      "toutes les Créatures gagnent +2 ATQ et +1 PV.",
+      source,
+      creatures.length,
+    );
   }
   return { side: nextSide, enemy: nextEnemy, events };
 }

@@ -20,7 +20,9 @@ Le ZIP `paw-claw-assets-optimized.zip` présent à la racine est extrait automat
 - Collection avec filtres famille / rareté / recherche
 - Booster avec tirage de cartes
 - Deck builder
-- Combinaisons tactiques, constructions, Pet Tank Robot et raid Pirate
+- Combinaisons tactiques propres aux 10 groupes, constructions, Pet Tank Robot et raid Pirate
+- Capacités d’entrée progressives par rareté et modulées par le rôle de chaque héros
+- Interface mobile recalée sur la palette 2D royale des illustrations
 - Profils de compétences et cinq paliers de maîtrise pour chaque héros
 - Bibliothèque `assets` affichant tous les visuels générés extraits du ZIP
 

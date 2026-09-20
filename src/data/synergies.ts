@@ -70,6 +70,49 @@ export const FAMILY_RULES: Record<string, [string, string]> = {
   ],
 };
 
+export const GROUP_COMBO_RULES: Record<string, [string, string]> = {
+  Armée: [
+    "Ordre de bataille",
+    "4 Armée : tous les alliés gagnent +1 ATQ/+1 PV et le héros reçoit 2 Boucliers.",
+  ],
+  Magiciens: [
+    "Tempête arcanique",
+    "4 Magiciens : 1 dégât de zone à toutes les unités adverses et +1 énergie.",
+  ],
+  Nobles: [
+    "Couronne unifiée",
+    "4 Nobles : tous les alliés gagnent +1 PV max et le héros reçoit 3 Boucliers.",
+  ],
+  Ombres: [
+    "Nuit totale",
+    "4 Ombres : les deux unités adverses les plus solides perdent 2 ATQ.",
+  ],
+  Robots: [
+    "Atelier Pet Tank",
+    "4 Robots dont 3 Défense + 1 Attaque : invoque un Pet Tank 6 PV qui tire à puissance 2.",
+  ],
+  Nature: [
+    "Grande floraison",
+    "4 Nature : tous les alliés gagnent +1 PV max et récupèrent jusqu’à 2 PV.",
+  ],
+  Éléments: [
+    "Cataclysme maîtrisé",
+    "4 Éléments : les trois unités adverses les plus solides subissent 2 dégâts.",
+  ],
+  Guérisseurs: [
+    "Grand miracle",
+    "4 Guérisseurs : le héros récupère 4 PV et tous les alliés jusqu’à 2 PV.",
+  ],
+  Pirates: [
+    "Raid du navire",
+    "4 Pirates : 3 dégâts à une construction, sinon 1 dégât direct au héros.",
+  ],
+  Créatures: [
+    "Éveil primal",
+    "4 Créatures : toutes les Créatures gagnent +2 ATQ et +1 PV.",
+  ],
+};
+
 export function synergyProgress(side: Side): SynergyProgress[] {
   return Object.keys(FAMILY_RULES)
     .map((family) => {
@@ -115,15 +158,19 @@ export function synergies(side: Side, enemy: Side): Synergy[] {
       active: true,
       tier: 2,
     });
-  if (familyCount(side.board, "Pirates") >= 4)
-    list.push({
-      id: "combo-pirate-raid",
-      title: "Raid du navire",
-      description:
-        "4 Pirates : le bateau envahit la zone adverse et inflige 3 dégâts à une construction, sinon 1 dégât direct.",
-      active: true,
-      tier: 2,
-    });
+  for (const [family, [title, description]] of Object.entries(
+    GROUP_COMBO_RULES,
+  )) {
+    if (family === "Robots") continue;
+    if (familyCount(side.board, family) >= 4)
+      list.push({
+        id: `combo-group-${family}`,
+        title,
+        description,
+        active: true,
+        tier: 2,
+      });
+  }
   if (side.heroHp <= 10)
     list.push({
       id: "last-stand",

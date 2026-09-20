@@ -450,6 +450,13 @@ function Collection({ owned }: { owned: OwnedCards }) {
                   <strong>{selectedProfile.signature.name}</strong>
                   <p>{selectedProfile.signature.description}</p>
                 </div>
+                <div
+                  className={`character-ability rarity-power rarity-power-${selectedProfile.rarityAbility.power}`}
+                >
+                  <span>{selectedProfile.rarityAbility.rarityLabel}</span>
+                  <strong>{selectedProfile.rarityAbility.name}</strong>
+                  <p>{selectedProfile.rarityAbility.description}</p>
+                </div>
                 <div className="character-combo">
                   <strong>Combinaison</strong>
                   <p>{selectedProfile.comboHint}</p>
