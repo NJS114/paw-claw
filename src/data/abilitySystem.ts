@@ -1,5 +1,6 @@
 import type { CardData, Rarity } from "./cards";
 import type { CombatRole } from "./characterDesign";
+import { rarityRule } from "./rarityBalance";
 
 export type RarityRank = 0 | 1 | 2 | 3;
 export type DeployEffect =
@@ -23,13 +24,6 @@ export type DeployAbilitySpec = {
   magnitude: number;
   targetCount: number;
   description: string;
-};
-
-const RARITY_RANK: Record<Rarity, RarityRank> = {
-  Commune: 0,
-  Rare: 1,
-  Épique: 2,
-  Légendaire: 3,
 };
 
 const FAMILY_EFFECT: Record<string, DeployEffect> = {
@@ -103,7 +97,7 @@ function familyClause(effect: DeployEffect, rank: RarityRank) {
 }
 
 export function rarityRank(rarity: Rarity): RarityRank {
-  return RARITY_RANK[rarity];
+  return Math.max(0, rarityRule(rarity).rank - 1) as RarityRank;
 }
 
 export function deployAbilityFor(
