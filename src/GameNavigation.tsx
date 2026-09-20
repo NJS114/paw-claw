@@ -3,8 +3,8 @@ import {GameAsset} from './GameAsset';
 import type {Progression} from './data/progression';
 
 export type GameScreen='home'|'battle'|'boosters'|'collection'|'deck'|'progression'|'balance'|'assets'|'shop'|'profile';
-const names:Record<GameScreen,string>={home:'Accueil',battle:'Combat',boosters:'Boosters',collection:'Collection',deck:'Decks',progression:'Missions et passe',balance:'Équilibrage',assets:'Assets',shop:'Boutique',profile:'Profil'};
-const tabs=[['home','home'],['collection','cards'],['battle','swords'],['deck','shield'],['shop','shop']] as const;
+const names:Record<GameScreen,string>={home:'Accueil',battle:'Combat',boosters:'Boosters',collection:'Collection',deck:'Decks',progression:'Missions et passe',balance:'Équilibrage',assets:'Assets',shop:'Boutique',profile:'Compagnon'};
+const tabs=[['home','home'],['collection','cards'],['battle','swords'],['profile','shield']] as const;
 
 export function GameNavigation({screen,onNavigate}:{screen:GameScreen;onNavigate:(screen:GameScreen)=>void}){
  return <nav className="game-navigation" aria-label="Navigation principale">{tabs.map(([target,icon])=><button key={target} aria-current={screen===target?'page':undefined} onClick={()=>onNavigate(target)}><LobbyIcon name={icon}/><span>{names[target]}</span></button>)}</nav>;

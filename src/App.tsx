@@ -15,7 +15,6 @@ import {
   loadProgression,
   openBooster,
   saveProgression,
-  xpForLevel,
   type Progression,
 } from "./data/progression";
 import {
@@ -61,6 +60,12 @@ import { BoosterOpening } from "./BoosterOpening";
 import { MobileLobby } from "./MobileLobby";
 import { GameAsset } from "./GameAsset";
 import { GameCard } from "./GameCard";
+import { CompanionStudio } from "./CompanionStudio";
+import {
+  loadCompanion,
+  saveCompanion,
+  type PlayerCompanion,
+} from "./data/companion";
 
 type Screen = GameScreen;
 type AssetManifest = { sourceZip: string; count: number; entries: string[] };
@@ -103,12 +108,16 @@ export function App() {
   );
   const [pass, setPass] = useState<BattlePassState>(() => loadBattlePass());
   const [monetization] = useState<MonetizationState>(() => loadMonetization());
+  const [companion, setCompanion] = useState<PlayerCompanion>(() =>
+    loadCompanion(),
+  );
   useEffect(() => saveCollection(owned), [owned]);
   useEffect(() => saveProgression(progress), [progress]);
   useEffect(() => saveDeck(deck), [deck]);
   useEffect(() => saveMissionProgress(missions), [missions]);
   useEffect(() => saveBattlePass(pass), [pass]);
   useEffect(() => saveMonetization(monetization), [monetization]);
+  useEffect(() => saveCompanion(companion), [companion]);
   useEffect(() => {
     const checked = validateDeck(deck, cards, owned);
     if (checked.cardIds.length !== deck.cardIds.length)
@@ -192,6 +201,7 @@ export function App() {
             progress={progress}
             missions={missions}
             ownedCount={ownedCount(owned)}
+            companion={companion}
             onNavigate={(target) => setScreen(target)}
           />
         )}{" "}
@@ -260,7 +270,13 @@ export function App() {
             />
           </ScreenBackdrop>
         )}{" "}
-        {screen === "profile" && <Profile progress={progress} owned={owned} />}{" "}
+        {screen === "profile" && (
+          <CompanionStudio
+            companion={companion}
+            level={progress.level}
+            onSave={setCompanion}
+          />
+        )}{" "}
         {screen === "assets" && <AssetsLibrary />}
       </main>
     </div>
@@ -506,73 +522,6 @@ function CatalogCard({
         />
       </button>
     </article>
-  );
-}
-function Profile({
-  progress,
-  owned,
-}: {
-  progress: Progression;
-  owned: OwnedCards;
-}) {
-  const need = xpForLevel(progress.level),
-    discovered = Object.keys(owned).filter((id) => owned[id] > 0).length;
-  return (
-    <section className="collection-screen">
-      <div className="profile-card">
-        <div className="profile-avatar">P&C</div>
-        <div>
-          <p className="eyebrow">PROFIL JOUEUR</p>
-          <h2>Niveau {progress.level}</h2>
-          <div className="xp-bar">
-            <span
-              style={{ width: `${Math.min(100, (progress.xp / need) * 100)}%` }}
-            />
-          </div>
-          <p>
-            {progress.xp}/{need} XP
-          </p>
-        </div>
-      </div>
-      <div className="profile-stats">
-        <div>
-          <strong>{progress.wins}</strong>
-          <span>Victoires</span>
-        </div>
-        <div>
-          <strong>{progress.losses}</strong>
-          <span>Défaites</span>
-        </div>
-        <div>
-          <strong>{progress.draws}</strong>
-          <span>Égalités</span>
-        </div>
-        <div>
-          <strong>{progress.boostersOpened}</strong>
-          <span>Boosters ouverts</span>
-        </div>
-        <div>
-          <strong>{progress.sealedBoosters}</strong>
-          <span>Boosters stockés</span>
-        </div>
-        <div>
-          <strong>{discovered}</strong>
-          <span>Cartes découvertes</span>
-        </div>
-        <div>
-          <strong>{progress.coins}</strong>
-          <span>Pièces</span>
-        </div>
-        <div>
-          <strong>{progress.gems}</strong>
-          <span>Gemmes</span>
-        </div>
-        <div>
-          <strong>{progress.essence}</strong>
-          <span>Essence</span>
-        </div>
-      </div>
-    </section>
   );
 }
 function AssetsLibrary() {

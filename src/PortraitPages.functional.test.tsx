@@ -20,22 +20,21 @@ const progress = {
 };
 
 describe("Portrait pages", () => {
-  it("offers five named destinations and marks the current page", async () => {
+  it("offers four essential mobile destinations and marks the current page", async () => {
     const go = vi.fn();
     render(<GameNavigation screen="collection" onNavigate={go} />);
-    expect(screen.getAllByRole("button")).toHaveLength(5);
+    expect(screen.getAllByRole("button")).toHaveLength(4);
     expect(screen.getByRole("button", { name: "Collection" })).toHaveAttribute(
       "aria-current",
       "page",
     );
-    for (const name of ["Accueil", "Collection", "Combat", "Decks", "Boutique"])
+    for (const name of ["Accueil", "Collection", "Combat", "Compagnon"])
       await userEvent.click(screen.getByRole("button", { name }));
     expect(go.mock.calls.map((x) => x[0])).toEqual([
       "home",
       "collection",
       "battle",
-      "deck",
-      "shop",
+      "profile",
     ]);
   });
   it("connects the real booster purchase and owned pack actions", async () => {

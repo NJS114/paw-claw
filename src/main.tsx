@@ -37,6 +37,8 @@ import "./game-card.css";
 import "./tactical-combos.css";
 import "./character-profile.css";
 import "./illustration-da.css";
+import "./companion-studio.css";
+import "./mobile-game-refresh.css";
 import { ProductionShell } from "./ProductionShell";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

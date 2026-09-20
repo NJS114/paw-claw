@@ -27,7 +27,8 @@ describe("Portrait app integration", () => {
     await user.click(screen.getAllByRole("button", { name: /^Voir / })[0]);
     expect(screen.getByRole("dialog")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Fermer" }));
-    await user.click(nav.getByRole("button", { name: "Decks" }));
+    await user.click(nav.getByRole("button", { name: "Accueil" }));
+    await user.click(screen.getByRole("button", { name: /DECKS/i }));
     expect(
       screen.getByRole("heading", { name: "Atelier des decks" }),
     ).toBeInTheDocument();
@@ -35,7 +36,8 @@ describe("Portrait app integration", () => {
       "src",
       "/assets/backgrounds/bg-deck-forge-2d-v9.webp",
     );
-    await user.click(nav.getByRole("button", { name: "Boutique" }));
+    await user.click(nav.getByRole("button", { name: "Accueil" }));
+    await user.click(screen.getByRole("button", { name: "Boutique" }));
     expect(container.querySelector(".screen-background-art")).toHaveAttribute(
       "src",
       "/assets/backgrounds/bg-shop-market-2d-v9.webp",
@@ -49,6 +51,10 @@ describe("Portrait app integration", () => {
     const saved = JSON.parse(localStorage.getItem("paw-claw.progression.v1")!);
     expect(saved.coins).toBe(840);
     expect(saved.sealedBoosters).toBe(2);
+    await user.click(nav.getByRole("button", { name: "Compagnon" }));
+    expect(
+      screen.getByRole("heading", { name: "Crée ton héros" }),
+    ).toBeInTheDocument();
     await user.click(nav.getByRole("button", { name: "Accueil" }));
     expect(
       screen.getByRole("region", { name: "Accueil Paw & Claw" }),
