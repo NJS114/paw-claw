@@ -30,6 +30,21 @@ describe('BoosterOpening',()=>{
   vi.useRealTimers();
  });
 
+ it('consumes exactly one pack for a full swipe, and none for a cancelled swipe',()=>{
+  const original=window.PointerEvent;
+  window.PointerEvent=MouseEvent as typeof PointerEvent;
+  const onOpen=vi.fn(()=>true);
+  const {container}=render(<BoosterOpening owned={{}} available={2} onOpen={onOpen} onShop={vi.fn()}/>);
+  const strip=container.querySelector('.booster-swipe') as HTMLElement;
+  strip.setPointerCapture=vi.fn();
+  vi.spyOn(strip,'getBoundingClientRect').mockReturnValue({width:200,left:0,right:200,top:0,bottom:50,height:50,x:0,y:0,toJSON:()=>({})});
+  fireEvent.pointerDown(strip,{clientX:0,button:0});fireEvent.pointerMove(strip,{clientX:50});fireEvent.pointerCancel(strip);
+  expect(onOpen).not.toHaveBeenCalled();
+  fireEvent.pointerDown(strip,{clientX:0,button:0});fireEvent.pointerMove(strip,{clientX:150});
+  fireEvent.pointerMove(strip,{clientX:190});expect(onOpen).toHaveBeenCalledTimes(1);
+  window.PointerEvent=original;
+ });
+
  it('routes to shop when no booster remains',()=>{
   const onShop=vi.fn();
   render(<BoosterOpening owned={{}} available={0} onOpen={vi.fn(()=>false)} onShop={onShop}/>);

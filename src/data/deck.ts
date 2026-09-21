@@ -1,3 +1,4 @@
+import {factionName} from './factions';
 import type { CardData } from './gameCards';
 import type { OwnedCards } from './collection';
 import { rarityCopyLimit } from './rarityBalance';
@@ -29,7 +30,7 @@ export function starterDeck(cards:CardData[],owned:OwnedCards):SavedDeck{
     for(let i=0;i<copies&&ids.length<DECK_SIZE;i++)ids.push(card.id);
     if(ids.length>=DECK_SIZE)break;
   }
-  return {version:1,name:species==='Chat'?'Deck Chats':'Deck Chiens',cardIds:ids,updatedAt:Date.now()};
+  return {version:1,name:`Deck ${factionName(species)}`,cardIds:ids,updatedAt:Date.now()};
 }
 
 export function deckSpecies(deck:SavedDeck,cards:CardData[]):Species|null{
@@ -55,7 +56,7 @@ export function validateDeck(deck:SavedDeck,cards:CardData[],owned:OwnedCards){
     if(next>rarityLimit){if(!issues.includes(`${card.name} : maximum ${rarityLimit} exemplaire${rarityLimit>1?'s':''} pour une carte ${card.rarity.toLowerCase()}.`))issues.push(`${card.name} : maximum ${rarityLimit} exemplaire${rarityLimit>1?'s':''} pour une carte ${card.rarity.toLowerCase()}.`);continue}
     counts.set(id,next);validIds.push(id);
   }
-  if(speciesSeen.size>1)issues.push('Un deck compétitif doit contenir uniquement des Chats ou uniquement des Chiens.');
+  if(speciesSeen.size>1)issues.push('Un deck compétitif doit contenir uniquement des Moustaches ou uniquement des Truffes.');
   if(validIds.length<DECK_SIZE)issues.push(`Ajoute ${DECK_SIZE-validIds.length} carte${DECK_SIZE-validIds.length>1?'s':''} pour atteindre ${DECK_SIZE}.`);
   const species=speciesSeen.size===1?[...speciesSeen][0]:null;
   return {valid:validIds.length===DECK_SIZE&&issues.length===0,cardIds:validIds,issues,species};

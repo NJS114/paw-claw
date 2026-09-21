@@ -1,3 +1,4 @@
+import {factionName} from './data/factions';
 import { useEffect,useMemo,useRef,useState,type CSSProperties } from 'react';
 import { BattleArena } from './BattleArena';
 import { GameAsset } from './GameAsset';
@@ -23,13 +24,13 @@ export function Matchmaking({playerPool,onWin,onLose,onDraw,onEditDeck}:{playerP
   <GameAsset assetId="world.matchmaking" className="matchmaking-world" decorative loading="eager"/>
   <div className="matchmaking-backdrop"/>
   {phase==='search'?<div className="match-search-card game-panel-v2">
-   <p className="eyebrow">ARÈNE CLASSÉE</p><h1>Recherche d’un adversaire</h1>
+   <p className="eyebrow">DUEL CONTRE L’IA</p><h1>Recherche d’un adversaire</h1>
    <div className="match-search-visual"><GameAsset assetId="character.royal-cat" className="match-hero match-hero-player" decorative/><div className="search-orbit" aria-hidden="true"><span/><span/><span/></div><GameAsset assetId="character.shadow-dog" className="match-hero match-hero-rival" decorative/></div>
-   <p>Ton deck <strong>{playerSpecies}</strong> cherche automatiquement un adversaire <strong>{rivalSpecies}</strong>.</p><small className="match-subcopy">Recherche sécurisée · niveau de puissance rapproché · camp opposé garanti</small>
+   <p>Ton deck <strong>{factionName(playerSpecies)}</strong> cherche automatiquement un adversaire <strong>{factionName(rivalSpecies)}</strong>.</p><small className="match-subcopy">Un rival contrôlé par le jeu · deux camps, une belle rencontre</small>
    <button onClick={onEditDeck}>Modifier le deck</button>
   </div>:<div className="match-ready-card game-panel-v2">
    <p className="eyebrow">ADVERSAIRE TROUVÉ</p>
-   <div className="versus-stage"><div className="versus-character player"><GameAsset assetId="character.royal-cat" decorative/><small>TON CAMP</small><strong>{playerSpecies.toUpperCase()}S</strong><span>{playerPool.length} cartes</span></div><div className="versus-mark"><b>VS</b><span>DUEL</span></div><div className="versus-character rival"><GameAsset assetId="character.shadow-dog" decorative/><small>RIVAL</small><strong>{rivalSpecies.toUpperCase()}S</strong><span>Deck adverse verrouillé</span></div></div>
+   <div className="versus-stage"><div className="versus-character player"><GameAsset assetId="character.royal-cat" decorative/><small>TON CAMP</small><strong>{factionName(playerSpecies)}</strong><span>{playerPool.length} cartes</span></div><div className="versus-mark"><b>VS</b><span>DUEL</span></div><div className="versus-character rival"><GameAsset assetId="character.shadow-dog" decorative/><small>RIVAL</small><strong>{factionName(rivalSpecies)}</strong><span>Deck adverse verrouillé</span></div></div>
    <h2>Prépare ton entrée dans l’arène</h2><p>Le deck actif sera verrouillé au lancement. Dix secondes suffisent pour vérifier ton choix sans ralentir la partie.</p>
    <button className="combat-guide-toggle" onClick={()=>setGuideOpen(v=>!v)} aria-expanded={guideOpen}>{guideOpen?'Masquer le guide':'Règles du combat'}</button>
    {guideOpen&&<div className="combat-guide" role="note"><div><strong>1. Construis le front</strong><span>Pose tes cartes dans l’une des 7 lignes. Une carte ennemie en face provoque un duel simultané.</span></div><div><strong>2. Gère ton énergie</strong><span>Chaque carte coûte de l’énergie. Les familles, le Momentum et les histoires peuvent modifier un tour.</span></div><div><strong>3. Anticipe la pioche</strong><span>Main limitée à 5 cartes. Quand la pioche est vide, la fatigue augmente à chaque nouvelle tentative de pioche.</span></div><div><strong>4. Fin de partie</strong><span>Le premier héros à 0 PV perd. Double K.O. ou limite de 40 tours : égalité.</span></div></div>}
