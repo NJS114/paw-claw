@@ -57,3 +57,7 @@ La découpe au doigt et l’ouverture des boosters fonctionnent encore ; aucun b
 Le dépôt n'a pas de serveur multijoueur : le duel est contre l'IA. Amis, classement en ligne, campagne avec carte de progression et évolution des cartes demandent encore leurs règles et leur stockage ; ils ne sont pas présentés comme opérationnels. Le choix de bannière dans le carnet ne modifie pas le deck actif. Les sauvegardes sont locales à l'appareil.
 
 Vérification : compilation TypeScript/Vite et tests ciblés des parcours, du geste de découpe, de la consommation unique, des camps, du carnet et des préférences. Vérification visuelle sur appareil encore nécessaire avant fusion ; le navigateur distant ne peut pas ouvrir l'aperçu local dans cette session.
+
+## Correction des calques
+
+La séquence mag-007 utilise désormais archimage-background-v2.webp (décor fixe) et archimage-character-v2.webp (grille RGBA sans fond, compression sans perte). La robe, la silhouette et le bâton viennent de la même pose dans chaque cellule ; seules les régions des yeux et de la page sont remplacées par les dessins successifs. La dernière pose est identique à la première. Le lecteur attend le chargement des deux calques et conserve l’original si un calque échoue. Aucune interpolation ni fondu. Les pixels du décor exposé sont identiques dans chaque PNG composé (différence maximale mesurée : 0).

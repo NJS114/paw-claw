@@ -29,3 +29,15 @@ it('keeps original art if the sequence cannot load',()=>{
  expect(container.querySelector('img')).toHaveAttribute('src','/original.webp');
  expect(container.querySelector('.frame-sequence-cell')).toBeNull();
 });
+it('loads both layers before showing the sprite and keeps the background fixed',()=>{
+ const layered={...atlas,backgroundSrc:'/background.webp'};
+ const {container}=render(<FrameSequence atlas={layered} label="Mage" fallback={<img src="/original.webp" alt="Original"/>}/>);
+ act(()=>images[0].onload?.());
+ expect(container.querySelector('.frame-sequence-cell')).toBeNull();
+ act(()=>images[1].onload?.());
+ const cell=container.querySelector('.frame-sequence-cell') as HTMLElement;
+ expect(cell.style.backgroundImage).toContain('/background.webp');
+ expect(cell.style.backgroundSize).toBe('400% 200%, 100% 100%');
+ act(()=>vi.advanceTimersByTime(100));
+ expect(cell.style.backgroundPosition).toContain('center');
+});
