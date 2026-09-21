@@ -1,0 +1,1534 @@
+{
+  "version": 8,
+  "status": "animation-preview",
+  "frameCount": 800,
+  "framesPerAction": {
+    "default": 4,
+    "legendaryUltimate": 8
+  },
+  "ultimateRarities": [
+    "Rare",
+    "Épique",
+    "Légendaire"
+  ],
+  "cards": [
+    {
+      "id": "matelot-tabby",
+      "name": "Matelot Tabby",
+      "rarity": "Commune",
+      "normalAttack": "Coup de cordage",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "matelot-tabby/front/idle/1.png",
+            "matelot-tabby/front/idle/2.png",
+            "matelot-tabby/front/idle/3.png",
+            "matelot-tabby/front/idle/4.png"
+          ],
+          "walk": [
+            "matelot-tabby/front/walk/1.png",
+            "matelot-tabby/front/walk/2.png",
+            "matelot-tabby/front/walk/3.png",
+            "matelot-tabby/front/walk/4.png"
+          ],
+          "attack": [
+            "matelot-tabby/front/attack/1.png",
+            "matelot-tabby/front/attack/2.png",
+            "matelot-tabby/front/attack/3.png",
+            "matelot-tabby/front/attack/4.png"
+          ],
+          "hurt": [
+            "matelot-tabby/front/hurt/1.png",
+            "matelot-tabby/front/hurt/2.png",
+            "matelot-tabby/front/hurt/3.png",
+            "matelot-tabby/front/hurt/4.png"
+          ],
+          "appear": [
+            "matelot-tabby/front/appear/1.png",
+            "matelot-tabby/front/appear/2.png",
+            "matelot-tabby/front/appear/3.png",
+            "matelot-tabby/front/appear/4.png"
+          ],
+          "disappear": [
+            "matelot-tabby/front/disappear/1.png",
+            "matelot-tabby/front/disappear/2.png",
+            "matelot-tabby/front/disappear/3.png",
+            "matelot-tabby/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "matelot-tabby/rear/idle/1.png",
+            "matelot-tabby/rear/idle/2.png",
+            "matelot-tabby/rear/idle/3.png",
+            "matelot-tabby/rear/idle/4.png"
+          ],
+          "walk": [
+            "matelot-tabby/rear/walk/1.png",
+            "matelot-tabby/rear/walk/2.png",
+            "matelot-tabby/rear/walk/3.png",
+            "matelot-tabby/rear/walk/4.png"
+          ],
+          "attack": [
+            "matelot-tabby/rear/attack/1.png",
+            "matelot-tabby/rear/attack/2.png",
+            "matelot-tabby/rear/attack/3.png",
+            "matelot-tabby/rear/attack/4.png"
+          ],
+          "hurt": [
+            "matelot-tabby/rear/hurt/1.png",
+            "matelot-tabby/rear/hurt/2.png",
+            "matelot-tabby/rear/hurt/3.png",
+            "matelot-tabby/rear/hurt/4.png"
+          ],
+          "appear": [
+            "matelot-tabby/rear/appear/1.png",
+            "matelot-tabby/rear/appear/2.png",
+            "matelot-tabby/rear/appear/3.png",
+            "matelot-tabby/rear/appear/4.png"
+          ],
+          "disappear": [
+            "matelot-tabby/rear/disappear/1.png",
+            "matelot-tabby/rear/disappear/2.png",
+            "matelot-tabby/rear/disappear/3.png",
+            "matelot-tabby/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "mousse-carlin",
+      "name": "Mousse Carlin",
+      "rarity": "Commune",
+      "normalAttack": "small compass-guided paw strike",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "mousse-carlin/front/idle/1.png",
+            "mousse-carlin/front/idle/2.png",
+            "mousse-carlin/front/idle/3.png",
+            "mousse-carlin/front/idle/4.png"
+          ],
+          "walk": [
+            "mousse-carlin/front/walk/1.png",
+            "mousse-carlin/front/walk/2.png",
+            "mousse-carlin/front/walk/3.png",
+            "mousse-carlin/front/walk/4.png"
+          ],
+          "attack": [
+            "mousse-carlin/front/attack/1.png",
+            "mousse-carlin/front/attack/2.png",
+            "mousse-carlin/front/attack/3.png",
+            "mousse-carlin/front/attack/4.png"
+          ],
+          "hurt": [
+            "mousse-carlin/front/hurt/1.png",
+            "mousse-carlin/front/hurt/2.png",
+            "mousse-carlin/front/hurt/3.png",
+            "mousse-carlin/front/hurt/4.png"
+          ],
+          "appear": [
+            "mousse-carlin/front/appear/1.png",
+            "mousse-carlin/front/appear/2.png",
+            "mousse-carlin/front/appear/3.png",
+            "mousse-carlin/front/appear/4.png"
+          ],
+          "disappear": [
+            "mousse-carlin/front/disappear/1.png",
+            "mousse-carlin/front/disappear/2.png",
+            "mousse-carlin/front/disappear/3.png",
+            "mousse-carlin/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "mousse-carlin/rear/idle/1.png",
+            "mousse-carlin/rear/idle/2.png",
+            "mousse-carlin/rear/idle/3.png",
+            "mousse-carlin/rear/idle/4.png"
+          ],
+          "walk": [
+            "mousse-carlin/rear/walk/1.png",
+            "mousse-carlin/rear/walk/2.png",
+            "mousse-carlin/rear/walk/3.png",
+            "mousse-carlin/rear/walk/4.png"
+          ],
+          "attack": [
+            "mousse-carlin/rear/attack/1.png",
+            "mousse-carlin/rear/attack/2.png",
+            "mousse-carlin/rear/attack/3.png",
+            "mousse-carlin/rear/attack/4.png"
+          ],
+          "hurt": [
+            "mousse-carlin/rear/hurt/1.png",
+            "mousse-carlin/rear/hurt/2.png",
+            "mousse-carlin/rear/hurt/3.png",
+            "mousse-carlin/rear/hurt/4.png"
+          ],
+          "appear": [
+            "mousse-carlin/rear/appear/1.png",
+            "mousse-carlin/rear/appear/2.png",
+            "mousse-carlin/rear/appear/3.png",
+            "mousse-carlin/rear/appear/4.png"
+          ],
+          "disappear": [
+            "mousse-carlin/rear/disappear/1.png",
+            "mousse-carlin/rear/disappear/2.png",
+            "mousse-carlin/rear/disappear/3.png",
+            "mousse-carlin/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "matelot-mau",
+      "name": "Matelot Mau Égyptien",
+      "rarity": "Commune",
+      "normalAttack": "throws small wooden bucket splash",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "matelot-mau/front/idle/1.png",
+            "matelot-mau/front/idle/2.png",
+            "matelot-mau/front/idle/3.png",
+            "matelot-mau/front/idle/4.png"
+          ],
+          "walk": [
+            "matelot-mau/front/walk/1.png",
+            "matelot-mau/front/walk/2.png",
+            "matelot-mau/front/walk/3.png",
+            "matelot-mau/front/walk/4.png"
+          ],
+          "attack": [
+            "matelot-mau/front/attack/1.png",
+            "matelot-mau/front/attack/2.png",
+            "matelot-mau/front/attack/3.png",
+            "matelot-mau/front/attack/4.png"
+          ],
+          "hurt": [
+            "matelot-mau/front/hurt/1.png",
+            "matelot-mau/front/hurt/2.png",
+            "matelot-mau/front/hurt/3.png",
+            "matelot-mau/front/hurt/4.png"
+          ],
+          "appear": [
+            "matelot-mau/front/appear/1.png",
+            "matelot-mau/front/appear/2.png",
+            "matelot-mau/front/appear/3.png",
+            "matelot-mau/front/appear/4.png"
+          ],
+          "disappear": [
+            "matelot-mau/front/disappear/1.png",
+            "matelot-mau/front/disappear/2.png",
+            "matelot-mau/front/disappear/3.png",
+            "matelot-mau/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "matelot-mau/rear/idle/1.png",
+            "matelot-mau/rear/idle/2.png",
+            "matelot-mau/rear/idle/3.png",
+            "matelot-mau/rear/idle/4.png"
+          ],
+          "walk": [
+            "matelot-mau/rear/walk/1.png",
+            "matelot-mau/rear/walk/2.png",
+            "matelot-mau/rear/walk/3.png",
+            "matelot-mau/rear/walk/4.png"
+          ],
+          "attack": [
+            "matelot-mau/rear/attack/1.png",
+            "matelot-mau/rear/attack/2.png",
+            "matelot-mau/rear/attack/3.png",
+            "matelot-mau/rear/attack/4.png"
+          ],
+          "hurt": [
+            "matelot-mau/rear/hurt/1.png",
+            "matelot-mau/rear/hurt/2.png",
+            "matelot-mau/rear/hurt/3.png",
+            "matelot-mau/rear/hurt/4.png"
+          ],
+          "appear": [
+            "matelot-mau/rear/appear/1.png",
+            "matelot-mau/rear/appear/2.png",
+            "matelot-mau/rear/appear/3.png",
+            "matelot-mau/rear/appear/4.png"
+          ],
+          "disappear": [
+            "matelot-mau/rear/disappear/1.png",
+            "matelot-mau/rear/disappear/2.png",
+            "matelot-mau/rear/disappear/3.png",
+            "matelot-mau/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "vigie-manx",
+      "name": "Vigie Manx",
+      "rarity": "Commune",
+      "normalAttack": "short paw swipe then ducks",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "vigie-manx/front/idle/1.png",
+            "vigie-manx/front/idle/2.png",
+            "vigie-manx/front/idle/3.png",
+            "vigie-manx/front/idle/4.png"
+          ],
+          "walk": [
+            "vigie-manx/front/walk/1.png",
+            "vigie-manx/front/walk/2.png",
+            "vigie-manx/front/walk/3.png",
+            "vigie-manx/front/walk/4.png"
+          ],
+          "attack": [
+            "vigie-manx/front/attack/1.png",
+            "vigie-manx/front/attack/2.png",
+            "vigie-manx/front/attack/3.png",
+            "vigie-manx/front/attack/4.png"
+          ],
+          "hurt": [
+            "vigie-manx/front/hurt/1.png",
+            "vigie-manx/front/hurt/2.png",
+            "vigie-manx/front/hurt/3.png",
+            "vigie-manx/front/hurt/4.png"
+          ],
+          "appear": [
+            "vigie-manx/front/appear/1.png",
+            "vigie-manx/front/appear/2.png",
+            "vigie-manx/front/appear/3.png",
+            "vigie-manx/front/appear/4.png"
+          ],
+          "disappear": [
+            "vigie-manx/front/disappear/1.png",
+            "vigie-manx/front/disappear/2.png",
+            "vigie-manx/front/disappear/3.png",
+            "vigie-manx/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "vigie-manx/rear/idle/1.png",
+            "vigie-manx/rear/idle/2.png",
+            "vigie-manx/rear/idle/3.png",
+            "vigie-manx/rear/idle/4.png"
+          ],
+          "walk": [
+            "vigie-manx/rear/walk/1.png",
+            "vigie-manx/rear/walk/2.png",
+            "vigie-manx/rear/walk/3.png",
+            "vigie-manx/rear/walk/4.png"
+          ],
+          "attack": [
+            "vigie-manx/rear/attack/1.png",
+            "vigie-manx/rear/attack/2.png",
+            "vigie-manx/rear/attack/3.png",
+            "vigie-manx/rear/attack/4.png"
+          ],
+          "hurt": [
+            "vigie-manx/rear/hurt/1.png",
+            "vigie-manx/rear/hurt/2.png",
+            "vigie-manx/rear/hurt/3.png",
+            "vigie-manx/rear/hurt/4.png"
+          ],
+          "appear": [
+            "vigie-manx/rear/appear/1.png",
+            "vigie-manx/rear/appear/2.png",
+            "vigie-manx/rear/appear/3.png",
+            "vigie-manx/rear/appear/4.png"
+          ],
+          "disappear": [
+            "vigie-manx/rear/disappear/1.png",
+            "vigie-manx/rear/disappear/2.png",
+            "vigie-manx/rear/disappear/3.png",
+            "vigie-manx/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cuisinier-devon",
+      "name": "Cuisinier Devon Rex",
+      "rarity": "Commune",
+      "normalAttack": "swings wooden cooking spoon",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "cuisinier-devon/front/idle/1.png",
+            "cuisinier-devon/front/idle/2.png",
+            "cuisinier-devon/front/idle/3.png",
+            "cuisinier-devon/front/idle/4.png"
+          ],
+          "walk": [
+            "cuisinier-devon/front/walk/1.png",
+            "cuisinier-devon/front/walk/2.png",
+            "cuisinier-devon/front/walk/3.png",
+            "cuisinier-devon/front/walk/4.png"
+          ],
+          "attack": [
+            "cuisinier-devon/front/attack/1.png",
+            "cuisinier-devon/front/attack/2.png",
+            "cuisinier-devon/front/attack/3.png",
+            "cuisinier-devon/front/attack/4.png"
+          ],
+          "hurt": [
+            "cuisinier-devon/front/hurt/1.png",
+            "cuisinier-devon/front/hurt/2.png",
+            "cuisinier-devon/front/hurt/3.png",
+            "cuisinier-devon/front/hurt/4.png"
+          ],
+          "appear": [
+            "cuisinier-devon/front/appear/1.png",
+            "cuisinier-devon/front/appear/2.png",
+            "cuisinier-devon/front/appear/3.png",
+            "cuisinier-devon/front/appear/4.png"
+          ],
+          "disappear": [
+            "cuisinier-devon/front/disappear/1.png",
+            "cuisinier-devon/front/disappear/2.png",
+            "cuisinier-devon/front/disappear/3.png",
+            "cuisinier-devon/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "cuisinier-devon/rear/idle/1.png",
+            "cuisinier-devon/rear/idle/2.png",
+            "cuisinier-devon/rear/idle/3.png",
+            "cuisinier-devon/rear/idle/4.png"
+          ],
+          "walk": [
+            "cuisinier-devon/rear/walk/1.png",
+            "cuisinier-devon/rear/walk/2.png",
+            "cuisinier-devon/rear/walk/3.png",
+            "cuisinier-devon/rear/walk/4.png"
+          ],
+          "attack": [
+            "cuisinier-devon/rear/attack/1.png",
+            "cuisinier-devon/rear/attack/2.png",
+            "cuisinier-devon/rear/attack/3.png",
+            "cuisinier-devon/rear/attack/4.png"
+          ],
+          "hurt": [
+            "cuisinier-devon/rear/hurt/1.png",
+            "cuisinier-devon/rear/hurt/2.png",
+            "cuisinier-devon/rear/hurt/3.png",
+            "cuisinier-devon/rear/hurt/4.png"
+          ],
+          "appear": [
+            "cuisinier-devon/rear/appear/1.png",
+            "cuisinier-devon/rear/appear/2.png",
+            "cuisinier-devon/rear/appear/3.png",
+            "cuisinier-devon/rear/appear/4.png"
+          ],
+          "disappear": [
+            "cuisinier-devon/rear/disappear/1.png",
+            "cuisinier-devon/rear/disappear/2.png",
+            "cuisinier-devon/rear/disappear/3.png",
+            "cuisinier-devon/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "cordage-teckel",
+      "name": "Cordage Teckel",
+      "rarity": "Commune",
+      "normalAttack": "throws short rope lasso",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "cordage-teckel/front/idle/1.png",
+            "cordage-teckel/front/idle/2.png",
+            "cordage-teckel/front/idle/3.png",
+            "cordage-teckel/front/idle/4.png"
+          ],
+          "walk": [
+            "cordage-teckel/front/walk/1.png",
+            "cordage-teckel/front/walk/2.png",
+            "cordage-teckel/front/walk/3.png",
+            "cordage-teckel/front/walk/4.png"
+          ],
+          "attack": [
+            "cordage-teckel/front/attack/1.png",
+            "cordage-teckel/front/attack/2.png",
+            "cordage-teckel/front/attack/3.png",
+            "cordage-teckel/front/attack/4.png"
+          ],
+          "hurt": [
+            "cordage-teckel/front/hurt/1.png",
+            "cordage-teckel/front/hurt/2.png",
+            "cordage-teckel/front/hurt/3.png",
+            "cordage-teckel/front/hurt/4.png"
+          ],
+          "appear": [
+            "cordage-teckel/front/appear/1.png",
+            "cordage-teckel/front/appear/2.png",
+            "cordage-teckel/front/appear/3.png",
+            "cordage-teckel/front/appear/4.png"
+          ],
+          "disappear": [
+            "cordage-teckel/front/disappear/1.png",
+            "cordage-teckel/front/disappear/2.png",
+            "cordage-teckel/front/disappear/3.png",
+            "cordage-teckel/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "cordage-teckel/rear/idle/1.png",
+            "cordage-teckel/rear/idle/2.png",
+            "cordage-teckel/rear/idle/3.png",
+            "cordage-teckel/rear/idle/4.png"
+          ],
+          "walk": [
+            "cordage-teckel/rear/walk/1.png",
+            "cordage-teckel/rear/walk/2.png",
+            "cordage-teckel/rear/walk/3.png",
+            "cordage-teckel/rear/walk/4.png"
+          ],
+          "attack": [
+            "cordage-teckel/rear/attack/1.png",
+            "cordage-teckel/rear/attack/2.png",
+            "cordage-teckel/rear/attack/3.png",
+            "cordage-teckel/rear/attack/4.png"
+          ],
+          "hurt": [
+            "cordage-teckel/rear/hurt/1.png",
+            "cordage-teckel/rear/hurt/2.png",
+            "cordage-teckel/rear/hurt/3.png",
+            "cordage-teckel/rear/hurt/4.png"
+          ],
+          "appear": [
+            "cordage-teckel/rear/appear/1.png",
+            "cordage-teckel/rear/appear/2.png",
+            "cordage-teckel/rear/appear/3.png",
+            "cordage-teckel/rear/appear/4.png"
+          ],
+          "disappear": [
+            "cordage-teckel/rear/disappear/1.png",
+            "cordage-teckel/rear/disappear/2.png",
+            "cordage-teckel/rear/disappear/3.png",
+            "cordage-teckel/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "carte-shih-tzu",
+      "name": "Carte Shih Tzu",
+      "rarity": "Commune",
+      "normalAttack": "unfurls small map then forward paw strike",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "carte-shih-tzu/front/idle/1.png",
+            "carte-shih-tzu/front/idle/2.png",
+            "carte-shih-tzu/front/idle/3.png",
+            "carte-shih-tzu/front/idle/4.png"
+          ],
+          "walk": [
+            "carte-shih-tzu/front/walk/1.png",
+            "carte-shih-tzu/front/walk/2.png",
+            "carte-shih-tzu/front/walk/3.png",
+            "carte-shih-tzu/front/walk/4.png"
+          ],
+          "attack": [
+            "carte-shih-tzu/front/attack/1.png",
+            "carte-shih-tzu/front/attack/2.png",
+            "carte-shih-tzu/front/attack/3.png",
+            "carte-shih-tzu/front/attack/4.png"
+          ],
+          "hurt": [
+            "carte-shih-tzu/front/hurt/1.png",
+            "carte-shih-tzu/front/hurt/2.png",
+            "carte-shih-tzu/front/hurt/3.png",
+            "carte-shih-tzu/front/hurt/4.png"
+          ],
+          "appear": [
+            "carte-shih-tzu/front/appear/1.png",
+            "carte-shih-tzu/front/appear/2.png",
+            "carte-shih-tzu/front/appear/3.png",
+            "carte-shih-tzu/front/appear/4.png"
+          ],
+          "disappear": [
+            "carte-shih-tzu/front/disappear/1.png",
+            "carte-shih-tzu/front/disappear/2.png",
+            "carte-shih-tzu/front/disappear/3.png",
+            "carte-shih-tzu/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "carte-shih-tzu/rear/idle/1.png",
+            "carte-shih-tzu/rear/idle/2.png",
+            "carte-shih-tzu/rear/idle/3.png",
+            "carte-shih-tzu/rear/idle/4.png"
+          ],
+          "walk": [
+            "carte-shih-tzu/rear/walk/1.png",
+            "carte-shih-tzu/rear/walk/2.png",
+            "carte-shih-tzu/rear/walk/3.png",
+            "carte-shih-tzu/rear/walk/4.png"
+          ],
+          "attack": [
+            "carte-shih-tzu/rear/attack/1.png",
+            "carte-shih-tzu/rear/attack/2.png",
+            "carte-shih-tzu/rear/attack/3.png",
+            "carte-shih-tzu/rear/attack/4.png"
+          ],
+          "hurt": [
+            "carte-shih-tzu/rear/hurt/1.png",
+            "carte-shih-tzu/rear/hurt/2.png",
+            "carte-shih-tzu/rear/hurt/3.png",
+            "carte-shih-tzu/rear/hurt/4.png"
+          ],
+          "appear": [
+            "carte-shih-tzu/rear/appear/1.png",
+            "carte-shih-tzu/rear/appear/2.png",
+            "carte-shih-tzu/rear/appear/3.png",
+            "carte-shih-tzu/rear/appear/4.png"
+          ],
+          "disappear": [
+            "carte-shih-tzu/rear/disappear/1.png",
+            "carte-shih-tzu/rear/disappear/2.png",
+            "carte-shih-tzu/rear/disappear/3.png",
+            "carte-shih-tzu/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "lanterne-dalmatien",
+      "name": "Lanterne Dalmatien",
+      "rarity": "Commune",
+      "normalAttack": "swings lantern releasing tiny amber flash",
+      "ultimate": null,
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "lanterne-dalmatien/front/idle/1.png",
+            "lanterne-dalmatien/front/idle/2.png",
+            "lanterne-dalmatien/front/idle/3.png",
+            "lanterne-dalmatien/front/idle/4.png"
+          ],
+          "walk": [
+            "lanterne-dalmatien/front/walk/1.png",
+            "lanterne-dalmatien/front/walk/2.png",
+            "lanterne-dalmatien/front/walk/3.png",
+            "lanterne-dalmatien/front/walk/4.png"
+          ],
+          "attack": [
+            "lanterne-dalmatien/front/attack/1.png",
+            "lanterne-dalmatien/front/attack/2.png",
+            "lanterne-dalmatien/front/attack/3.png",
+            "lanterne-dalmatien/front/attack/4.png"
+          ],
+          "hurt": [
+            "lanterne-dalmatien/front/hurt/1.png",
+            "lanterne-dalmatien/front/hurt/2.png",
+            "lanterne-dalmatien/front/hurt/3.png",
+            "lanterne-dalmatien/front/hurt/4.png"
+          ],
+          "appear": [
+            "lanterne-dalmatien/front/appear/1.png",
+            "lanterne-dalmatien/front/appear/2.png",
+            "lanterne-dalmatien/front/appear/3.png",
+            "lanterne-dalmatien/front/appear/4.png"
+          ],
+          "disappear": [
+            "lanterne-dalmatien/front/disappear/1.png",
+            "lanterne-dalmatien/front/disappear/2.png",
+            "lanterne-dalmatien/front/disappear/3.png",
+            "lanterne-dalmatien/front/disappear/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "lanterne-dalmatien/rear/idle/1.png",
+            "lanterne-dalmatien/rear/idle/2.png",
+            "lanterne-dalmatien/rear/idle/3.png",
+            "lanterne-dalmatien/rear/idle/4.png"
+          ],
+          "walk": [
+            "lanterne-dalmatien/rear/walk/1.png",
+            "lanterne-dalmatien/rear/walk/2.png",
+            "lanterne-dalmatien/rear/walk/3.png",
+            "lanterne-dalmatien/rear/walk/4.png"
+          ],
+          "attack": [
+            "lanterne-dalmatien/rear/attack/1.png",
+            "lanterne-dalmatien/rear/attack/2.png",
+            "lanterne-dalmatien/rear/attack/3.png",
+            "lanterne-dalmatien/rear/attack/4.png"
+          ],
+          "hurt": [
+            "lanterne-dalmatien/rear/hurt/1.png",
+            "lanterne-dalmatien/rear/hurt/2.png",
+            "lanterne-dalmatien/rear/hurt/3.png",
+            "lanterne-dalmatien/rear/hurt/4.png"
+          ],
+          "appear": [
+            "lanterne-dalmatien/rear/appear/1.png",
+            "lanterne-dalmatien/rear/appear/2.png",
+            "lanterne-dalmatien/rear/appear/3.png",
+            "lanterne-dalmatien/rear/appear/4.png"
+          ],
+          "disappear": [
+            "lanterne-dalmatien/rear/disappear/1.png",
+            "lanterne-dalmatien/rear/disappear/2.png",
+            "lanterne-dalmatien/rear/disappear/3.png",
+            "lanterne-dalmatien/rear/disappear/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "corsaire-bengal",
+      "name": "Corsaire Bengal",
+      "rarity": "Épique",
+      "normalAttack": "slashes with claw in short arc",
+      "ultimate": "unfurls map and summons towering turquoise wave sweeping foes",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "corsaire-bengal/front/idle/1.png",
+            "corsaire-bengal/front/idle/2.png",
+            "corsaire-bengal/front/idle/3.png",
+            "corsaire-bengal/front/idle/4.png"
+          ],
+          "walk": [
+            "corsaire-bengal/front/walk/1.png",
+            "corsaire-bengal/front/walk/2.png",
+            "corsaire-bengal/front/walk/3.png",
+            "corsaire-bengal/front/walk/4.png"
+          ],
+          "attack": [
+            "corsaire-bengal/front/attack/1.png",
+            "corsaire-bengal/front/attack/2.png",
+            "corsaire-bengal/front/attack/3.png",
+            "corsaire-bengal/front/attack/4.png"
+          ],
+          "hurt": [
+            "corsaire-bengal/front/hurt/1.png",
+            "corsaire-bengal/front/hurt/2.png",
+            "corsaire-bengal/front/hurt/3.png",
+            "corsaire-bengal/front/hurt/4.png"
+          ],
+          "appear": [
+            "corsaire-bengal/front/appear/1.png",
+            "corsaire-bengal/front/appear/2.png",
+            "corsaire-bengal/front/appear/3.png",
+            "corsaire-bengal/front/appear/4.png"
+          ],
+          "disappear": [
+            "corsaire-bengal/front/disappear/1.png",
+            "corsaire-bengal/front/disappear/2.png",
+            "corsaire-bengal/front/disappear/3.png",
+            "corsaire-bengal/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "corsaire-bengal/front/ultimate/1.png",
+            "corsaire-bengal/front/ultimate/2.png",
+            "corsaire-bengal/front/ultimate/3.png",
+            "corsaire-bengal/front/ultimate/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "corsaire-bengal/rear/idle/1.png",
+            "corsaire-bengal/rear/idle/2.png",
+            "corsaire-bengal/rear/idle/3.png",
+            "corsaire-bengal/rear/idle/4.png"
+          ],
+          "walk": [
+            "corsaire-bengal/rear/walk/1.png",
+            "corsaire-bengal/rear/walk/2.png",
+            "corsaire-bengal/rear/walk/3.png",
+            "corsaire-bengal/rear/walk/4.png"
+          ],
+          "attack": [
+            "corsaire-bengal/rear/attack/1.png",
+            "corsaire-bengal/rear/attack/2.png",
+            "corsaire-bengal/rear/attack/3.png",
+            "corsaire-bengal/rear/attack/4.png"
+          ],
+          "hurt": [
+            "corsaire-bengal/rear/hurt/1.png",
+            "corsaire-bengal/rear/hurt/2.png",
+            "corsaire-bengal/rear/hurt/3.png",
+            "corsaire-bengal/rear/hurt/4.png"
+          ],
+          "appear": [
+            "corsaire-bengal/rear/appear/1.png",
+            "corsaire-bengal/rear/appear/2.png",
+            "corsaire-bengal/rear/appear/3.png",
+            "corsaire-bengal/rear/appear/4.png"
+          ],
+          "disappear": [
+            "corsaire-bengal/rear/disappear/1.png",
+            "corsaire-bengal/rear/disappear/2.png",
+            "corsaire-bengal/rear/disappear/3.png",
+            "corsaire-bengal/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "corsaire-bengal/rear/ultimate/1.png",
+            "corsaire-bengal/rear/ultimate/2.png",
+            "corsaire-bengal/rear/ultimate/3.png",
+            "corsaire-bengal/rear/ultimate/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "capitaine-terre-neuve",
+      "name": "Capitaine Terre-Neuve",
+      "rarity": "Épique",
+      "normalAttack": "heavy commanding fist strike",
+      "ultimate": "turns spectral ship wheel summons three naval cannons with massive golden salvo",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "capitaine-terre-neuve/front/idle/1.png",
+            "capitaine-terre-neuve/front/idle/2.png",
+            "capitaine-terre-neuve/front/idle/3.png",
+            "capitaine-terre-neuve/front/idle/4.png"
+          ],
+          "walk": [
+            "capitaine-terre-neuve/front/walk/1.png",
+            "capitaine-terre-neuve/front/walk/2.png",
+            "capitaine-terre-neuve/front/walk/3.png",
+            "capitaine-terre-neuve/front/walk/4.png"
+          ],
+          "attack": [
+            "capitaine-terre-neuve/front/attack/1.png",
+            "capitaine-terre-neuve/front/attack/2.png",
+            "capitaine-terre-neuve/front/attack/3.png",
+            "capitaine-terre-neuve/front/attack/4.png"
+          ],
+          "hurt": [
+            "capitaine-terre-neuve/front/hurt/1.png",
+            "capitaine-terre-neuve/front/hurt/2.png",
+            "capitaine-terre-neuve/front/hurt/3.png",
+            "capitaine-terre-neuve/front/hurt/4.png"
+          ],
+          "appear": [
+            "capitaine-terre-neuve/front/appear/1.png",
+            "capitaine-terre-neuve/front/appear/2.png",
+            "capitaine-terre-neuve/front/appear/3.png",
+            "capitaine-terre-neuve/front/appear/4.png"
+          ],
+          "disappear": [
+            "capitaine-terre-neuve/front/disappear/1.png",
+            "capitaine-terre-neuve/front/disappear/2.png",
+            "capitaine-terre-neuve/front/disappear/3.png",
+            "capitaine-terre-neuve/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "capitaine-terre-neuve/front/ultimate/1.png",
+            "capitaine-terre-neuve/front/ultimate/2.png",
+            "capitaine-terre-neuve/front/ultimate/3.png",
+            "capitaine-terre-neuve/front/ultimate/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "capitaine-terre-neuve/rear/idle/1.png",
+            "capitaine-terre-neuve/rear/idle/2.png",
+            "capitaine-terre-neuve/rear/idle/3.png",
+            "capitaine-terre-neuve/rear/idle/4.png"
+          ],
+          "walk": [
+            "capitaine-terre-neuve/rear/walk/1.png",
+            "capitaine-terre-neuve/rear/walk/2.png",
+            "capitaine-terre-neuve/rear/walk/3.png",
+            "capitaine-terre-neuve/rear/walk/4.png"
+          ],
+          "attack": [
+            "capitaine-terre-neuve/rear/attack/1.png",
+            "capitaine-terre-neuve/rear/attack/2.png",
+            "capitaine-terre-neuve/rear/attack/3.png",
+            "capitaine-terre-neuve/rear/attack/4.png"
+          ],
+          "hurt": [
+            "capitaine-terre-neuve/rear/hurt/1.png",
+            "capitaine-terre-neuve/rear/hurt/2.png",
+            "capitaine-terre-neuve/rear/hurt/3.png",
+            "capitaine-terre-neuve/rear/hurt/4.png"
+          ],
+          "appear": [
+            "capitaine-terre-neuve/rear/appear/1.png",
+            "capitaine-terre-neuve/rear/appear/2.png",
+            "capitaine-terre-neuve/rear/appear/3.png",
+            "capitaine-terre-neuve/rear/appear/4.png"
+          ],
+          "disappear": [
+            "capitaine-terre-neuve/rear/disappear/1.png",
+            "capitaine-terre-neuve/rear/disappear/2.png",
+            "capitaine-terre-neuve/rear/disappear/3.png",
+            "capitaine-terre-neuve/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "capitaine-terre-neuve/rear/ultimate/1.png",
+            "capitaine-terre-neuve/rear/ultimate/2.png",
+            "capitaine-terre-neuve/rear/ultimate/3.png",
+            "capitaine-terre-neuve/rear/ultimate/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "chamane-mainecoon",
+      "name": "Chamane Mainecoon",
+      "rarity": "Épique",
+      "normalAttack": "conjures tiny blue fish projectile",
+      "ultimate": "raises both paws summons giant turquoise spectral ray bursting in sea foam",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "chamane-mainecoon/front/idle/1.png",
+            "chamane-mainecoon/front/idle/2.png",
+            "chamane-mainecoon/front/idle/3.png",
+            "chamane-mainecoon/front/idle/4.png"
+          ],
+          "walk": [
+            "chamane-mainecoon/front/walk/1.png",
+            "chamane-mainecoon/front/walk/2.png",
+            "chamane-mainecoon/front/walk/3.png",
+            "chamane-mainecoon/front/walk/4.png"
+          ],
+          "attack": [
+            "chamane-mainecoon/front/attack/1.png",
+            "chamane-mainecoon/front/attack/2.png",
+            "chamane-mainecoon/front/attack/3.png",
+            "chamane-mainecoon/front/attack/4.png"
+          ],
+          "hurt": [
+            "chamane-mainecoon/front/hurt/1.png",
+            "chamane-mainecoon/front/hurt/2.png",
+            "chamane-mainecoon/front/hurt/3.png",
+            "chamane-mainecoon/front/hurt/4.png"
+          ],
+          "appear": [
+            "chamane-mainecoon/front/appear/1.png",
+            "chamane-mainecoon/front/appear/2.png",
+            "chamane-mainecoon/front/appear/3.png",
+            "chamane-mainecoon/front/appear/4.png"
+          ],
+          "disappear": [
+            "chamane-mainecoon/front/disappear/1.png",
+            "chamane-mainecoon/front/disappear/2.png",
+            "chamane-mainecoon/front/disappear/3.png",
+            "chamane-mainecoon/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "chamane-mainecoon/front/ultimate/1.png",
+            "chamane-mainecoon/front/ultimate/2.png",
+            "chamane-mainecoon/front/ultimate/3.png",
+            "chamane-mainecoon/front/ultimate/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "chamane-mainecoon/rear/idle/1.png",
+            "chamane-mainecoon/rear/idle/2.png",
+            "chamane-mainecoon/rear/idle/3.png",
+            "chamane-mainecoon/rear/idle/4.png"
+          ],
+          "walk": [
+            "chamane-mainecoon/rear/walk/1.png",
+            "chamane-mainecoon/rear/walk/2.png",
+            "chamane-mainecoon/rear/walk/3.png",
+            "chamane-mainecoon/rear/walk/4.png"
+          ],
+          "attack": [
+            "chamane-mainecoon/rear/attack/1.png",
+            "chamane-mainecoon/rear/attack/2.png",
+            "chamane-mainecoon/rear/attack/3.png",
+            "chamane-mainecoon/rear/attack/4.png"
+          ],
+          "hurt": [
+            "chamane-mainecoon/rear/hurt/1.png",
+            "chamane-mainecoon/rear/hurt/2.png",
+            "chamane-mainecoon/rear/hurt/3.png",
+            "chamane-mainecoon/rear/hurt/4.png"
+          ],
+          "appear": [
+            "chamane-mainecoon/rear/appear/1.png",
+            "chamane-mainecoon/rear/appear/2.png",
+            "chamane-mainecoon/rear/appear/3.png",
+            "chamane-mainecoon/rear/appear/4.png"
+          ],
+          "disappear": [
+            "chamane-mainecoon/rear/disappear/1.png",
+            "chamane-mainecoon/rear/disappear/2.png",
+            "chamane-mainecoon/rear/disappear/3.png",
+            "chamane-mainecoon/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "chamane-mainecoon/rear/ultimate/1.png",
+            "chamane-mainecoon/rear/ultimate/2.png",
+            "chamane-mainecoon/rear/ultimate/3.png",
+            "chamane-mainecoon/rear/ultimate/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "ciel-saluki",
+      "name": "Ciel Saluki",
+      "rarity": "Épique",
+      "normalAttack": "swings sail spar releases short wind blade",
+      "ultimate": "opens great ivory sail summoning spiral cyclone with gold compass stars",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "ciel-saluki/front/idle/1.png",
+            "ciel-saluki/front/idle/2.png",
+            "ciel-saluki/front/idle/3.png",
+            "ciel-saluki/front/idle/4.png"
+          ],
+          "walk": [
+            "ciel-saluki/front/walk/1.png",
+            "ciel-saluki/front/walk/2.png",
+            "ciel-saluki/front/walk/3.png",
+            "ciel-saluki/front/walk/4.png"
+          ],
+          "attack": [
+            "ciel-saluki/front/attack/1.png",
+            "ciel-saluki/front/attack/2.png",
+            "ciel-saluki/front/attack/3.png",
+            "ciel-saluki/front/attack/4.png"
+          ],
+          "hurt": [
+            "ciel-saluki/front/hurt/1.png",
+            "ciel-saluki/front/hurt/2.png",
+            "ciel-saluki/front/hurt/3.png",
+            "ciel-saluki/front/hurt/4.png"
+          ],
+          "appear": [
+            "ciel-saluki/front/appear/1.png",
+            "ciel-saluki/front/appear/2.png",
+            "ciel-saluki/front/appear/3.png",
+            "ciel-saluki/front/appear/4.png"
+          ],
+          "disappear": [
+            "ciel-saluki/front/disappear/1.png",
+            "ciel-saluki/front/disappear/2.png",
+            "ciel-saluki/front/disappear/3.png",
+            "ciel-saluki/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "ciel-saluki/front/ultimate/1.png",
+            "ciel-saluki/front/ultimate/2.png",
+            "ciel-saluki/front/ultimate/3.png",
+            "ciel-saluki/front/ultimate/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "ciel-saluki/rear/idle/1.png",
+            "ciel-saluki/rear/idle/2.png",
+            "ciel-saluki/rear/idle/3.png",
+            "ciel-saluki/rear/idle/4.png"
+          ],
+          "walk": [
+            "ciel-saluki/rear/walk/1.png",
+            "ciel-saluki/rear/walk/2.png",
+            "ciel-saluki/rear/walk/3.png",
+            "ciel-saluki/rear/walk/4.png"
+          ],
+          "attack": [
+            "ciel-saluki/rear/attack/1.png",
+            "ciel-saluki/rear/attack/2.png",
+            "ciel-saluki/rear/attack/3.png",
+            "ciel-saluki/rear/attack/4.png"
+          ],
+          "hurt": [
+            "ciel-saluki/rear/hurt/1.png",
+            "ciel-saluki/rear/hurt/2.png",
+            "ciel-saluki/rear/hurt/3.png",
+            "ciel-saluki/rear/hurt/4.png"
+          ],
+          "appear": [
+            "ciel-saluki/rear/appear/1.png",
+            "ciel-saluki/rear/appear/2.png",
+            "ciel-saluki/rear/appear/3.png",
+            "ciel-saluki/rear/appear/4.png"
+          ],
+          "disappear": [
+            "ciel-saluki/rear/disappear/1.png",
+            "ciel-saluki/rear/disappear/2.png",
+            "ciel-saluki/rear/disappear/3.png",
+            "ciel-saluki/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "ciel-saluki/rear/ultimate/1.png",
+            "ciel-saluki/rear/ultimate/2.png",
+            "ciel-saluki/rear/ultimate/3.png",
+            "ciel-saluki/rear/ultimate/4.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "fantome-sphynx",
+      "name": "Fantôme Sphynx",
+      "rarity": "Légendaire",
+      "normalAttack": "summons a single small turquoise spectral fish",
+      "ultimate": "Baleine spectrale",
+      "dodgeEvery": 3,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "fantome-sphynx/front/idle/1.png",
+            "fantome-sphynx/front/idle/2.png",
+            "fantome-sphynx/front/idle/3.png",
+            "fantome-sphynx/front/idle/4.png"
+          ],
+          "walk": [
+            "fantome-sphynx/front/walk/1.png",
+            "fantome-sphynx/front/walk/2.png",
+            "fantome-sphynx/front/walk/3.png",
+            "fantome-sphynx/front/walk/4.png"
+          ],
+          "attack": [
+            "fantome-sphynx/front/attack/1.png",
+            "fantome-sphynx/front/attack/2.png",
+            "fantome-sphynx/front/attack/3.png",
+            "fantome-sphynx/front/attack/4.png"
+          ],
+          "hurt": [
+            "fantome-sphynx/front/hurt/1.png",
+            "fantome-sphynx/front/hurt/2.png",
+            "fantome-sphynx/front/hurt/3.png",
+            "fantome-sphynx/front/hurt/4.png"
+          ],
+          "appear": [
+            "fantome-sphynx/front/appear/1.png",
+            "fantome-sphynx/front/appear/2.png",
+            "fantome-sphynx/front/appear/3.png",
+            "fantome-sphynx/front/appear/4.png"
+          ],
+          "disappear": [
+            "fantome-sphynx/front/disappear/1.png",
+            "fantome-sphynx/front/disappear/2.png",
+            "fantome-sphynx/front/disappear/3.png",
+            "fantome-sphynx/front/disappear/4.png"
+          ],
+          "dodge": [
+            "fantome-sphynx/front/dodge/1.png",
+            "fantome-sphynx/front/dodge/2.png",
+            "fantome-sphynx/front/dodge/3.png",
+            "fantome-sphynx/front/dodge/4.png"
+          ],
+          "ultimate": [
+            "fantome-sphynx/front/ultimate/1.png",
+            "fantome-sphynx/front/ultimate/2.png",
+            "fantome-sphynx/front/ultimate/3.png",
+            "fantome-sphynx/front/ultimate/4.png",
+            "fantome-sphynx/front/ultimate/5.png",
+            "fantome-sphynx/front/ultimate/6.png",
+            "fantome-sphynx/front/ultimate/7.png",
+            "fantome-sphynx/front/ultimate/8.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "fantome-sphynx/rear/idle/1.png",
+            "fantome-sphynx/rear/idle/2.png",
+            "fantome-sphynx/rear/idle/3.png",
+            "fantome-sphynx/rear/idle/4.png"
+          ],
+          "walk": [
+            "fantome-sphynx/rear/walk/1.png",
+            "fantome-sphynx/rear/walk/2.png",
+            "fantome-sphynx/rear/walk/3.png",
+            "fantome-sphynx/rear/walk/4.png"
+          ],
+          "attack": [
+            "fantome-sphynx/rear/attack/1.png",
+            "fantome-sphynx/rear/attack/2.png",
+            "fantome-sphynx/rear/attack/3.png",
+            "fantome-sphynx/rear/attack/4.png"
+          ],
+          "hurt": [
+            "fantome-sphynx/rear/hurt/1.png",
+            "fantome-sphynx/rear/hurt/2.png",
+            "fantome-sphynx/rear/hurt/3.png",
+            "fantome-sphynx/rear/hurt/4.png"
+          ],
+          "appear": [
+            "fantome-sphynx/rear/appear/1.png",
+            "fantome-sphynx/rear/appear/2.png",
+            "fantome-sphynx/rear/appear/3.png",
+            "fantome-sphynx/rear/appear/4.png"
+          ],
+          "disappear": [
+            "fantome-sphynx/rear/disappear/1.png",
+            "fantome-sphynx/rear/disappear/2.png",
+            "fantome-sphynx/rear/disappear/3.png",
+            "fantome-sphynx/rear/disappear/4.png"
+          ],
+          "dodge": [
+            "fantome-sphynx/rear/dodge/1.png",
+            "fantome-sphynx/rear/dodge/2.png",
+            "fantome-sphynx/rear/dodge/3.png",
+            "fantome-sphynx/rear/dodge/4.png"
+          ],
+          "ultimate": [
+            "fantome-sphynx/rear/ultimate/1.png",
+            "fantome-sphynx/rear/ultimate/2.png",
+            "fantome-sphynx/rear/ultimate/3.png",
+            "fantome-sphynx/rear/ultimate/4.png",
+            "fantome-sphynx/rear/ultimate/5.png",
+            "fantome-sphynx/rear/ultimate/6.png",
+            "fantome-sphynx/rear/ultimate/7.png",
+            "fantome-sphynx/rear/ultimate/8.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "amiral-bouvier",
+      "name": "Amiral Bouvier Bernois",
+      "rarity": "Légendaire",
+      "normalAttack": "strong commanding paw slash with tiny gold arc",
+      "ultimate": "Ancre des abysses",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chien",
+      "orientations": {
+        "front": {
+          "idle": [
+            "amiral-bouvier/front/idle/1.png",
+            "amiral-bouvier/front/idle/2.png",
+            "amiral-bouvier/front/idle/3.png",
+            "amiral-bouvier/front/idle/4.png"
+          ],
+          "walk": [
+            "amiral-bouvier/front/walk/1.png",
+            "amiral-bouvier/front/walk/2.png",
+            "amiral-bouvier/front/walk/3.png",
+            "amiral-bouvier/front/walk/4.png"
+          ],
+          "attack": [
+            "amiral-bouvier/front/attack/1.png",
+            "amiral-bouvier/front/attack/2.png",
+            "amiral-bouvier/front/attack/3.png",
+            "amiral-bouvier/front/attack/4.png"
+          ],
+          "hurt": [
+            "amiral-bouvier/front/hurt/1.png",
+            "amiral-bouvier/front/hurt/2.png",
+            "amiral-bouvier/front/hurt/3.png",
+            "amiral-bouvier/front/hurt/4.png"
+          ],
+          "appear": [
+            "amiral-bouvier/front/appear/1.png",
+            "amiral-bouvier/front/appear/2.png",
+            "amiral-bouvier/front/appear/3.png",
+            "amiral-bouvier/front/appear/4.png"
+          ],
+          "disappear": [
+            "amiral-bouvier/front/disappear/1.png",
+            "amiral-bouvier/front/disappear/2.png",
+            "amiral-bouvier/front/disappear/3.png",
+            "amiral-bouvier/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "amiral-bouvier/front/ultimate/1.png",
+            "amiral-bouvier/front/ultimate/2.png",
+            "amiral-bouvier/front/ultimate/3.png",
+            "amiral-bouvier/front/ultimate/4.png",
+            "amiral-bouvier/front/ultimate/5.png",
+            "amiral-bouvier/front/ultimate/6.png",
+            "amiral-bouvier/front/ultimate/7.png",
+            "amiral-bouvier/front/ultimate/8.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "amiral-bouvier/rear/idle/1.png",
+            "amiral-bouvier/rear/idle/2.png",
+            "amiral-bouvier/rear/idle/3.png",
+            "amiral-bouvier/rear/idle/4.png"
+          ],
+          "walk": [
+            "amiral-bouvier/rear/walk/1.png",
+            "amiral-bouvier/rear/walk/2.png",
+            "amiral-bouvier/rear/walk/3.png",
+            "amiral-bouvier/rear/walk/4.png"
+          ],
+          "attack": [
+            "amiral-bouvier/rear/attack/1.png",
+            "amiral-bouvier/rear/attack/2.png",
+            "amiral-bouvier/rear/attack/3.png",
+            "amiral-bouvier/rear/attack/4.png"
+          ],
+          "hurt": [
+            "amiral-bouvier/rear/hurt/1.png",
+            "amiral-bouvier/rear/hurt/2.png",
+            "amiral-bouvier/rear/hurt/3.png",
+            "amiral-bouvier/rear/hurt/4.png"
+          ],
+          "appear": [
+            "amiral-bouvier/rear/appear/1.png",
+            "amiral-bouvier/rear/appear/2.png",
+            "amiral-bouvier/rear/appear/3.png",
+            "amiral-bouvier/rear/appear/4.png"
+          ],
+          "disappear": [
+            "amiral-bouvier/rear/disappear/1.png",
+            "amiral-bouvier/rear/disappear/2.png",
+            "amiral-bouvier/rear/disappear/3.png",
+            "amiral-bouvier/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "amiral-bouvier/rear/ultimate/1.png",
+            "amiral-bouvier/rear/ultimate/2.png",
+            "amiral-bouvier/rear/ultimate/3.png",
+            "amiral-bouvier/rear/ultimate/4.png",
+            "amiral-bouvier/rear/ultimate/5.png",
+            "amiral-bouvier/rear/ultimate/6.png",
+            "amiral-bouvier/rear/ultimate/7.png",
+            "amiral-bouvier/rear/ultimate/8.png"
+          ]
+        }
+      }
+    },
+    {
+      "id": "navigateur-tuxedo",
+      "name": "Navigateur Tuxedo",
+      "rarity": "Rare",
+      "normalAttack": "aims telescope fires narrow gold star bolt",
+      "ultimate": "looks through telescope draws enormous celestial compass targeting circle and calls gold comet blast",
+      "dodgeEvery": null,
+      "fps": 6,
+      "species": "Chat",
+      "orientations": {
+        "front": {
+          "idle": [
+            "navigateur-tuxedo/front/idle/1.png",
+            "navigateur-tuxedo/front/idle/2.png",
+            "navigateur-tuxedo/front/idle/3.png",
+            "navigateur-tuxedo/front/idle/4.png"
+          ],
+          "walk": [
+            "navigateur-tuxedo/front/walk/1.png",
+            "navigateur-tuxedo/front/walk/2.png",
+            "navigateur-tuxedo/front/walk/3.png",
+            "navigateur-tuxedo/front/walk/4.png"
+          ],
+          "attack": [
+            "navigateur-tuxedo/front/attack/1.png",
+            "navigateur-tuxedo/front/attack/2.png",
+            "navigateur-tuxedo/front/attack/3.png",
+            "navigateur-tuxedo/front/attack/4.png"
+          ],
+          "hurt": [
+            "navigateur-tuxedo/front/hurt/1.png",
+            "navigateur-tuxedo/front/hurt/2.png",
+            "navigateur-tuxedo/front/hurt/3.png",
+            "navigateur-tuxedo/front/hurt/4.png"
+          ],
+          "appear": [
+            "navigateur-tuxedo/front/appear/1.png",
+            "navigateur-tuxedo/front/appear/2.png",
+            "navigateur-tuxedo/front/appear/3.png",
+            "navigateur-tuxedo/front/appear/4.png"
+          ],
+          "disappear": [
+            "navigateur-tuxedo/front/disappear/1.png",
+            "navigateur-tuxedo/front/disappear/2.png",
+            "navigateur-tuxedo/front/disappear/3.png",
+            "navigateur-tuxedo/front/disappear/4.png"
+          ],
+          "ultimate": [
+            "navigateur-tuxedo/front/ultimate/1.png",
+            "navigateur-tuxedo/front/ultimate/2.png",
+            "navigateur-tuxedo/front/ultimate/3.png",
+            "navigateur-tuxedo/front/ultimate/4.png"
+          ]
+        },
+        "rear": {
+          "idle": [
+            "navigateur-tuxedo/rear/idle/1.png",
+            "navigateur-tuxedo/rear/idle/2.png",
+            "navigateur-tuxedo/rear/idle/3.png",
+            "navigateur-tuxedo/rear/idle/4.png"
+          ],
+          "walk": [
+            "navigateur-tuxedo/rear/walk/1.png",
+            "navigateur-tuxedo/rear/walk/2.png",
+            "navigateur-tuxedo/rear/walk/3.png",
+            "navigateur-tuxedo/rear/walk/4.png"
+          ],
+          "attack": [
+            "navigateur-tuxedo/rear/attack/1.png",
+            "navigateur-tuxedo/rear/attack/2.png",
+            "navigateur-tuxedo/rear/attack/3.png",
+            "navigateur-tuxedo/rear/attack/4.png"
+          ],
+          "hurt": [
+            "navigateur-tuxedo/rear/hurt/1.png",
+            "navigateur-tuxedo/rear/hurt/2.png",
+            "navigateur-tuxedo/rear/hurt/3.png",
+            "navigateur-tuxedo/rear/hurt/4.png"
+          ],
+          "appear": [
+            "navigateur-tuxedo/rear/appear/1.png",
+            "navigateur-tuxedo/rear/appear/2.png",
+            "navigateur-tuxedo/rear/appear/3.png",
+            "navigateur-tuxedo/rear/appear/4.png"
+          ],
+          "disappear": [
+            "navigateur-tuxedo/rear/disappear/1.png",
+            "navigateur-tuxedo/rear/disappear/2.png",
+            "navigateur-tuxedo/rear/disappear/3.png",
+            "navigateur-tuxedo/rear/disappear/4.png"
+          ],
+          "ultimate": [
+            "navigateur-tuxedo/rear/ultimate/1.png",
+            "navigateur-tuxedo/rear/ultimate/2.png",
+            "navigateur-tuxedo/rear/ultimate/3.png",
+            "navigateur-tuxedo/rear/ultimate/4.png"
+          ]
+        }
+      }
+    }
+  ],
+  "vfxFrameCount": 32,
+  "synergy": {
+    "id": "maree-pirate",
+    "minimumAlliedPirates": 3,
+    "damage": 30,
+    "stunSeconds": 2,
+    "balance": "illustrative-configurable",
+    "trigger": "manual-cast-when-eligible",
+    "target": "enemies-in-wave-path",
+    "oncePerTargetPerCast": true,
+    "frames": [
+      "vfx/red-pirate-ship/1.png",
+      "vfx/red-pirate-ship/2.png",
+      "vfx/red-pirate-ship/3.png",
+      "vfx/red-pirate-ship/4.png",
+      "vfx/red-pirate-ship/5.png",
+      "vfx/red-pirate-ship/6.png",
+      "vfx/red-pirate-ship/7.png",
+      "vfx/red-pirate-ship/8.png"
+    ],
+    "name": "Navire écarlate",
+    "teams": "both",
+    "opposingFrames": [
+      "vfx/red-pirate-ship-reverse/1.png",
+      "vfx/red-pirate-ship-reverse/2.png",
+      "vfx/red-pirate-ship-reverse/3.png",
+      "vfx/red-pirate-ship-reverse/4.png",
+      "vfx/red-pirate-ship-reverse/5.png",
+      "vfx/red-pirate-ship-reverse/6.png",
+      "vfx/red-pirate-ship-reverse/7.png",
+      "vfx/red-pirate-ship-reverse/8.png"
+    ],
+    "demoTimes": {
+      "allied": 12.5,
+      "opposing": 16
+    }
+  },
+  "combat": {
+    "range": 112,
+    "speed": 88,
+    "attackDamage": 3,
+    "attackCooldownSeconds": 1.3,
+    "stopToAttack": true,
+    "cancelAttackOutOfRange": true,
+    "stunBlocksMovementAndAttack": true,
+    "balance": "illustrative-configurable",
+    "ultimate": {
+      "damage": 14,
+      "range": 230,
+      "animationSeconds": 2,
+      "demoReadyAt": {
+        "fantome-sphynx": 4,
+        "amiral-bouvier": 8.5
+      },
+      "boost": {
+        "stat": "attackSpeed",
+        "multiplier": 1.4,
+        "durationSeconds": 4,
+        "targets": "other-living-allied-pirates"
+      },
+      "placement": "separate-effect-on-enemy",
+      "damageAtImpactSeconds": 0.6
+    }
+  },
+  "ultimateEffects": {
+    "whale": [
+      "vfx/tidal-whale/1.png",
+      "vfx/tidal-whale/2.png",
+      "vfx/tidal-whale/3.png",
+      "vfx/tidal-whale/4.png",
+      "vfx/tidal-whale/5.png",
+      "vfx/tidal-whale/6.png",
+      "vfx/tidal-whale/7.png",
+      "vfx/tidal-whale/8.png"
+    ],
+    "anchor": [
+      "vfx/golden-anchor/1.png",
+      "vfx/golden-anchor/2.png",
+      "vfx/golden-anchor/3.png",
+      "vfx/golden-anchor/4.png",
+      "vfx/golden-anchor/5.png",
+      "vfx/golden-anchor/6.png",
+      "vfx/golden-anchor/7.png",
+      "vfx/golden-anchor/8.png"
+    ]
+  }
+}

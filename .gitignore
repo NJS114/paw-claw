@@ -4,3 +4,11 @@ dist/
 public/assets/generated/
 public/assets/cards/**/*.webp
 output/
+
+# Rebuilt from optimized Pirate atlases
+public/assets/animations/pirates/**/*.png
+
+/node_modules
+/public/assets/animations/groups/*.png
+
+/public/assets/animations/groups/*.webp

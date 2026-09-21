@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs",
+    "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs && npm run assets:pirates && npm run assets:groups",
     "assets:crop": "node scripts/crop-card-sheets.mjs",
     "assets:validate": "node scripts/validate-assets.mjs",
     "assets:audit": "node scripts/audit-asset-coverage.mjs",
@@ -18,7 +18,11 @@
     "test:functional": "vitest run src/*.functional.test.tsx",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:all": "npm run assets:validate && npm run test:unit && npm run test:functional"
+    "test:all": "npm run assets:validate && npm run test:unit && npm run test:functional",
+    "assets:pirates": "node scripts/import-pirate-animations.mjs",
+    "test:pirates": "npm run assets:pirates && node scripts/validate-pirate-animations.mjs",
+    "test:groups": "npm run assets:groups && node scripts/test-group-animations.cjs",
+    "assets:groups": "node scripts/import-group-animations.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

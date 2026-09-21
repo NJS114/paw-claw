@@ -1,0 +1,221 @@
+{
+  "status": "incomplete-transfer",
+  "reason": "Execution environment disconnected after 16 confirmed binary blobs.",
+  "baseCommit": "616f9fd5b7a0849614dae9eab0f4228c195ba479",
+  "expectedCompleteTree": "dd86ae3409af8dddf6251916a7d5d973214772c8",
+  "uploaded": {
+    "assets/groups/armee.webp.part00": "433451a3bc416d46b0608f6828a42df3939cff7e",
+    "assets/groups/armee.webp.part01": "66a5863b858aa7950f2be33e6147c76df7da151f",
+    "assets/groups/board.webp.part00": "ed3e240434babcc38da55a5203a9bb6827d1d413",
+    "assets/groups/creatures.webp.part00": "faa0b4b2764659638f00a1b390b8d8708b0de20b",
+    "assets/groups/creatures.webp.part01": "b739fe3407c268f90d3810a9694e43216cf5e5bc",
+    "assets/groups/elements.webp.part00": "8f59c0cb44e95ed3abd26cc71980b94d9241d711",
+    "assets/groups/elements.webp.part01": "b333cd09d64d5d7c1758514a3d94b0f8a2cba124",
+    "assets/groups/guerisseurs.webp.part00": "54dcc6003bcf54a7411a2ccbe7b5b6f9f24e40df",
+    "assets/groups/guerisseurs.webp.part01": "31bfbde73e8e51afb9073c224687d7eed52fdf6a",
+    "assets/groups/magiciens.webp.part00": "4acbe586d27a34c89d935a23bd5480d29e5da1d2",
+    "assets/groups/magiciens.webp.part01": "08c84214b0384edf8529c7121a7f1c107fa81709",
+    "assets/groups/nature.webp.part00": "42effd4c0a25a71b6fb9c0d8458eb9f8a7364a63",
+    "assets/groups/nature.webp.part01": "97bfb68070ad45f61033146633c666055100010f",
+    "assets/groups/nobles.webp.part00": "719e41ed6ac67d5855732b6e8b23cab1b004426a",
+    "assets/groups/nobles.webp.part01": "0296810aebc74024520684db7e29ba62b3858dc6",
+    "assets/groups/ombres.webp.part00": "7e8f6c622e0c792e8185f2f9c59f45b62db145f4"
+  },
+  "missing": [
+    {
+      "path": "assets/groups/ombres.webp.part01",
+      "size": 89802,
+      "sha": "65cd8d1753def5f60310e9b07fa91a7554d3a310"
+    },
+    {
+      "path": "assets/groups/robots.webp.part00",
+      "size": 384000,
+      "sha": "ee1580dcdd9de0f41233a9331aa1748eaf243f22"
+    },
+    {
+      "path": "assets/groups/robots.webp.part01",
+      "size": 171366,
+      "sha": "8871ad2a43107b055dc80169578136fd8f1f385d"
+    },
+    {
+      "path": "assets/pirates/amiral-bouvier.webp.part00",
+      "size": 384000,
+      "sha": "21d24bf2a8358341c238ee9cb21220d471289fe4"
+    },
+    {
+      "path": "assets/pirates/amiral-bouvier.webp.part01",
+      "size": 372734,
+      "sha": "9ef35573d467cea3fbd6ef04bf0a8035b95afc4e"
+    },
+    {
+      "path": "assets/pirates/board.webp.part00",
+      "size": 180632,
+      "sha": "ed3e240434babcc38da55a5203a9bb6827d1d413"
+    },
+    {
+      "path": "assets/pirates/capitaine-terre-neuve.webp.part00",
+      "size": 384000,
+      "sha": "18f061688aeca84f7ac3de76b7a2c4e3c7b7a8b7"
+    },
+    {
+      "path": "assets/pirates/capitaine-terre-neuve.webp.part01",
+      "size": 241684,
+      "sha": "b3fa252c774bc7edff6a3fd45878853dbb28b5ea"
+    },
+    {
+      "path": "assets/pirates/carte-shih-tzu.webp.part00",
+      "size": 384000,
+      "sha": "298a2dcd35f658a35e384d44bae62c42445b79ed"
+    },
+    {
+      "path": "assets/pirates/carte-shih-tzu.webp.part01",
+      "size": 96444,
+      "sha": "d6ca9efb46ba66bbe7e658a7df7c325bd56d63fe"
+    },
+    {
+      "path": "assets/pirates/chamane-mainecoon.webp.part00",
+      "size": 384000,
+      "sha": "89e294079cbd4dc0c2a6792b750d01d34a60b21a"
+    },
+    {
+      "path": "assets/pirates/chamane-mainecoon.webp.part01",
+      "size": 310978,
+      "sha": "9d3da47bcd732b8ce8944610850ad00efd3ee4bc"
+    },
+    {
+      "path": "assets/pirates/ciel-saluki.webp.part00",
+      "size": 384000,
+      "sha": "b6ab9754a2288547173abd126f74b1cd27b1ffe9"
+    },
+    {
+      "path": "assets/pirates/ciel-saluki.webp.part01",
+      "size": 280372,
+      "sha": "b6f520927b735bd9a5756d15d423888b181f0d0b"
+    },
+    {
+      "path": "assets/pirates/cordage-teckel.webp.part00",
+      "size": 384000,
+      "sha": "7862a351b56f2bd60b8e8978917816f12e5b4046"
+    },
+    {
+      "path": "assets/pirates/cordage-teckel.webp.part01",
+      "size": 55822,
+      "sha": "106376f8f1e213d59fab151777d2700ef0472d21"
+    },
+    {
+      "path": "assets/pirates/corsaire-bengal.webp.part00",
+      "size": 384000,
+      "sha": "4235ccf419e9153de961010e0837fd10e96aebda"
+    },
+    {
+      "path": "assets/pirates/corsaire-bengal.webp.part01",
+      "size": 352216,
+      "sha": "a39db8a3e8756ba71ca9f18028056e395042f47c"
+    },
+    {
+      "path": "assets/pirates/cuisinier-devon.webp.part00",
+      "size": 384000,
+      "sha": "266a4531d64abdf05cb031f66888e774346563fd"
+    },
+    {
+      "path": "assets/pirates/cuisinier-devon.webp.part01",
+      "size": 116044,
+      "sha": "ffb760a0471f8e79bcfaf6502379160cb1f486d7"
+    },
+    {
+      "path": "assets/pirates/effects.webp.part00",
+      "size": 384000,
+      "sha": "cc0e0fc787055208ea7f44841b8430ce5655a91c"
+    },
+    {
+      "path": "assets/pirates/effects.webp.part01",
+      "size": 384000,
+      "sha": "0087746420440535ea86cc563350009f35677b0d"
+    },
+    {
+      "path": "assets/pirates/effects.webp.part02",
+      "size": 384000,
+      "sha": "5fb1ff8e2a51a44872c398facb8cd3348b0c3c6d"
+    },
+    {
+      "path": "assets/pirates/effects.webp.part03",
+      "size": 222728,
+      "sha": "0090f69b7818d0786a185b473c83f319d43d5f93"
+    },
+    {
+      "path": "assets/pirates/fantome-sphynx.webp.part00",
+      "size": 384000,
+      "sha": "df02d4b55cdef3dd575a2c7d9de9d277a2b0860b"
+    },
+    {
+      "path": "assets/pirates/fantome-sphynx.webp.part01",
+      "size": 384000,
+      "sha": "46ae506228b3cc20f86d7a0e5927cd7da5bf3b79"
+    },
+    {
+      "path": "assets/pirates/fantome-sphynx.webp.part02",
+      "size": 39644,
+      "sha": "ded02360f2d94788887325b1cda8259bd4913faa"
+    },
+    {
+      "path": "assets/pirates/lanterne-dalmatien.webp.part00",
+      "size": 384000,
+      "sha": "bc72186240dbb4c73f778b342d8ef16abe48f38a"
+    },
+    {
+      "path": "assets/pirates/lanterne-dalmatien.webp.part01",
+      "size": 83624,
+      "sha": "e7e07db6fc22026b8f59626288e60e6a4213ab16"
+    },
+    {
+      "path": "assets/pirates/matelot-mau.webp.part00",
+      "size": 384000,
+      "sha": "c44ed56bf3e6fcf7fbb5f20ba02ada0221f3a233"
+    },
+    {
+      "path": "assets/pirates/matelot-mau.webp.part01",
+      "size": 113948,
+      "sha": "4ef2290212b0d53ba05541a5ccd011ae2e465366"
+    },
+    {
+      "path": "assets/pirates/matelot-tabby.webp.part00",
+      "size": 384000,
+      "sha": "977435d45cbe9bc991663a8e35c420132f13b9b7"
+    },
+    {
+      "path": "assets/pirates/matelot-tabby.webp.part01",
+      "size": 60530,
+      "sha": "c644357e65552a86a6edef732a5e657147d5e030"
+    },
+    {
+      "path": "assets/pirates/mousse-carlin.webp.part00",
+      "size": 384000,
+      "sha": "99445cf0bcf8c5ab906393cb153cf96d2f529227"
+    },
+    {
+      "path": "assets/pirates/mousse-carlin.webp.part01",
+      "size": 59822,
+      "sha": "34c3afd0032b25aef9743f0318a73d10a4c09f2e"
+    },
+    {
+      "path": "assets/pirates/navigateur-tuxedo.webp.part00",
+      "size": 384000,
+      "sha": "23d9796ca3c1da90e62df58afbe6bc9fcd309500"
+    },
+    {
+      "path": "assets/pirates/navigateur-tuxedo.webp.part01",
+      "size": 220334,
+      "sha": "9e88f3afa23933f63512e7f11fe8057e4e06b8b1"
+    },
+    {
+      "path": "assets/pirates/vigie-manx.webp.part00",
+      "size": 384000,
+      "sha": "77fe995787c6394b9e5617f277e2a6aedf7e6cd1"
+    },
+    {
+      "path": "assets/pirates/vigie-manx.webp.part01",
+      "size": 75264,
+      "sha": "9d2b89f43eb4c3c9c06ee8fa7c9565cbf26bce9e"
+    }
+  ]
+}

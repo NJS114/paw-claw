@@ -1,0 +1,74 @@
+{
+  "format": "webp-mobile",
+  "entries": [
+    {
+      "file": "magiciens.webp",
+      "parts": [
+        "magiciens.webp.part00",
+        "magiciens.webp.part01"
+      ]
+    },
+    {
+      "file": "armee.webp",
+      "parts": [
+        "armee.webp.part00",
+        "armee.webp.part01"
+      ]
+    },
+    {
+      "file": "nobles.webp",
+      "parts": [
+        "nobles.webp.part00",
+        "nobles.webp.part01"
+      ]
+    },
+    {
+      "file": "ombres.webp",
+      "parts": [
+        "ombres.webp.part00",
+        "ombres.webp.part01"
+      ]
+    },
+    {
+      "file": "robots.webp",
+      "parts": [
+        "robots.webp.part00",
+        "robots.webp.part01"
+      ]
+    },
+    {
+      "file": "nature.webp",
+      "parts": [
+        "nature.webp.part00",
+        "nature.webp.part01"
+      ]
+    },
+    {
+      "file": "elements.webp",
+      "parts": [
+        "elements.webp.part00",
+        "elements.webp.part01"
+      ]
+    },
+    {
+      "file": "guerisseurs.webp",
+      "parts": [
+        "guerisseurs.webp.part00",
+        "guerisseurs.webp.part01"
+      ]
+    },
+    {
+      "file": "creatures.webp",
+      "parts": [
+        "creatures.webp.part00",
+        "creatures.webp.part01"
+      ]
+    },
+    {
+      "file": "board.webp",
+      "parts": [
+        "board.webp.part00"
+      ]
+    }
+  ]
+}

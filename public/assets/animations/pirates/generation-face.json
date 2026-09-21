@@ -1,0 +1,107 @@
+[
+  {
+    "id": "matelot-tabby",
+    "name": "Matelot Tabby",
+    "rows": 6,
+    "prompt": "New opposing-team FRONT VIEW animation sprite atlas of Matelot Tabby ONLY from the reference card gallery. Identity: orange striped tabby cat with cream paws, red scarf, navy vest. Cute detailed painted 2D fantasy. CAMERA CRITICAL: 60-degree overhead camera seeing the character's FACE, EYES, CHEST and front of legs, as enemy on far side of TFT-like board looking diagonally DOWN-LEFT toward viewer/player. NOT back view, NOT side view, NOT looking up-right, no back-of-coat. Draw newly rotated anatomy. All 24 poses face down-left consistently. Real transparent alpha PNG, no backdrop, fog, card border, text or grid lines. EXACT 4 equal columns x 6 equal rows. Full bodies same size/feet anchor, each cell has transparent gutters, no overlapping neighboring cells. Row1 4 idle attentive poses. Row2 4 WALK poses advancing toward down-left, alternating front/back legs and arms. Row3 4 NORMAL ATTACK drawings windup/action/strike/recover: winds rope coil and lashes rope toward lower-left, aimed DOWN-LEFT. Row4 4 TAKING DAMAGE drawings face winces, torso recoils, hurt crouch, recovery. Row5 4 APPEAR drawings gold sparks -> half body -> mostly formed -> solid. Row6 4 DISAPPEAR drawings kneel -> partially disintegrated -> last pieces -> few gold sparks. No ultimate attack for common. Preserve costume and character from reference. Crisp real limb movement, no sliding or floating illustration.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "mousse-carlin",
+    "name": "Mousse Carlin",
+    "rows": 6,
+    "prompt": "New opposing-team FRONT VIEW animation sprite atlas of Mousse Carlin ONLY from the reference card gallery. Identity: pug sailor, navy cap, blue white striped shirt, turquoise scarf, brass compass. Cute detailed painted 2D fantasy. CAMERA CRITICAL: 60-degree overhead camera seeing the character's FACE, EYES, CHEST and front of legs, as enemy on far side of TFT-like board looking diagonally DOWN-LEFT toward viewer/player. NOT back view, NOT side view, NOT looking up-right, no back-of-coat. Draw newly rotated anatomy. All 24 poses face down-left consistently. Real transparent alpha PNG, no backdrop, fog, card border, text or grid lines. EXACT 4 equal columns x 6 equal rows. Full bodies same size/feet anchor, each cell has transparent gutters, no overlapping neighboring cells. Row1 4 idle attentive poses. Row2 4 WALK poses advancing toward down-left, alternating front/back legs and arms. Row3 4 NORMAL ATTACK drawings windup/action/strike/recover: small compass-guided paw strike, aimed DOWN-LEFT. Row4 4 TAKING DAMAGE drawings face winces, torso recoils, hurt crouch, recovery. Row5 4 APPEAR drawings gold sparks -> half body -> mostly formed -> solid. Row6 4 DISAPPEAR drawings kneel -> partially disintegrated -> last pieces -> few gold sparks. No ultimate attack for common. Preserve costume and character from reference. Crisp real limb movement, no sliding or floating illustration.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "matelot-mau",
+    "name": "Matelot Mau Égyptien",
+    "rows": 6,
+    "prompt": "New opposing-team FRONT VIEW animation sprite atlas of Matelot Mau Égyptien ONLY from the reference card gallery. Identity: spotted silver Egyptian Mau cat, red neckerchief, navy harness. Cute detailed painted 2D fantasy. CAMERA CRITICAL: 60-degree overhead camera seeing the character's FACE, EYES, CHEST and front of legs, as enemy on far side of TFT-like board looking diagonally DOWN-LEFT toward viewer/player. NOT back view, NOT side view, NOT looking up-right, no back-of-coat. Draw newly rotated anatomy. All 24 poses face down-left consistently. Real transparent alpha PNG, no backdrop, fog, card border, text or grid lines. EXACT 4 equal columns x 6 equal rows. Full bodies same size/feet anchor, each cell has transparent gutters, no overlapping neighboring cells. Row1 4 idle attentive poses. Row2 4 WALK poses advancing toward down-left, alternating front/back legs and arms. Row3 4 NORMAL ATTACK drawings windup/action/strike/recover: throws small wooden bucket splash, aimed DOWN-LEFT. Row4 4 TAKING DAMAGE drawings face winces, torso recoils, hurt crouch, recovery. Row5 4 APPEAR drawings gold sparks -> half body -> mostly formed -> solid. Row6 4 DISAPPEAR drawings kneel -> partially disintegrated -> last pieces -> few gold sparks. No ultimate attack for common. Preserve costume and character from reference. Crisp real limb movement, no sliding or floating illustration.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "vigie-manx",
+    "name": "Vigie Manx",
+    "rows": 6,
+    "prompt": "Draw NEW FRONT VIEW 2D animation atlas for Vigie Manx ONLY, brown white Manx cat, red head bandana, white sailor shirt, blue scarf, from reference gallery. Same cute painted detailed style and original clothes. Opposing team camera: high 60 degree overhead, FRONT three-quarter facing diagonally DOWN-LEFT toward viewer, clearly see both eyes, face, chest, front legs. Never face upper right or show back. All 24 drawings share this direction. Exact 4 columns x 6 rows of isolated full-body sprites, same size and feet anchor, equal cells with clear gutters, transparent alpha background. No scenery or card frames or text. Row1 idle four facial/ear poses. Row2 walk four successive alternating legs and arms advancing down-left. Row3 normal attack short paw swipe then ducks aimed down-left, four windup/strike/recovery drawings. Row4 damage face grimace, actual body recoil, kneel hurt, recover. Row5 appear sparks/half formed/near solid/solid. Row6 disappear crouch/partial dissolution/last pieces/only gold sparks. No big attack for Common. Actual anatomically different successive poses, not floating illustration. Keep all drawings/effects contained in their cell, exact uniform grid.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "cuisinier-devon",
+    "name": "Cuisinier Devon Rex",
+    "rows": 6,
+    "prompt": "Draw NEW FRONT VIEW 2D animation atlas for Cuisinier Devon Rex ONLY, cream orange Devon Rex big ears, navy apron, cooking spoon, from reference gallery. Same cute painted detailed style and original clothes. Opposing team camera: high 60 degree overhead, FRONT three-quarter facing diagonally DOWN-LEFT toward viewer, clearly see both eyes, face, chest, front legs. Never face upper right or show back. All 24 drawings share this direction. Exact 4 columns x 6 rows of isolated full-body sprites, same size and feet anchor, equal cells with clear gutters, transparent alpha background. No scenery or card frames or text. Row1 idle four facial/ear poses. Row2 walk four successive alternating legs and arms advancing down-left. Row3 normal attack swings wooden cooking spoon aimed down-left, four windup/strike/recovery drawings. Row4 damage face grimace, actual body recoil, kneel hurt, recover. Row5 appear sparks/half formed/near solid/solid. Row6 disappear crouch/partial dissolution/last pieces/only gold sparks. No big attack for Common. Actual anatomically different successive poses, not floating illustration. Keep all drawings/effects contained in their cell, exact uniform grid.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "cordage-teckel",
+    "name": "Cordage Teckel",
+    "rows": 6,
+    "prompt": "Draw NEW FRONT VIEW 2D animation atlas for Cordage Teckel ONLY, brown dachshund, navy sailor cap, red scarf, rope around shoulder, from reference gallery. Same cute painted detailed style and original clothes. Opposing team camera: high 60 degree overhead, FRONT three-quarter facing diagonally DOWN-LEFT toward viewer, clearly see both eyes, face, chest, front legs. Never face upper right or show back. All 24 drawings share this direction. Exact 4 columns x 6 rows of isolated full-body sprites, same size and feet anchor, equal cells with clear gutters, transparent alpha background. No scenery or card frames or text. Row1 idle four facial/ear poses. Row2 walk four successive alternating legs and arms advancing down-left. Row3 normal attack throws short rope lasso aimed down-left, four windup/strike/recovery drawings. Row4 damage face grimace, actual body recoil, kneel hurt, recover. Row5 appear sparks/half formed/near solid/solid. Row6 disappear crouch/partial dissolution/last pieces/only gold sparks. No big attack for Common. Actual anatomically different successive poses, not floating illustration. Keep all drawings/effects contained in their cell, exact uniform grid.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "carte-shih-tzu",
+    "name": "Carte Shih Tzu",
+    "rows": 6,
+    "prompt": "Create NEW FRONT VIEW enemy-team animation atlas for Carte Shih Tzu ONLY, identity cream brown Shih Tzu long fur, red hair bows, teal scarf, sailor belt matching its card in reference gallery. Preserve cute painted 2D fantasy, detailed costume. Camera: overhead 60 degrees, face/chest/front paws clearly visible, FRONT THREE QUARTER facing LOWER LEFT toward viewer. Never back view, never looking up-right. All poses same direction and scale. Transparent alpha background, no scene/fog/card border/text/grid. EXACT 4 columns x 6 equally spaced rows with clear gutters and full-body poses inside each cell. Row1 four attentive idle poses. Row2 four alternating leg/arm WALK poses toward lower-left. Row3 four NORMAL ATTACK anticipation/strike/impact/recover: unfurls small map then forward paw strike, effect toward lower-left. Row4 four HURT poses grimace/recoil/kneel/recover. Row5 four APPEAR gold sparks/half body/near full/solid. Row6 four DISAPPEAR crouch/dissolve/last body fragments/sparks only. No big ultimate for Common. Different drawn anatomy on each frame, no floating or simple translation.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "lanterne-dalmatien",
+    "name": "Lanterne Dalmatien",
+    "rows": 6,
+    "prompt": "Create NEW FRONT VIEW enemy-team animation atlas for Lanterne Dalmatien ONLY, identity white black spotted Dalmatian, navy coat, blue scarf, brass lantern matching its card in reference gallery. Preserve cute painted 2D fantasy, detailed costume. Camera: overhead 60 degrees, face/chest/front paws clearly visible, FRONT THREE QUARTER facing LOWER LEFT toward viewer. Never back view, never looking up-right. All poses same direction and scale. Transparent alpha background, no scene/fog/card border/text/grid. EXACT 4 columns x 6 equally spaced rows with clear gutters and full-body poses inside each cell. Row1 four attentive idle poses. Row2 four alternating leg/arm WALK poses toward lower-left. Row3 four NORMAL ATTACK anticipation/strike/impact/recover: swings lantern releasing tiny amber flash, effect toward lower-left. Row4 four HURT poses grimace/recoil/kneel/recover. Row5 four APPEAR gold sparks/half body/near full/solid. Row6 four DISAPPEAR crouch/dissolve/last body fragments/sparks only. No big ultimate for Common. Different drawn anatomy on each frame, no floating or simple translation.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "corsaire-bengal",
+    "name": "Corsaire Bengal",
+    "rows": 7,
+    "prompt": "Create NEW FRONT VIEW enemy-team animation atlas for Corsaire Bengal ONLY, identity spotted Bengal cat, black gold pirate tricorn red feather, red coat, teal scarf, treasure map matching its card in reference gallery. Preserve cute painted 2D fantasy, detailed costume. Camera: overhead 60 degrees, face/chest/front paws clearly visible, FRONT THREE QUARTER facing LOWER LEFT toward viewer. Never back view, never looking up-right. All poses same direction and scale. Transparent alpha background, no scene/fog/card border/text/grid. EXACT 4 columns x 7 equally spaced rows with clear gutters and full-body poses inside each cell. Row1 four attentive idle poses. Row2 four alternating leg/arm WALK poses toward lower-left. Row3 four NORMAL ATTACK anticipation/strike/impact/recover: slashes with claw in short arc, effect toward lower-left. Row4 four HURT poses grimace/recoil/kneel/recover. Row5 four APPEAR gold sparks/half body/near full/solid. Row6 four DISAPPEAR crouch/dissolve/last body fragments/sparks only. Row7 four BIG ULTIMATE stages charge/release/impact/recover: unfurls map and summons towering turquoise wave sweeping foes, directed DOWN-LEFT toward player. Spectacular but entirely inside each cell. Different drawn anatomy on each frame, no floating or simple translation.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "capitaine-terre-neuve",
+    "name": "Capitaine Terre-Neuve",
+    "rows": 7,
+    "prompt": "NEW opposing team FRONT VIEW sprite atlas for Capitaine Terre-Neuve ONLY. Identity fluffy black Newfoundland dog, black gold tricorn white feather, navy gold coat and red sash from reference. Cute painted fantasy 2D, ornate costume faithfully retained. Fixed 60-degree overhead camera, FRONT three-quarter view: FACE, both eyes, chest and front paws visible, looking diagonally DOWN-LEFT toward player. Absolutely no back view or upper-right gaze. Exact 4 columns x 7 equal rows, 28 isolated sprites. Transparent alpha, no background, fog, labels, card frame or grid. Generous gutters, same body scale and feet anchor all poses. Row1 idle 4 attentive poses. Row2 WALK 4 distinct alternating steps/arms down-left. Row3 NORMAL ATTACK 4 windup/action/impact/recover drawings: heavy commanding fist strike directed DOWN-LEFT. Row4 HURT 4 drawings facial grimace, torso recoil, hurt crouch, recovery. Row5 APPEAR 4 sparks/half body/nearly formed/solid. Row6 DISAPPEAR 4 crouch/half disintegrated/last silhouette pieces/only sparks. Row7 BIG ULTIMATE 4 windup/charge/release/aftermath drawings: turns spectral ship wheel summons three naval cannons with massive golden salvo, spectacular effect toward down-left, no overlap into neighboring cells. Newly drawn anatomy in each pose, no floating. Clear separation between rows so each animation can be cropped.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "chamane-mainecoon",
+    "name": "Chamane Mainecoon",
+    "rows": 7,
+    "prompt": "NEW opposing team FRONT VIEW sprite atlas for Chamane Mainecoon ONLY. Identity fluffy gray brown Maine Coon, wine red gold shaman pirate coat, glowing turquoise medallion from reference. Cute painted fantasy 2D, ornate costume faithfully retained. Fixed 60-degree overhead camera, FRONT three-quarter view: FACE, both eyes, chest and front paws visible, looking diagonally DOWN-LEFT toward player. Absolutely no back view or upper-right gaze. Exact 4 columns x 7 equal rows, 28 isolated sprites. Transparent alpha, no background, fog, labels, card frame or grid. Generous gutters, same body scale and feet anchor all poses. Row1 idle 4 attentive poses. Row2 WALK 4 distinct alternating steps/arms down-left. Row3 NORMAL ATTACK 4 windup/action/impact/recover drawings: conjures tiny blue fish projectile directed DOWN-LEFT. Row4 HURT 4 drawings facial grimace, torso recoil, hurt crouch, recovery. Row5 APPEAR 4 sparks/half body/nearly formed/solid. Row6 DISAPPEAR 4 crouch/half disintegrated/last silhouette pieces/only sparks. Row7 BIG ULTIMATE 4 windup/charge/release/aftermath drawings: raises both paws summons giant turquoise spectral ray bursting in sea foam, spectacular effect toward down-left, no overlap into neighboring cells. Newly drawn anatomy in each pose, no floating. Clear separation between rows so each animation can be cropped.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "ciel-saluki",
+    "name": "Ciel Saluki",
+    "rows": 7,
+    "prompt": "NEW opposing team FRONT VIEW sprite atlas for Ciel Saluki ONLY. Identity slender cream Saluki long silky ears, red gold coat, goggles, ivory sail from reference. Cute painted fantasy 2D, ornate costume faithfully retained. Fixed 60-degree overhead camera, FRONT three-quarter view: FACE, both eyes, chest and front paws visible, looking diagonally DOWN-LEFT toward player. Absolutely no back view or upper-right gaze. Exact 4 columns x 7 equal rows, 28 isolated sprites. Transparent alpha, no background, fog, labels, card frame or grid. Generous gutters, same body scale and feet anchor all poses. Row1 idle 4 attentive poses. Row2 WALK 4 distinct alternating steps/arms down-left. Row3 NORMAL ATTACK 4 windup/action/impact/recover drawings: swings sail spar releases short wind blade directed DOWN-LEFT. Row4 HURT 4 drawings facial grimace, torso recoil, hurt crouch, recovery. Row5 APPEAR 4 sparks/half body/nearly formed/solid. Row6 DISAPPEAR 4 crouch/half disintegrated/last silhouette pieces/only sparks. Row7 BIG ULTIMATE 4 windup/charge/release/aftermath drawings: opens great ivory sail summoning spiral cyclone with gold compass stars, spectacular effect toward down-left, no overlap into neighboring cells. Newly drawn anatomy in each pose, no floating. Clear separation between rows so each animation can be cropped.\nCorrection: remove tricorn and feather, goggles on cream fur/red cloth.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "fantome-sphynx",
+    "name": "Fantôme Sphynx",
+    "rows": 7,
+    "prompt": "NEW FRONT VIEW animation atlas for Fantôme Sphynx ONLY. Identity gray hairless Sphynx cat, red gold pirate hat feather, ornate red coat, turquoise star medallion faithfully matching reference card. Cute detailed painted 2D fantasy. Opponent perspective: HIGH 60-degree overhead camera, FRONT three-quarter facing DOWN-LEFT toward viewer, both eyes/face/chest/front paws visible. Never back or up-right view. Same direction every pose. TRUE TRANSPARENT ALPHA background, no scenery/haze/text/card frame/grid. EXACT 4 columns x 7 equal rows, full-body sprites with clear gutters, same scale and foot anchor. Row1 four attentive idle poses. Row2 four true WALK alternating limb poses toward lower-left. Row3 four NORMAL ATTACK drawings windup/action/impact/recover: summons a single small turquoise spectral fish directed LOWER LEFT. Row4 four HURT facial wince/body recoil/crouch/recover. Row5 four APPEAR sparks/partial body/near formed/solid. Row6 four DISAPPEAR kneeling/partial dissolution/last silhouette/only sparks. Row7 four SPECTRAL DODGE poses solid/translucent turquoise ghost with clothes/projectile passes through body/reform solid. Defensive dodge only, no ultimate. Exact separate new limb drawings, no floating or sliding static image. Entire sprite and effects contained inside each cell.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "amiral-bouvier",
+    "name": "Amiral Bouvier Bernois",
+    "rows": 6,
+    "prompt": "NEW FRONT VIEW animation atlas for Amiral Bouvier Bernois ONLY. Identity Bernese mountain dog black white brown, navy gold tricorn red feather, navy gold admiral coat faithfully matching reference card. Cute detailed painted 2D fantasy. Opponent perspective: HIGH 60-degree overhead camera, FRONT three-quarter facing DOWN-LEFT toward viewer, both eyes/face/chest/front paws visible. Never back or up-right view. Same direction every pose. TRUE TRANSPARENT ALPHA background, no scenery/haze/text/card frame/grid. EXACT 4 columns x 6 equal rows, full-body sprites with clear gutters, same scale and foot anchor. Row1 four attentive idle poses. Row2 four true WALK alternating limb poses toward lower-left. Row3 four NORMAL ATTACK drawings windup/action/impact/recover: strong commanding paw slash with tiny gold arc directed LOWER LEFT. Row4 four HURT facial wince/body recoil/crouch/recover. Row5 four APPEAR sparks/partial body/near formed/solid. Row6 four DISAPPEAR kneeling/partial dissolution/last silhouette/only sparks. No ultimate attack for Legendary in this pack. Exact separate new limb drawings, no floating or sliding static image. Entire sprite and effects contained inside each cell.",
+    "method": "Générateur d’images intégré"
+  },
+  {
+    "id": "navigateur-tuxedo",
+    "name": "Navigateur Tuxedo",
+    "rows": 7,
+    "prompt": "NEW FRONT VIEW animation atlas for Navigateur Tuxedo ONLY. Identity black white tuxedo cat, black gold tricorn, red bandana, navy gold coat, brass telescope faithfully matching reference card. Cute detailed painted 2D fantasy. Opponent perspective: HIGH 60-degree overhead camera, FRONT three-quarter facing DOWN-LEFT toward viewer, both eyes/face/chest/front paws visible. Never back or up-right view. Same direction every pose. TRUE TRANSPARENT ALPHA background, no scenery/haze/text/card frame/grid. EXACT 4 columns x 7 equal rows, full-body sprites with clear gutters, same scale and foot anchor. Row1 four attentive idle poses. Row2 four true WALK alternating limb poses toward lower-left. Row3 four NORMAL ATTACK drawings windup/action/impact/recover: aims telescope fires narrow gold star bolt directed LOWER LEFT. Row4 four HURT facial wince/body recoil/crouch/recover. Row5 four APPEAR sparks/partial body/near formed/solid. Row6 four DISAPPEAR kneeling/partial dissolution/last silhouette/only sparks. Row7 four BIG ULTIMATE drawings charge/aim/blast/recover: looks through telescope draws enormous celestial compass targeting circle and calls gold comet blast aimed lower-left toward player. Exact separate new limb drawings, no floating or sliding static image. Entire sprite and effects contained inside each cell.",
+    "method": "Générateur d’images intégré"
+  }
+]

@@ -1,0 +1,6 @@
+{
+  "method": "Générateur d’images intégré",
+  "prompt": "Production transparent PNG sprite atlas for cute handpainted fantasy 2D pirate game. Exactly FOUR columns TWO rows, eight consecutive frames, equal cells with generous empty gutters, no dividers no text. ONLY a giant GOLDEN SPECTRAL NAUTICAL ANCHOR with two curved flukes, circular eye and short chain, plus turquoise ocean impact foam. No animal, no character, no ship, no scenery. Fixed high overhead 60 degree camera. Eight drawn motion stages left to right top then bottom: 1 small gold targeting ellipse and sparks; 2 enormous glowing gold anchor suspended above target ellipse; 3 anchor falling quickly with golden motion streaks; 4 anchor strikes dead center of turquoise foamy circular splash; 5 powerful expanding circular sea shockwave with anchor center; 6 anchor disperses into gold fragments with spreading water; 7 fading gold fragments and foam circle; 8 tiny fading wisps. Consistent anchor design. Fully transparent alpha backdrop, no opaque background, no ground plane. Every frame completely within its own cell. Bright gold metal, luminous edges, turquoise wave, painterly game asset, dramatic impact effect for compositing directly on an enemy. This atlas contains ONLY the spell, never the caster.",
+  "frames": 8,
+  "usage": "Effet offensif séparé, centré sur l’adversaire"
+}
