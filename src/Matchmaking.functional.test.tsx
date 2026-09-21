@@ -17,8 +17,8 @@ describe('matchmaking flow',()=>{
     act(()=>{vi.advanceTimersByTime(1300)});
     expect(screen.getByText(/Adversaire trouvé/i)).toBeInTheDocument();
     expect(screen.getByText('10')).toBeInTheDocument();
-    expect(screen.getByText(/CHATS/i)).toBeInTheDocument();
-    expect(screen.getByText(/CHIENS/i)).toBeInTheDocument();
+    expect(screen.getByText(/Moustaches/i)).toBeInTheDocument();
+    expect(screen.getByText(/Truffes/i)).toBeInTheDocument();
   });
 
   it('allows returning to deck editing before combat',()=>{

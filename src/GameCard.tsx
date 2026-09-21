@@ -13,16 +13,17 @@ type Props={
  atkBonus?:number;
  hpBonus?:number;
  className?:string;
+ animateArtwork?:boolean;
 };
 
-export function GameCard({card,variant='standard',currentHp,copies,statusBadge,locked=false,atkBonus=0,hpBonus=0,className=''}:Props){
+export function GameCard({card,variant='standard',currentHp,copies,statusBadge,locked=false,atkBonus=0,hpBonus=0,animateArtwork=false,className=''}:Props){
  const rarity=slug(card.rarity),family=slug(card.family),hp=currentHp??card.hp;
  const description=card.flavor??defaultEffect(card);
  const battleClass=variant==='battle'?'battle-card':'';
  const label=[card.name,card.rarity,card.family,card.species,card.breed,`coût ${card.cost}`,card.atk!==undefined?`attaque ${card.atk}`:'',hp!==undefined?`${hp} points de vie`:'',description].filter(Boolean).join(', ');
  return <div className={`game-card game-card--${variant} rarity-${rarity} family-${family} ${battleClass} ${locked?'is-locked':''} ${className}`.trim()} aria-label={label}>
   <div className="game-card__foil" aria-hidden="true"/>
-  <div className="game-card__art"><CardArtwork card={card}/></div>
+  <div className="game-card__art"><CardArtwork card={card} animated={animateArtwork}/></div>
   <div className="game-card__cost" aria-label={`Coût ${card.cost}`}><small>COÛT</small><b>{card.cost}</b></div>
   <div className="game-card__family" title={card.family}><span aria-hidden="true">{familyMark(card.family)}</span><small>{card.family}</small></div>
   {statusBadge&&<span className="game-card__status">{statusBadge}</span>}

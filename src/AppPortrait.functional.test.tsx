@@ -8,7 +8,7 @@ describe('Portrait app integration',()=>{
   const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   localStorage.clear();const user=userEvent.setup();const{container}=render(<App/>);
   const nav=within(screen.getByRole('navigation',{name:'Navigation principale'}));
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
+  expect(screen.getByRole('button',{name:'Saluer les Moustaches'})).toBeInTheDocument();
   await user.click(nav.getByRole('button',{name:'Collection'}));
   expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-gallery-2d-v9.webp');

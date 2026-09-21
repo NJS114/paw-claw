@@ -1,3 +1,4 @@
+import {factionName} from './factions';
 import type { SavedDeck } from './deck';
 import type { Species } from './loreSynergies';
 
@@ -9,7 +10,7 @@ export type DeckLibrary={version:1;decks:DeckProfile[]};
 
 export function createDeckProfile(species:Species,name?:string):DeckProfile{
  const now=Date.now();
- return {version:1,id:`deck-${now}-${Math.random().toString(36).slice(2,7)}`,name:name??`Deck ${species}s`,species,favorite:false,cardIds:[],createdAt:now,updatedAt:now};
+ return {version:1,id:`deck-${now}-${Math.random().toString(36).slice(2,7)}`,name:name??`Deck ${factionName(species)}`,species,favorite:false,cardIds:[],createdAt:now,updatedAt:now};
 }
 
 export function loadDeckLibrary():DeckLibrary{
