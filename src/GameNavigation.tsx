@@ -7,6 +7,7 @@ const names:Record<GameScreen,string>={home:'Accueil',battle:'Combat',boosters:'
 const tabs=[['home','home'],['collection','cards'],['battle','swords'],['deck','shield'],['shop','shop']] as const;
 
 export function GameNavigation({screen,onNavigate}:{screen:GameScreen;onNavigate:(screen:GameScreen)=>void}){
+ if(screen==='home')return null;
  return <nav className="game-navigation" aria-label="Navigation principale">{tabs.map(([target,icon])=><button key={target} aria-current={screen===target?'page':undefined} onClick={()=>onNavigate(target)}><LobbyIcon name={icon}/><span>{names[target]}</span></button>)}</nav>;
 }
 export function GameHeader({screen,progress,onNavigate}:{screen:GameScreen;progress:Progression;onNavigate:(screen:GameScreen)=>void}){

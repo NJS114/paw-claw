@@ -1,4 +1,4 @@
-import {render,screen,fireEvent} from '@testing-library/react';
+import {render,screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import {describe,expect,it,vi} from 'vitest';
 import {MobileLobby} from './MobileLobby';
@@ -19,30 +19,25 @@ describe('MobileLobby',()=>{
   rerender(<MobileLobby progress={progress} ownedCount={16} missions={{...missions,counts:{'daily-play-3':3},claimed:['daily-play-3']}} onNavigate={go}/>);
   expect(screen.getByRole('button',{name:/Récompense récupérée/})).toBeInTheDocument();
  });
- it('loads the local-time portrait artwork with the heroes playing together',()=>{
-  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
-  const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
-  expect(container.querySelector('.mobile-lobby')).toHaveAttribute('data-lobby-period','day');
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
-  expect(container.querySelector('.lobby-character-stage')).not.toBeInTheDocument();
-  expect(container.querySelector('.button-copy')).not.toBeInTheDocument();
-  expect(screen.queryByText('Festival lunaire')).not.toBeInTheDocument();
-  hours.mockRestore();
+ it('opens the pirate preview, closes it, and routes preparation to the deck',async()=>{
+  const user=userEvent.setup(),go=vi.fn();
+  render(<MobileLobby progress={progress} ownedCount={148} onNavigate={go}/>);
+  await user.click(screen.getByRole('button',{name:/Duel des pirates/}));
+  expect(screen.getByRole('dialog',{name:'Duel des pirates'})).toBeInTheDocument();
+  await user.click(screen.getByRole('button',{name:'Fermer l’événement'}));
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+  await user.click(screen.getByRole('button',{name:/Duel des pirates/}));
+  await user.click(screen.getByRole('button',{name:/Préparer mon équipe/}));
+  expect(go).toHaveBeenCalledWith('deck');
+  expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
  });
- it('retains the previous background if the new asset fails to load',()=>{
-  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
-  const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
-  const background=container.querySelector('.mobile-lobby-bg')!;
-  fireEvent.error(background);
-  expect(background).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-v2.webp');
-  hours.mockRestore();
- });
- it('uses the quiet back-facing scene at night',()=>{
-  const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(22);
-  const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={()=>{}}/>);
-  expect(container.querySelector('.mobile-lobby')).toHaveAttribute('data-lobby-period','night');
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-night-back-v7.webp');
-  hours.mockRestore();
+ it('pauses animation without blocking navigation',async()=>{
+  const user=userEvent.setup(),go=vi.fn();
+  const {container}=render(<MobileLobby progress={progress} ownedCount={148} onNavigate={go}/>);
+  await user.click(screen.getByRole('button',{name:'Mettre les animations en pause'}));
+  expect(container.querySelector('.depth-lobby')).toHaveAttribute('data-motion','paused');
+  await user.click(screen.getByRole('button',{name:/Boutique/}));
+  expect(go).toHaveBeenCalledWith('shop');
  });
  it('keeps deck and reward actions interactive',async()=>{
   const user=userEvent.setup();const go=vi.fn();

@@ -7,9 +7,9 @@ describe('Portrait app integration',()=>{
  it('keeps the four portrait destinations reachable and saves a real booster purchase',async()=>{
   const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   localStorage.clear();const user=userEvent.setup();const{container}=render(<App/>);
+  expect(container.querySelector('.depth-world img')).toHaveAttribute('src','/assets/layered-home/village.webp');
+  await user.click(screen.getByRole('button',{name:/Collection/}));
   const nav=within(screen.getByRole('navigation',{name:'Navigation principale'}));
-  expect(container.querySelector('.mobile-lobby-bg')).toHaveAttribute('src','/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
-  await user.click(nav.getByRole('button',{name:'Collection'}));
   expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-gallery-2d-v9.webp');
   await user.click(screen.getAllByRole('button',{name:/^Voir /})[0]);
