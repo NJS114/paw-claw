@@ -1,6 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
 import {GameAsset} from './GameAsset';
-import {LobbyIcon} from './LobbyIcon';
 import {GameCard} from './GameCard';
 import {cards} from './data/gameCards';
 import {xpForLevel,type Progression} from './data/progression';
@@ -10,7 +9,12 @@ import './layered-home.css';
 type LobbyTarget='battle'|'collection'|'deck'|'progression'|'shop'|'boosters'|'profile';
 type Props={progress:Progression;ownedCount:number;missions?:MissionProgress;onNavigate:(target:LobbyTarget)=>void};
 const art='/assets/layered-home/';
+const iconArt='/assets/home-icons-v2/';
+const referenceUi='/assets/reference-ui/';
 const pirates=cards.filter(c=>c.family==='Pirates').slice(0,3);
+type HomeIconName='missions'|'collection'|'pass'|'home'|'decks'|'combat'|'shop'|'boosters';
+function HomeIcon({name}:{name:HomeIconName}){return <img className="depth-icon" src={`${iconArt}${name}.webp`} alt="" aria-hidden="true"/>}
+function ReferenceTile({name}:{name:'home'|'deck'|'combat'|'shop'|'boosters'}){return <img className="depth-tile-art" src={`${referenceUi}${name}.webp`} alt="" aria-hidden="true"/>}
 
 function PiratePreview({onClose,onNavigate}:{onClose:()=>void;onNavigate:Props['onNavigate']}){
  const dialog=useRef<HTMLDialogElement>(null);
@@ -52,18 +56,18 @@ export function MobileLobby({progress,ownedCount,missions,onNavigate}:Props){
    <div className="depth-wallet" aria-label="Ressources"><span><GameAsset assetId="icon.coins" decorative/><b>{progress.coins}</b><small>Pièces</small></span><span><GameAsset assetId="icon.gems" decorative/><b>{progress.gems}</b><small>Gemmes</small></span></div>
   </header>
   <div className="depth-brand"><span>BIENVENUE AU ROYAUME</span><h1>Paw <i>&amp;</i> Claw</h1><p>Deux rivaux. Une grande aventure.</p></div>
-  <nav className="depth-side" aria-label="Activités du royaume"><button onClick={()=>go('progression')}><LobbyIcon name="scroll"/><span>Missions</span></button><button onClick={()=>go('collection')}><LobbyIcon name="cards"/><span>Collection</span><small>{ownedCount} cartes</small></button><button onClick={()=>go('progression')}><LobbyIcon name="crown"/><span>Passe</span></button></nav>
+  <nav className="depth-side" aria-label="Activités du royaume"><button onClick={()=>go('progression')}><HomeIcon name="missions"/><span>Missions</span></button><button onClick={()=>go('collection')}><HomeIcon name="collection"/><span>Collection</span><small>{ownedCount} cartes</small></button><button onClick={()=>go('progression')}><HomeIcon name="pass"/><span>Passe</span></button></nav>
   <div className="depth-heroes" aria-hidden="true"><div className="depth-hero depth-cat"><img src={art+'cat.webp'} alt=""/></div><div className="depth-hero depth-dog"><img src={art+'dog.webp'} alt=""/></div></div>
   <button className="depth-event" onClick={()=>setEvent(true)} aria-haspopup="dialog"><span className="depth-event-picture"><img src={art+'pirate-cat.webp'} alt=""/><img src={art+'pirate-dog.webp'} alt=""/></span><strong>Duel des pirates</strong><small>Découvrir les équipages <span aria-hidden="true">›</span></small></button>
   <button className="depth-motion" onClick={()=>setPaused(v=>!v)} aria-label={paused?'Reprendre les animations':'Mettre les animations en pause'} aria-pressed={paused}>{paused?'▷':'Ⅱ'}</button>
   <div className="depth-foliage" aria-hidden="true"><img src={art+'foliage.webp'} alt=""/><img src={art+'foliage.webp'} alt=""/></div>
   <div className="depth-quest"><div><span>QUÊTE DU JOUR</span><strong>{quest.description}</strong><progress aria-label="Progression de la quête du jour" value={count} max={quest.target}/></div><button onClick={()=>go('progression')} aria-label={claimed?'Récompense récupérée':count===quest.target?'Récupérer la récompense':'Voir les récompenses'}>{count}/{quest.target}<span aria-hidden="true">›</span></button></div>
   <nav className="depth-dock" aria-label="Navigation de l’accueil">
-   <button aria-current="page"><LobbyIcon name="home"/><span>Accueil</span></button>
-   <button onClick={()=>go('deck')}><LobbyIcon name="cards"/><span>Decks</span></button>
-   <button className="depth-combat depth-gold" onClick={()=>go('battle')} aria-label="Jouer en arène"><LobbyIcon name="swords"/><span>Combattre</span></button>
-   <button onClick={()=>go('shop')}><LobbyIcon name="shop"/><span>Boutique</span></button>
-   <button onClick={()=>go('boosters')}><LobbyIcon name="gift"/><span>Boosters</span><small>{progress.sealedBoosters} disponible{progress.sealedBoosters!==1?'s':''}</small></button>
+   <button aria-current="page"><ReferenceTile name="home"/><span className="sr-only">Accueil</span></button>
+   <button onClick={()=>go('deck')}><ReferenceTile name="deck"/><span className="sr-only">Decks</span></button>
+   <button className="depth-combat" onClick={()=>go('battle')} aria-label="Jouer en arène"><ReferenceTile name="combat"/><span className="sr-only">Combattre</span></button>
+   <button onClick={()=>go('shop')}><ReferenceTile name="shop"/><span className="sr-only">Boutique</span></button>
+   <button onClick={()=>go('boosters')} aria-label={`Boosters, ${progress.sealedBoosters} disponible${progress.sealedBoosters!==1?'s':''}`}><ReferenceTile name="boosters"/><span className="sr-only">Boosters · {progress.sealedBoosters} disponible{progress.sealedBoosters!==1?'s':''}</span></button>
   </nav>
   {event&&<PiratePreview onClose={()=>setEvent(false)} onNavigate={go}/>}
  </section>
