@@ -66,6 +66,10 @@
 .depth-tile-art{display:block;width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 5px 2px #4f382e55)}
 .depth-dock>.depth-combat{align-self:end}.depth-dock>.depth-combat .depth-tile-art{width:112%;max-width:none;margin-left:-6%;margin-bottom:-1px}
 .depth-dock>button:hover{translate:0 -4px}.depth-dock>button:active{translate:0 2px}
-.production-shell:has(.depth-lobby) .production-tools summary{background:#72523d url('/assets/reference-ui/settings.webp') center/cover no-repeat;border-color:#f4e1bb}
+.production-shell:has(.depth-lobby) .production-tools summary{background:#72523d url('/assets/reference-ui/settings.webp') center/145% auto no-repeat;border-color:#f4e1bb}
 @media(max-height:540px) and (orientation:landscape){.depth-dock>button,.depth-dock>.depth-combat{min-height:0}.depth-dock>.depth-combat .depth-tile-art{margin-bottom:0}}
-@media(orientation:portrait){.depth-dock>button,.depth-dock>.depth-combat{min-height:0}.depth-dock>.depth-combat .depth-tile-art{width:118%;margin-left:-9%}}
+@media(orientation:portrait){
+ .depth-dock{bottom:max(72px,calc(env(safe-area-inset-bottom) + 24px))}
+ .depth-dock>button,.depth-dock>.depth-combat{min-height:0}
+ .depth-dock>.depth-combat .depth-tile-art{width:112%;margin-left:-6%;margin-bottom:0}
+}
