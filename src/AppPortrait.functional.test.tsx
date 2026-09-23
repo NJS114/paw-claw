@@ -16,7 +16,7 @@ describe('Portrait app integration',()=>{
   expect(screen.getByRole('dialog')).toBeInTheDocument();
   await user.click(screen.getByRole('button',{name:'Fermer'}));
   await user.click(nav.getByRole('button',{name:'Decks'}));
-  expect(screen.getByRole('heading',{name:'Atelier des decks'})).toBeInTheDocument();
+  expect(screen.getByRole('heading',{name:'Mes decks'})).toBeInTheDocument();
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-deck-forge-2d-v9.webp');
   await user.click(nav.getByRole('button',{name:'Boutique'}));
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-shop-market-2d-v9.webp');

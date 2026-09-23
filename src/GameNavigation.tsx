@@ -8,6 +8,7 @@ const tabs=[['home','home'],['collection','cards'],['battle','swords'],['deck','
 
 export function GameNavigation({screen,onNavigate}:{screen:GameScreen;onNavigate:(screen:GameScreen)=>void}){
  if(screen==='home')return null;
+ if(screen==='deck')return <nav className="game-navigation cozy-navigation" aria-label="Navigation principale">{(['home','deck','battle','shop','boosters'] as const).map((target,i)=><button key={target} aria-current={screen===target?'page':undefined} onClick={()=>onNavigate(target)}><img src={`/assets/reference-ui/${['home','deck','combat','shop','boosters'][i]}.webp`} alt=""/><span className="sr-only">{names[target]}</span></button>)}</nav>;
  return <nav className="game-navigation" aria-label="Navigation principale">{tabs.map(([target,icon])=><button key={target} aria-current={screen===target?'page':undefined} onClick={()=>onNavigate(target)}><LobbyIcon name={icon}/><span>{names[target]}</span></button>)}</nav>;
 }
 export function GameHeader({screen,progress,onNavigate}:{screen:GameScreen;progress:Progression;onNavigate:(screen:GameScreen)=>void}){

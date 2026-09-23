@@ -34,6 +34,7 @@ import './booster-opening.css';
 import './screen-backgrounds.css';
 import './portrait-pages.css';
 import './game-card.css';
+import './cozy-decks.css';
 import { ProductionShell } from './ProductionShell';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
