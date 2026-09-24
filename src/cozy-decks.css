@@ -60,3 +60,38 @@
 .cozy-navigation img{display:block;width:100%;height:auto;filter:drop-shadow(0 3px 2px #412d2255)}
 @media(max-width:350px){.portrait-app .cozy-decks .deck-card-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.cozy-deck-preview{height:140px}.cozy-deck-caption{width:96%}}
 @media(prefers-reduced-motion:reduce){.cozy-deck-preview>div{transition:none}}
+
+/* Illustrated Decks scene: each painted layer stays independent of the controls. */
+.portrait-app:has(.cozy-decks) .deck-world{background:#69452e}
+.portrait-app:has(.cozy-decks) .screen-background-content{background:#69452e url('/assets/decks-illustrated/harbor.png') center top/100% auto no-repeat}
+.portrait-app:has(.cozy-decks) .game-page-header{position:relative;z-index:2;background:#65402cde;color:#fff3d6;border-bottom:2px solid #e8bd73;backdrop-filter:blur(8px)}
+.portrait-app:has(.cozy-decks) .game-page-header h1,.portrait-app:has(.cozy-decks) .game-back,.portrait-app:has(.cozy-decks) .game-header-wallet{color:#fff4dd}
+.portrait-app .cozy-decks{max-width:520px;padding:16px 12px 220px!important}
+.portrait-app .cozy-decks .deck-studio-head{position:relative;display:grid;place-items:center;width:min(95%,460px);height:clamp(114px,29vw,154px);margin:0 auto -16px}
+.portrait-app .cozy-decks .deck-studio-head img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 7px 3px #37281777)}
+.portrait-app .cozy-decks .deck-studio-head h2{position:relative;z-index:1;margin:20px 0 0;padding:0;background:none;border:0;box-shadow:none;transform:none;font-size:clamp(27px,8vw,43px);color:#fff9e9;text-shadow:0 3px 0 #55351f,2px 0 #55351f,-2px 0 #55351f}
+.cozy-feature{padding:0;background:none;margin:0 -12px -1px}
+.cozy-feature:before,.cozy-feature:after{display:none}
+.cozy-deck-preview{height:clamp(190px,55vw,285px);padding:0;display:grid;place-items:center}
+.cozy-deck-preview img{width:min(100%,475px);height:100%;object-fit:contain;filter:drop-shadow(0 13px 7px #20191082)}
+.cozy-deck-caption{width:78%;min-height:57px;margin:-17px auto 4px;justify-content:center;flex-wrap:wrap;gap:0 8px;border:3px solid #7c4f29;border-radius:16px 16px 25px 25px;background:linear-gradient(#fff1cb,#f7d590);box-shadow:inset 0 0 0 2px #fff7dc,0 7px 0 #493321a8;transform:rotate(-1deg)}
+.cozy-deck-caption strong{font-size:clamp(22px,6vw,30px);font-weight:1000;color:#3d2b23}.cozy-deck-caption span{font-size:12px;color:#64462b}
+.deck-carousel-controls{display:flex;align-items:center;justify-content:space-between;margin:-62px 9px 17px;min-height:55px;position:relative;z-index:4;pointer-events:none}
+.deck-carousel-controls>button{pointer-events:auto;width:44px;height:50px;border:3px solid #6d4a30;border-radius:13px;background:#fff1cc;color:#57351e;font-size:43px;font-weight:900;line-height:32px;box-shadow:0 4px 0 #4c3029}
+.deck-carousel-controls>button:disabled{opacity:.48}
+.deck-carousel-dots{position:absolute;left:50%;top:65px;display:flex;gap:8px;transform:translateX(-50%);pointer-events:auto}
+.deck-carousel-dots button{width:15px;height:15px;border:2px solid #ffe5a0;border-radius:50%;padding:0;overflow:hidden;background:#8b613e;color:transparent;font-size:0;box-shadow:0 2px 2px #33231a77}
+.deck-carousel-dots button.active{background:#ffd258;box-shadow:0 0 0 3px #fff1ce,0 2px 4px #33231a77}
+.cozy-decks .deck-issues{margin-top:27px}
+.cozy-vault-heading{margin-top:26px;min-height:57px;padding:8px 13px;border:4px solid #67442b;border-radius:15px 15px 4px 4px;background:linear-gradient(#94653e,#69462f);box-shadow:0 4px 0 #3b291f88}
+.cozy-vault-heading h3{font-size:clamp(21px,6vw,27px);color:#fff1ce;text-shadow:0 2px #3e2c23}
+.cozy-vault-heading select{max-width:45%;border-radius:16px;background:#6b4430;color:#fff3d8;border-color:#462d23;font-weight:800}
+.portrait-app .cozy-decks .deck-mobile-tabs{background:#eec895;border-color:#704b30;padding:6px 8px}
+.portrait-app .cozy-decks .deck-card-vault{padding:11px 9px 15px;border:4px solid #704b30;border-top:0;background:linear-gradient(#f8e4b9,#efd0a0);box-shadow:0 10px 0 #513522,0 16px 19px #2e1c1588}
+.portrait-app .cozy-decks .deck-card-grid{gap:10px 8px}
+.cozy-decks .deck-card-token .game-card{box-shadow:0 4px 0 #3b2b25,0 7px 9px #44311b7a}
+.cozy-decks .deck-token-action{width:30px;height:30px}
+.portrait-app .cozy-decks .deck-launch{bottom:calc(97px + env(safe-area-inset-bottom));padding:18px 25px 8px;background:linear-gradient(0deg,#3b2719db,#3b271900)}
+.portrait-app .cozy-decks .deck-launch .primary{border-radius:30px;background:linear-gradient(#fff7b5,#ffd46c 55%,#efaa45);font-size:clamp(17px,5.1vw,24px);min-height:60px;box-shadow:inset 0 0 0 4px #fff5cd,0 6px 0 #714322,0 8px 14px #25160e77}
+.portrait-app:has(.cozy-decks) .cozy-navigation{bottom:0;height:calc(94px + env(safe-area-inset-bottom));padding:5px 7px calc(6px + env(safe-area-inset-bottom));background:linear-gradient(#63462b55,#3a281fcf)}
+@media(max-width:380px){.portrait-app .cozy-decks .deck-studio-head{height:112px}.cozy-deck-preview{height:186px}.deck-carousel-controls{margin-top:-59px}.cozy-vault-heading{margin-top:23px}}
