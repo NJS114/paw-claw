@@ -4,3 +4,9 @@ dist/
 public/assets/generated/
 public/assets/cards/**/*.webp
 output/
+
+.env
+.env.*
+!.env.example
+*.jks
+*.keystore

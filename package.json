@@ -18,23 +18,34 @@
     "test:functional": "vitest run src/*.functional.test.tsx",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:all": "npm run assets:validate && npm run test:unit && npm run test:functional"
+    "test:all": "npm run assets:validate && npm run test:unit && npm run test:functional",
+    "mobile:android": "node scripts/configure-admob.mjs android && npm run build && cap sync android",
+    "mobile:ios": "node scripts/configure-admob.mjs ios && npm run build && cap sync ios",
+    "android": "cap open android",
+    "ios": "cap open ios",
+    "test:ads": "vitest run src/data/admob.test.ts src/Ads.functional.test.tsx"
   },
   "dependencies": {
+    "@capacitor-community/admob": "^8.1.0",
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capacitor/ios": "^8.5.2",
     "@vitejs/plugin-react": "latest",
-    "vite": "latest",
-    "typescript": "latest",
+    "adm-zip": "^0.5.16",
     "react": "latest",
     "react-dom": "latest",
-    "adm-zip": "^0.5.16",
-    "sharp": "^0.34.3"
+    "sharp": "^0.34.3",
+    "typescript": "latest",
+    "vite": "latest"
   },
   "devDependencies": {
-    "@types/react": "latest",
-    "@types/react-dom": "latest",
+    "@capacitor/cli": "^8.5.2",
     "@testing-library/jest-dom": "latest",
     "@testing-library/react": "latest",
     "@testing-library/user-event": "latest",
+    "@types/node": "^26.6.2",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "@vitest/coverage-v8": "latest",
     "jsdom": "latest",
     "vitest": "latest"

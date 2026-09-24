@@ -8,6 +8,7 @@ export type Progression = {
   draws: number;
   boostersOpened: number;
   sealedBoosters: number;
+  adRewardClaims?: string[];
 };
 const KEY='paw-claw.progression.v1';
 const initial:Progression={coins:1240,gems:120,xp:0,level:1,wins:0,losses:0,draws:0,boostersOpened:0,sealedBoosters:1};
@@ -20,3 +21,13 @@ export function battleDefeat(p:Progression):Progression{return addXp({...p,coins
 export function battleDraw(p:Progression):Progression{return addXp({...p,coins:p.coins+40,draws:p.draws+1},35)}
 export function buyBooster(p:Progression,price=100):Progression|null{if(p.coins<price)return null;return{...p,coins:p.coins-price,sealedBoosters:p.sealedBoosters+1}}
 export function openBooster(p:Progression):Progression|null{if(p.sealedBoosters<=0)return null;return{...p,sealedBoosters:p.sealedBoosters-1,boostersOpened:p.boostersOpened+1}}
+
+/** Stored with the balance so repeated native events cannot credit the same bonus twice. */
+export function claimAdBonus(p:Progression,key:string,amount:number):Progression{
+  const claims=Array.isArray(p.adRewardClaims)?p.adRewardClaims:[];
+  if(claims.includes(key)||!Number.isSafeInteger(amount)||amount<=0)return p;
+  const updated=[...claims,key];
+  // Keep daily receipts separately so a long play session cannot unlock today's bonus again.
+  const retained=[...updated.filter(id=>id.startsWith('daily:')).slice(-7),...updated.filter(id=>!id.startsWith('daily:')).slice(-200)];
+  return {...p,coins:p.coins+amount,adRewardClaims:retained};
+}
