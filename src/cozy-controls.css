@@ -1,0 +1,49 @@
+/* Every control uses its own SVG, never a crop of a screenshot. */
+.paw-ui-icon{display:block;width:32px;height:32px;flex:none;object-fit:contain;pointer-events:none;user-select:none}
+.depth-lobby .depth-dock{grid-template-columns:1fr 1fr 1.38fr 1fr 1fr;gap:4px;width:min(96%,790px);bottom:max(14px,env(safe-area-inset-bottom));align-items:end}
+.portrait-app:has(.cozy-decks) .game-navigation.cozy-navigation{height:calc(96px + env(safe-area-inset-bottom));grid-template-columns:1fr 1fr 1.38fr 1fr 1fr;gap:3px;padding:7px 4px calc(7px + env(safe-area-inset-bottom));align-items:end;overflow:visible}
+.depth-lobby .depth-dock>button.paw-nav-button,.portrait-app .game-navigation.cozy-navigation>button.paw-nav-button{position:relative;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2px;min-width:0;min-height:0;height:78px;padding:8px 2px 14px;border:0;border-radius:0;background:transparent url('/assets/ui-buttons/plate-cream.svg') center/100% 100% no-repeat;box-shadow:none;overflow:visible;color:#63452f;font-family:ui-rounded,'Trebuchet MS',sans-serif;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;transition:transform .13s ease,filter .13s ease}
+.depth-lobby .depth-dock>button.paw-nav-button[aria-current=page],.portrait-app .game-navigation.cozy-navigation>button.paw-nav-button[aria-current=page]{background-image:url('/assets/ui-buttons/plate-gold.svg');box-shadow:none}
+.depth-lobby .depth-dock>button.paw-nav-combat,.portrait-app .game-navigation.cozy-navigation>button.paw-nav-combat{height:88px;background-image:url('/assets/ui-buttons/plate-gold.svg');padding-top:5px}
+.depth-lobby .depth-dock .paw-ui-icon,.portrait-app .game-navigation.cozy-navigation .paw-ui-icon{display:block;width:34px;height:34px;margin:0;filter:drop-shadow(0 1px 0 #fff5d6);object-fit:contain}
+.depth-lobby .depth-dock .paw-nav-combat .paw-ui-icon,.portrait-app .game-navigation.cozy-navigation .paw-nav-combat .paw-ui-icon{width:45px;height:45px}
+.depth-lobby .depth-dock>button>.paw-nav-label,.portrait-app .game-navigation.cozy-navigation .paw-nav-label{display:block;position:static;width:auto;height:auto;margin:0;overflow:visible;clip:auto;white-space:nowrap;font-size:clamp(12px,3.25vw,14px);font-weight:900;letter-spacing:-.35px;line-height:1.15;text-shadow:0 1px #fff8dd}
+.depth-lobby .depth-dock .paw-nav-combat .paw-nav-label,.portrait-app .game-navigation.cozy-navigation .paw-nav-combat .paw-nav-label{font-size:clamp(13px,3.5vw,16px)}
+.paw-nav-badge{position:absolute;top:-4px;right:2px;display:grid;place-items:center;min-width:21px;height:21px;padding:0 4px;border:2px solid #fff3ce;border-radius:50%;background:#bb6650;color:#fff8df;font-size:12px;box-shadow:0 2px 0 #754830}
+.paw-nav-button:active{transform:translateY(3px)}
+.paw-nav-button:focus-visible{outline:3px solid #127f92!important;outline-offset:2px!important;border-radius:15px!important}
+.production-shell:has(.depth-lobby) .production-tools summary{background-image:url('/assets/ui-buttons/settings.svg');background-size:77%;border-color:#f4e1bb}
+.depth-motion .paw-ui-icon,.depth-close .paw-ui-icon{width:100%;height:100%}
+.depth-motion{padding:6px}.depth-close{padding:8px}
+.portrait-app:has(.cozy-decks) .paw-back,.cozy-decks .deck-carousel-controls>button,.cozy-decks .paw-deck-menu{display:grid;place-items:center;width:44px;height:48px;min-width:44px;min-height:44px;padding:8px;border:0;border-radius:0;background:transparent url('/assets/ui-buttons/plate-cream.svg') center/100% 100% no-repeat;box-shadow:none;color:#69462e;cursor:pointer;touch-action:manipulation}
+.portrait-app:has(.cozy-decks) .paw-back .paw-ui-icon,.cozy-decks .deck-carousel-controls>button .paw-ui-icon,.cozy-decks .paw-deck-menu .paw-ui-icon{width:26px;height:26px}
+.cozy-decks .cozy-deck-caption{padding-right:45px;padding-left:12px}
+.cozy-decks .paw-deck-menu{position:absolute;right:-11px;bottom:4px;width:46px;height:48px}
+.cozy-decks .deck-carousel-dots{gap:1px;top:51px}
+.cozy-decks .deck-carousel-dots button{position:relative;display:grid;place-items:center;width:32px;height:44px;border:0;border-radius:0;background:none;box-shadow:none;font-size:0}
+.cozy-decks .deck-carousel-dots button:before{content:'';width:11px;height:11px;border:2px solid #8d5c32;border-radius:50%;background:#edc687;box-shadow:0 1px 2px #33231a}
+.cozy-decks .deck-carousel-dots button.active:before{background:#ffd258;box-shadow:0 0 0 2px #fff1ce,0 0 9px #ffc845}
+.cozy-decks .cozy-vault-heading h3{display:flex;align-items:center;gap:6px;font-size:clamp(19px,5.5vw,27px)}
+.cozy-decks .cozy-vault-heading h3 .paw-ui-icon{width:24px;height:24px}
+.cozy-decks .cozy-vault-heading select{appearance:none;-webkit-appearance:none;min-height:44px;padding:6px 32px 6px 12px;background:#694530 url('/assets/ui-buttons/chevron-down.svg') right 8px center/18px no-repeat;color:#fff4d9;border:2px solid #c99a64;border-radius:14px;font-size:14px}
+.portrait-app .cozy-decks .deck-mobile-tabs button,.portrait-app .cozy-decks .deck-editor-toolbar button,.portrait-app .cozy-decks .deck-create-actions button{min-height:49px;padding:8px 10px 13px;border:0;border-radius:0;background:transparent url('/assets/ui-buttons/plate-cream.svg') center/100% 100% no-repeat;box-shadow:none;color:#65462f;font-size:14px}
+.portrait-app .cozy-decks .deck-mobile-tabs button[aria-selected=true]{background-image:url('/assets/ui-buttons/plate-gold.svg');border:0}
+.cozy-decks .deck-token-action{display:grid;place-items:center;width:32px;height:34px;padding:6px;border:0;border-radius:0;background:transparent url('/assets/ui-buttons/plate-gold.svg') center/100% 100% no-repeat;box-shadow:none}
+.cozy-decks .deck-token-action .paw-ui-icon{width:19px;height:19px}
+.cozy-decks .cozy-deck-options,.portrait-app .cozy-decks .deck-strategy{padding:0;background:#fff0d5;border:2px solid #8e6440;overflow:hidden}
+.cozy-decks .cozy-deck-options>summary,.cozy-decks .deck-strategy>summary{list-style:none;min-height:48px;padding:13px 38px 13px 13px;background:#80583a url('/assets/ui-buttons/chevron-down.svg') right 12px center/20px no-repeat;color:#fff0cd;font-size:14px}
+.cozy-decks summary::-webkit-details-marker{display:none}
+.cozy-decks .cozy-deck-options>div,.cozy-decks .deck-strategy>div{margin:12px}
+.portrait-app .cozy-decks .deck-launch{bottom:calc(97px + env(safe-area-inset-bottom));padding:12px 21px 6px}
+.portrait-app .cozy-decks .deck-launch .primary{display:flex;align-items:center;justify-content:center;gap:12px;min-height:67px;padding:9px 16px 16px;border:0;border-radius:0;background:transparent url('/assets/ui-buttons/pill-gold.svg') center/100% 100% no-repeat;box-shadow:none;font-size:clamp(17px,5vw,23px);color:#53391f;white-space:nowrap}
+.cozy-decks .deck-launch .primary .paw-ui-icon{width:29px;height:29px;opacity:.8}
+.cozy-decks .deck-launch .primary span{line-height:1.2;text-shadow:0 1px #fffbd9}
+.cozy-decks .deck-launch .primary:disabled{opacity:.65;filter:saturate(.55)}
+.cozy-decks .deck-launch:has(>button:nth-of-type(2)){flex-wrap:wrap}
+.cozy-decks .deck-launch:has(>button:nth-of-type(2)) .primary{flex-basis:100%}
+@media(max-width:350px){.depth-lobby .depth-dock>button>.paw-nav-label,.portrait-app .game-navigation.cozy-navigation .paw-nav-label{font-size:11px}.depth-lobby .depth-dock .paw-nav-combat .paw-nav-label,.portrait-app .game-navigation.cozy-navigation .paw-nav-combat .paw-nav-label{font-size:12px}.cozy-decks .deck-launch .primary .paw-ui-icon{width:23px;height:23px}}
+@media(orientation:landscape) and (max-height:540px){.depth-lobby .depth-dock{width:min(80%,700px);bottom:10px}.depth-lobby .depth-dock>button.paw-nav-button{height:65px;padding:5px 4px 13px}.depth-lobby .depth-dock>button.paw-nav-combat{height:73px}.depth-lobby .depth-dock .paw-ui-icon{width:29px;height:29px}.depth-lobby .depth-dock .paw-nav-combat .paw-ui-icon{width:38px;height:38px}}
+@media(prefers-reduced-motion:reduce){.paw-nav-button{transition:none!important}}
+
+.production-shell:has(.cozy-decks) .production-tools summary{background:#795238 url('/assets/ui-buttons/settings.svg') center/77% no-repeat;border:2px solid #f1d8a5;border-radius:12px;box-shadow:0 3px 0 #573d28;color:transparent}
+.production-shell:has(.cozy-decks) .production-tools summary .lobby-icon{opacity:0}

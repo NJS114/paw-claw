@@ -36,6 +36,7 @@ import './portrait-pages.css';
 import './game-card.css';
 import './cozy-decks.css';
 import { ProductionShell } from './ProductionShell';
+import './cozy-controls.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
  <React.StrictMode><ProductionShell /></React.StrictMode>,
