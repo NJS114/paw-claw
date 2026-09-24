@@ -47,3 +47,49 @@
 
 .production-shell:has(.cozy-decks) .production-tools summary{background:#795238 url('/assets/ui-buttons/settings.svg') center/77% no-repeat;border:2px solid #f1d8a5;border-radius:12px;box-shadow:0 3px 0 #573d28;color:transparent}
 .production-shell:has(.cozy-decks) .production-tools summary .lobby-icon{opacity:0}
+
+/* Complete the warm workshop theme through the expanded management panels. */
+.portrait-app .cozy-decks{padding-bottom:calc(120px + env(safe-area-inset-bottom))!important}
+.cozy-decks .cozy-deck-options,.portrait-app .cozy-decks .deck-strategy{border:3px solid #91663e;border-radius:17px;background:#fff0cf;box-shadow:inset 0 0 0 2px #fff8e4,0 4px 0 #5d3d28;scroll-margin-block:80px 115px}
+.cozy-decks .cozy-deck-options>summary,.cozy-decks .deck-strategy>summary{position:relative;display:flex;align-items:center;gap:8px;min-height:53px;padding:12px 42px 12px 16px;border-bottom:2px solid #6d472d;background:linear-gradient(#a47a4e,#825934);font-family:inherit;font-size:16px;line-height:1.3;font-weight:900;text-shadow:0 1px #684329}
+.cozy-decks .deck-strategy>summary:before{content:none}
+.cozy-decks .cozy-deck-options>summary:after,.cozy-decks .deck-strategy>summary:after{content:'';position:absolute;right:15px;top:50%;width:19px;height:19px;margin-top:-9px;background:url('/assets/ui-buttons/chevron-down.svg') center/contain no-repeat;transition:transform .15s}
+.cozy-decks details[open]>summary:after{transform:rotate(180deg)}
+.cozy-decks .cozy-field-label{grid-column:1/-1;font-size:14px;font-weight:900;color:#785337;margin:3px 3px -1px}
+.portrait-app .cozy-decks .deck-editor-toolbar input{min-height:46px;padding:10px 13px;border:2px solid #b98a52;border-radius:12px;background:#fff9e6;color:#5e402c;box-shadow:inset 0 2px 3px #b3894d26;font-size:16px;font-weight:700}
+.portrait-app .cozy-decks .deck-validity{justify-self:center;min-height:28px;display:flex;align-items:center;gap:6px;margin:3px 0;padding:5px 13px;border:1px solid #cca35c;border-radius:20px;background:#f7de9a;color:#775026;font-size:13px;font-weight:800;text-transform:none;letter-spacing:0}
+.portrait-app .cozy-decks .deck-validity.valid{border-color:#8da266;background:#e2edbd;color:#506437}
+.portrait-app .cozy-decks .deck-create-actions button,.portrait-app .cozy-decks .deck-editor-toolbar button{font-weight:800;line-height:1.25}
+.portrait-app .cozy-decks .deck-coherence{display:grid;gap:12px;margin:14px;padding:0;color:#68472f}
+.portrait-app .cozy-decks .deck-coherence>div{position:relative;padding:14px 15px;gap:7px;border:2px solid #c49a64;border-radius:14px;background:linear-gradient(#fff9e5,#f5e4bf);box-shadow:inset 0 0 0 2px #fffcef,0 3px 0 #bb92524d;color:#65442d;scroll-margin-bottom:120px}
+.portrait-app .cozy-decks .deck-coherence>div:nth-child(2){border-color:#a4af74;background:linear-gradient(#f4f6d9,#e4e9be)}
+.portrait-app .cozy-decks .deck-coherence>div:nth-child(3){border-color:#d3a06e;background:linear-gradient(#fff2d9,#f7debd)}
+.cozy-decks .deck-coherence small{font-size:15px;line-height:1.3;color:#775334;font-weight:900;letter-spacing:0;text-transform:none}
+.cozy-decks .deck-coherence strong{font-size:29px;line-height:1.2;color:#805425;font-weight:900;text-shadow:0 1px #fff8d9}
+.cozy-decks .deck-coherence span:not(.coherence-track){color:#624b34;font-size:14px;line-height:1.5}
+.cozy-decks .deck-coherence .coherence-track{height:13px;margin-top:4px;padding:2px;border:1px solid #b7894c;border-radius:12px;background:#dfc69a;box-shadow:inset 0 1px 2px #92714155}
+.cozy-decks .coherence-track i{height:100%;border-radius:9px;background:linear-gradient(#b3ca70,#839a4f);box-shadow:inset 0 1px #e1eba3}
+.portrait-app .cozy-decks .cost-curve{height:140px;margin:14px;padding:13px 12px;border:2px solid #c49a64;border-radius:14px;background:#fff7df;box-shadow:inset 0 0 0 2px #fffcef;color:#755136;scroll-margin-bottom:120px}
+.cozy-decks .cost-curve>div{min-width:0;gap:5px}
+.cozy-decks .cost-curve span{width:70%;border:1px solid #be8c41;border-radius:6px 6px 3px 3px;background:linear-gradient(#efd786,#c59649);box-shadow:inset 1px 1px #fff0b2}
+.cozy-decks .cost-curve small{color:#82613d;font-size:13px;font-weight:700}
+.cozy-decks .cost-curve b{color:#5e422b;font-size:14px;font-weight:900}
+.cozy-decks .deck-synergy-preview{display:flex;flex-wrap:wrap;gap:7px;margin:14px;color:#664c34}
+.cozy-decks .deck-synergy-preview>span,.cozy-decks .deck-synergy-preview .lore-chip{padding:7px 10px;border:1px solid #c39c60;border-radius:12px;background:#f9e7bc;color:#755333;font-size:13px;line-height:1.35;font-weight:700}
+.cozy-decks .deck-synergy-preview .lore-chip{border-color:#bba584;background:#fff4db;color:#7c5d42}
+/* The primary action follows the card tray, keeping the analysis unobscured. */
+.portrait-app .cozy-decks .deck-launch{position:relative;inset:auto;left:auto;bottom:auto;transform:none;z-index:1;width:100%;margin:15px 0 17px;padding:0 9px;background:none;box-shadow:none;scroll-margin-block:80px 115px}
+.portrait-app .cozy-decks .deck-launch .primary:disabled{opacity:1;filter:none;background-image:url('/assets/ui-buttons/pill-gold.svg');color:#886f42}
+.cozy-decks .deck-launch .primary:disabled .paw-ui-icon{opacity:.42}
+.cozy-decks .deck-launch>button:not(.primary){background:#fff0c9;color:#66452e;border:2px solid #b28a52;border-radius:17px;font-family:inherit;font-weight:800}
+/* Keep the existing illustrations and rarity colors, with parchment card labels. */
+.cozy-decks .game-card{background:#f0d49d;color:#65442c;box-shadow:inset 0 0 0 2px #fff2cc,0 4px 6px #78553144}
+.cozy-decks .game-card__art{background:#e6d09d}
+.cozy-decks .game-card__art:after{background:linear-gradient(180deg,transparent 73%,#f0d49d)}
+.cozy-decks .game-card__content{background:linear-gradient(#fff7df,#efd7a6);box-shadow:0 -2px 5px #a37b4933;border-color:var(--card-accent)}
+.cozy-decks .game-card__title{color:#65432b;font-family:ui-rounded,'Trebuchet MS',sans-serif;font-weight:900;text-shadow:0 1px #fff9e2}
+.cozy-decks .game-card__rarity,.cozy-decks .game-card.rarity-legendaire .game-card__rarity{color:#765433;background:#fff4d3;text-shadow:none;box-shadow:none}
+.cozy-decks .game-card__stats span{background:#fff1cc;border-color:#b78b50;box-shadow:0 1px 2px #7f5b3433}
+.cozy-decks .game-card__stats small{color:#8b653c}.cozy-decks .game-card__stats b{color:#68482e}
+.cozy-decks .game-card__cost{background:radial-gradient(circle at 35% 28%,#8dc8e5,#4387ac);border-color:#e7f4de;box-shadow:0 2px 3px #5e543366}
+@media(prefers-reduced-motion:reduce){.cozy-decks summary:after{transition:none}}
