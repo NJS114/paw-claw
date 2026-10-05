@@ -4,3 +4,4 @@ dist/
 public/assets/generated/
 public/assets/cards/**/*.webp
 output/
+cards-src/
