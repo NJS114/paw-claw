@@ -4,6 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
+    "cards:import": "node scripts/import-cards.mjs",
     "assets:import": "node scripts/import-assets.mjs && node scripts/crop-card-sheets.mjs",
     "assets:crop": "node scripts/crop-card-sheets.mjs",
     "assets:validate": "node scripts/validate-assets.mjs",
