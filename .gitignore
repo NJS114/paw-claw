@@ -3,5 +3,7 @@ dist/
 *.tsbuildinfo
 public/assets/generated/
 public/assets/cards/**/*.webp
+!public/assets/cards/v2/
+!public/assets/cards/v2/**/*.webp
 output/
 cards-src/

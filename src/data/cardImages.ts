@@ -2,8 +2,13 @@
 export interface CardImage { full: string; thumb: string; landscape: boolean }
 
 export const CARD_IMAGES: Record<string, CardImage> = {
-  'chef-01-verso': { full: '/assets/cards/v2/chef-01-verso.webp', thumb: '/assets/cards/v2/thumbs/chef-01-verso.webp', landscape: false },
+  'arm-014': { full: '/assets/cards/v2/arm-014.webp', thumb: '/assets/cards/v2/thumbs/arm-014.webp', landscape: false },
+  'cha-404': { full: '/assets/cards/v2/cha-404.webp', thumb: '/assets/cards/v2/thumbs/cha-404.webp', landscape: false },
   'chef-01': { full: '/assets/cards/v2/chef-01.webp', thumb: '/assets/cards/v2/thumbs/chef-01.webp', landscape: false },
+  'chef-01-verso': { full: '/assets/cards/v2/chef-01-verso.webp', thumb: '/assets/cards/v2/thumbs/chef-01-verso.webp', landscape: false },
+  'cre-026': { full: '/assets/cards/v2/cre-026.webp', thumb: '/assets/cards/v2/thumbs/cre-026.webp', landscape: false },
+  'elm-018': { full: '/assets/cards/v2/elm-018.webp', thumb: '/assets/cards/v2/thumbs/elm-018.webp', landscape: false },
+  'hea-014': { full: '/assets/cards/v2/hea-014.webp', thumb: '/assets/cards/v2/thumbs/hea-014.webp', landscape: false },
   'mag-001': { full: '/assets/cards/v2/mag-001.webp', thumb: '/assets/cards/v2/thumbs/mag-001.webp', landscape: false },
   'mag-002': { full: '/assets/cards/v2/mag-002.webp', thumb: '/assets/cards/v2/thumbs/mag-002.webp', landscape: false },
   'mag-003': { full: '/assets/cards/v2/mag-003.webp', thumb: '/assets/cards/v2/thumbs/mag-003.webp', landscape: false },
@@ -16,11 +21,23 @@ export const CARD_IMAGES: Record<string, CardImage> = {
   'mag-010': { full: '/assets/cards/v2/mag-010.webp', thumb: '/assets/cards/v2/thumbs/mag-010.webp', landscape: false },
   'mag-011': { full: '/assets/cards/v2/mag-011.webp', thumb: '/assets/cards/v2/thumbs/mag-011.webp', landscape: false },
   'mag-012': { full: '/assets/cards/v2/mag-012.webp', thumb: '/assets/cards/v2/thumbs/mag-012.webp', landscape: false },
+  'mag-014': { full: '/assets/cards/v2/mag-014.webp', thumb: '/assets/cards/v2/thumbs/mag-014.webp', landscape: false },
   'mag-u01': { full: '/assets/cards/v2/mag-u01.webp', thumb: '/assets/cards/v2/thumbs/mag-u01.webp', landscape: false },
   'mag-u02': { full: '/assets/cards/v2/mag-u02.webp', thumb: '/assets/cards/v2/thumbs/mag-u02.webp', landscape: false },
   'mag-u03': { full: '/assets/cards/v2/mag-u03.webp', thumb: '/assets/cards/v2/thumbs/mag-u03.webp', landscape: true },
+  'nat-020': { full: '/assets/cards/v2/nat-020.webp', thumb: '/assets/cards/v2/thumbs/nat-020.webp', landscape: false },
+  'nob-017': { full: '/assets/cards/v2/nob-017.webp', thumb: '/assets/cards/v2/thumbs/nob-017.webp', landscape: false },
+  'omb-018': { full: '/assets/cards/v2/omb-018.webp', thumb: '/assets/cards/v2/thumbs/omb-018.webp', landscape: false },
+  'pir-015': { full: '/assets/cards/v2/pir-015.webp', thumb: '/assets/cards/v2/thumbs/pir-015.webp', landscape: false },
+  'rob-017': { full: '/assets/cards/v2/rob-017.webp', thumb: '/assets/cards/v2/thumbs/rob-017.webp', landscape: false },
+  'som-012': { full: '/assets/cards/v2/som-012.webp', thumb: '/assets/cards/v2/thumbs/som-012.webp', landscape: false },
+  'tn-011': { full: '/assets/cards/v2/tn-011.webp', thumb: '/assets/cards/v2/thumbs/tn-011.webp', landscape: false },
   'tn-012': { full: '/assets/cards/v2/tn-012.webp', thumb: '/assets/cards/v2/thumbs/tn-012.webp', landscape: false },
+  'tn-013': { full: '/assets/cards/v2/tn-013.webp', thumb: '/assets/cards/v2/thumbs/tn-013.webp', landscape: false },
   'tn-014': { full: '/assets/cards/v2/tn-014.webp', thumb: '/assets/cards/v2/thumbs/tn-014.webp', landscape: false },
+  'tn-016': { full: '/assets/cards/v2/tn-016.webp', thumb: '/assets/cards/v2/thumbs/tn-016.webp', landscape: false },
+  'tn-u03': { full: '/assets/cards/v2/tn-u03.webp', thumb: '/assets/cards/v2/thumbs/tn-u03.webp', landscape: false },
+  'tn-u04': { full: '/assets/cards/v2/tn-u04.webp', thumb: '/assets/cards/v2/thumbs/tn-u04.webp', landscape: true },
 };
 
 export const cardImageFor = (id: string): CardImage | undefined => CARD_IMAGES[id];
