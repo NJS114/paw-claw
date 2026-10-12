@@ -1,10 +1,10 @@
 # Cartes secrètes PAMUK
 
-Lot final de 19 cartes issu de `PAMUK_Bible_de_jeu_Collections(1).xlsx`, livré le 8 octobre 2026.
+Lot final de 19 cartes issu de `PAMUK_Bible_de_jeu_Collections(1).xlsx`, mis à jour le 12 octobre 2026.
 
 Les fichiers utilisent les identifiants du catalogue et le système d’import existant : WebP de 768 × 1152 pixels (1152 × 768 pour la Zone), miniatures de 256 pixels de large et registre `src/data/cardImages.ts`.
 
-Ce lot remplace aussi les anciennes versions de Docteur Ozias Filament et Prototype KT-849. Les dernières retouches d’Aster, Murmure, Prototype, Chat 404, des Ciseaux et du Métier Céleste sont incluses.
+Les 19 visuels utilisent désormais une direction graphique de jeu de cartes urbain : encrage dynamique, ombres découpées, couleurs franches et poses expressives. Cerbère-Ω possède un corps cohérent et trois têtes canines distinctes. Les noms, capacités, statistiques et descriptions du fichier source sont conservés.
 
 | Identifiant | Carte | Numéro | Famille | Visuel | Miniature |
 | --- | --- | --- | --- | --- | --- |
