@@ -88,3 +88,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,su
 html[data-motion=reduced] *,html[data-motion=reduced] *:before,html[data-motion=reduced] *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 /* The lobby owns its dock and fills one viewport without an extra page gutter. */
 .portrait-app:has(.depth-lobby){padding:0;background:#25364f}
+/* Override the legacy arena placeholder, which used an important background. */
+.portrait-app .cinematic-battle{background-image:linear-gradient(#172b43b3,#1b2c43e8),url('/assets/refined/city.webp')!important;background-position:center 70%!important;justify-content:flex-start;gap:5px}
+.portrait-app .cinematic-battle>.battle-header-panel,.portrait-app .cinematic-battle>.battle-row{flex:0 0 auto}
+.portrait-app .cinematic-battle>.cinematic-center{flex:0 0 44px}
+.portrait-app .cinematic-battle>.battle-command-bar{margin-top:auto;flex:0 0 auto}
+.story-effect{background:#eeebe3;color:#43566e}.story-effect h3,.story-effect strong{color:#857044}.story-effect p{color:#43566e}
