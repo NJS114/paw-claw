@@ -28,8 +28,8 @@ describe('booster edition pulls',()=>{
   const pull=generateStandardBooster('booster.healers-light');
   expect(pull.legendary).toBe(true);
   expect(pull.cards).toHaveLength(12);
-  expect(pull.cards.at(-1)?.rarity).toBe('Légendaire');
-  expect(pull.cards.at(-1)?.family).toBe('Guérisseurs');
+  expect(pull.cards[pull.cards.length-1]?.rarity).toBe('Légendaire');
+  expect(pull.cards[pull.cards.length-1]?.family).toBe('Guérisseurs');
  });
 
  it('persists the selected pack, ignores invalid indices and restores a safe default',()=>{
