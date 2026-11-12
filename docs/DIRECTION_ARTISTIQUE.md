@@ -1,52 +1,49 @@
-# Direction artistique — fantasy chaleureuse
+# Direction artistique officielle — fantasy épurée
 
-Décision utilisateur du 12 novembre 2026 : « Fantasy chaleureuse : bois, parchemin, couleurs douces ».
+Décision utilisateur : « C’est beaucoup beaucoup mieux, on part sur ça ! », après la proposition `09-fantasy-epuree.png` du 12 novembre 2026. Cette décision remplace la piste précédente bois/parchemin/fleurs.
 
 ## Intention
 
-Le jeu est un petit royaume vivant que l’on manipule avec le doigt. L’accueil est une scène illustrée avec des héros au premier plan. Les menus sont des objets de cet univers : enseignes en bois, onglets épais, coffres, cartes encadrées et parchemins. La collection est un album, les decks un atelier et la boutique un comptoir.
+Le lore donne son identité au jeu : architecture, factions, lumière et liens entre les personnages. L’interface accompagne les cartes sans les concurrencer. La richesse reste dans les illustrations ; les commandes, cadres et compteurs sont sobres.
 
-Les fonds et personnages existants restent des calques séparés. Textes, valeurs et commandes restent vivants et accessibles ; aucune maquette complète ne doit devenir une image cliquable aplatie.
+- Palette : bleu ardoise, pierre claire et ivoire ; laiton et or en accents.
+- Cadres fins, quelques angles adoucis, pas de textures de bois ni de végétation décorative dans l’interface.
+- Cartes dominantes, deux colonnes dans la collection, caractéristiques essentielles lisibles.
+- Accueil composé de calques séparés : cité de pierre, duo de héros, textes et contrôles vivants.
+- Un appel principal au jeu, activités secondaires compactes et dock discret.
+- Combat compact, sept lignes alignées, portraits d’unités et nombres prioritaires ; les statistiques détaillées des résultats sont repliées.
+- Histoires en chapitre illustré lisible, sans défilement horizontal de toute la page.
+- Animations courtes et fonctionnelles ; choix d’animations réduites conservé.
 
-## Grammaire commune
+Les illustrations de cartes peuvent contenir des fleurs, des ornements ou des éléments propres à leur famille. La restriction concerne l’habillage global de l’interface, pas la réécriture artistique du catalogue.
 
-| Élément | Direction |
-| --- | --- |
-| Bois | Brun noisette #805333, ombres #573823, bord sculpté et petite profondeur |
-| Parchemin | Crème #FFF0CF, lumière #FFF7E2, textes brun #553B2A |
-| Action principale | Miel #E9B758, éclairage en haut, base brune, pression tactile courte |
-| État sélectionné | Sauge #719785, bord #466D60 et texte crème |
-| Décor | Bleus poussiéreux, végétation et pierre chaude ; limiter les noirs et l’effet néon |
-| Personnages | Expressions lisibles, matières peintes, silhouettes distinctes, même échelle de détail |
-| Typographie | Sérif de conte pour titres courts ; caractères arrondis lisibles pour commandes et chiffres |
-| Monnaies | Icônes réelles du jeu, valeurs dynamiques, aucune promesse d’achat non disponible |
-| Mouvement | Léger flottement, pression et révélation ; réduction effective dans les réglages et via le système |
+## Ressources livrées
 
-Le fichier `src/kingdom-ui.css` applique cette direction après les styles hérités. Ce choix permet une révision progressive ; il ne remplace pas la suppression ultérieure des règles obsolètes.
+| Fichier | Usage | Dimensions |
+| --- | --- | --- |
+| `public/assets/refined/city.webp` | Scène de cité et architecture commune | 863 × 1822 |
+| `public/assets/refined/heroes.webp` | Duo chat archimage / chien gardien, alpha préservé | 1100 × 880 |
+| `public/assets/refined/lore.webp` | Illustration d’ambiance de deux clans séparés par un pont | 1000 × 1333 |
 
-## Composition par écran
+Les trois images sont produites avec l’outil image intégré à partir de la référence approuvée. Elles ne sont pas des captures aplaties de l’interface. Les originaux PNG restent dans `/workspace/generated_images/` ; les WebP de production sont encodés pour le jeu sans modification de composition.
 
-- **Accueil :** scène plein écran, duo central, activités sur le côté, quête lisible et dock au pouce. Éviter les slogans de page commerciale et les panneaux statistiques occupant tout le décor.
-- **Collection :** album crème, filtres en jetons épais, cartes dominantes, trois colonnes quand elles restent lisibles et deux sur très petit écran. La fiche s’ouvre comme un volet de l’album.
-- **Decks :** atelier existant comme référence ; cartes manipulables avec plus/moins, capacité 20 cartes clairement visible. Le visuel de présentation doit ensuite refléter le deck sélectionné, pas toujours le même équipage pirate.
-- **Boutique :** paquet en objet central sur son comptoir ; un bouton d’achat clair en pièces du jeu, réserve accessible, pas de vitrine de fonctionnalités absentes.
-- **Missions :** fiches de parchemin, tampons de récompense et barre sauge ; distinction terminée/récupérée sans dépendre uniquement de la couleur.
-- **Combat :** conserver le plateau illustré et les deux camps, privilégier unités/PV/énergie, réduire le journal secondaire. Vérifier la lisibilité avant d’ajouter des effets.
-- **Réglages et guide :** petit panneau sculpté au-dessus du monde ; choix réellement fonctionnels, commandes ≥44 px, focus et fermeture accessibles.
-- **Résultats :** panneau de récompense chaleureux. Les images victoire/défaite dédiées et une mise en scène sonore restent à produire.
+La scène d’histoire est une illustration d’ambiance des factions, pas un remplacement des illustrations ni de l’identité des cartes citées dans les textes. Les cartes déjà présentes restent inchangées. Les images générées dans d’autres conversations devront être fournies pour leur intégration fidèle.
 
-## Nouvelle icône
+## Mise en œuvre
 
-Source : `public/assets/branding/paw-claw-icon-source.webp`, image originale conservée dans la session sous `/workspace/generated_images/`. Duo chat mage et chien chevalier, tons sauge/miel/parchemin, sans texte. Création par l’outil image intégré, puis encodage/redimensionnement pour les dimensions natives sans modification de composition. Les fichiers Android/iOS sont générés par `npm run mobile:art`.
+- `src/kingdom-ui.css` devient la couche visuelle commune épurée.
+- `src/layered-home.css` remplace l’ancien accueil fleuri.
+- `src/game-card.css` donne la priorité aux illustrations et aux nombres.
+- `src/CozyUi.tsx` conserve son API pour les consommateurs mais utilise des emblèmes vectoriels sans plaques raster.
+- Les feuilles `cozy-decks.css` et `cozy-controls.css` ne sont plus chargées.
+- L’atelier affiche un aperçu des vraies cartes du deck ; les enseignes boisées et l’illustration pirate générique sont retirées du parcours.
+- La boutique utilise une hauteur explicite pour le paquet. La fin d’ouverture expose les douze cartes reçues dans une grille.
+- Les récompenses du combat sont visibles immédiatement ; les métriques secondaires restent disponibles dans un volet.
 
-L’icône doit encore être observée sous les masques Android et à petite taille sur écran d’accueil. Sa génération ne vaut pas approbation finale de toute la DA.
+Cette refonte ne change ni les règles, ni les quantités de récompenses, ni les clés de sauvegarde.
 
-## Validation visuelle requise
+## Validation
 
-Contrôler accueil, collection vide/filtrée, fiche de carte, atelier complet/invalide, boutique solde faible, booster/reveal, missions/passe, préparation, combat, résultats, guide et réglages :
+Conserver les parcours fonctionnels et vérifier le rendu sur les captures CI au format 390 × 844, puis sur appareils Android et iPhone. Une compilation ou un test DOM ne vaut pas validation de fidélité visuelle. Réviser les écarts observés avant d’annoncer une correspondance complète avec la maquette.
 
-- iPhone compact 375×667, iPhone avec encoche 393×852, Android étroit 360×800, grand Android 412×915, format étroit 320 px et paysage bas.
-- Zéro chevauchement avec encoche, barre système, clavier ou dock ; boutons utilisables sans zoom ; titres de cartes identifiables ; contraste sur parchemin ; aucune icône cassée.
-- Animations réduites actives, contrôle au clavier, retour Android et changements d’orientation.
-
-Aucune capture de rendu de ce lot n’est disponible. Les écarts observés à cette revue devront être corrigés avant publication.
+Les problèmes de contenu déjà identifiés restent distincts : illustrations de cartes manquantes, audio et équilibrage, sauvegarde cloud absente et finalisation de la publication en boutique.

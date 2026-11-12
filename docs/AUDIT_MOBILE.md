@@ -1,3 +1,5 @@
+> Révision de DA : la direction officielle est désormais la fantasy épurée, approuvée après le comparatif. Le bois, les fleurs et les panneaux ornés décrits dans le bilan historique ci-dessous sont remplacés dans ce nouveau lot. Voir DIRECTION_ARTISTIQUE.md. Les inventaires et limites de sortie restent applicables.
+
 # Paw & Claw — audit de préparation mobile
 
 Date : 12 novembre 2026. Cible : Android et iPhone. Direction choisie par l’utilisateur : fantasy chaleureuse, bois, parchemin, couleurs douces.

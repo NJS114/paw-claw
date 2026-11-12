@@ -4,12 +4,12 @@ const config: CapacitorConfig = {
   appId: 'com.pawandclaw.game',
   appName: 'Paw & Claw',
   webDir: 'dist',
-  backgroundColor: '#f4e5c6',
+  backgroundColor: '#1b2941',
   android: { allowMixedContent: false },
   ios: { contentInset: 'never', preferredContentMode: 'mobile' },
   plugins: {
-    SplashScreen: { launchAutoHide: true, launchShowDuration: 800, backgroundColor: '#f4e5c6', showSpinner: false },
-    StatusBar: { overlaysWebView: false, backgroundColor: '#f4e5c6', style: 'LIGHT' },
+    SplashScreen: { launchAutoHide: true, launchShowDuration: 800, backgroundColor: '#1b2941', showSpinner: false },
+    StatusBar: { overlaysWebView: false, backgroundColor: '#1b2941', style: 'DARK' },
   },
 };
 export default config;

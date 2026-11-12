@@ -1,6 +1,6 @@
 import { useEffect, useRef, type ReactNode } from 'react';
 
-export function GameDialog({ title, onClose, children }: { title: string; onClose: () => void; children: ReactNode }) {
+export function GameDialog({ title, onClose, children, closeLabel = 'Fermer' }: { title: string; closeLabel?: string; onClose: () => void; children: ReactNode }) {
   const ref = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     const dialog = ref.current!;
@@ -22,5 +22,5 @@ export function GameDialog({ title, onClose, children }: { title: string; onClos
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }
-  }}><div className="royal-dialog-heading"><h2>{title}</h2><button onClick={onClose} aria-label="Fermer">×</button></div>{children}</dialog>;
+  }}><div className="royal-dialog-heading"><h2>{title}</h2><button onClick={onClose} aria-label={closeLabel}>×</button></div>{children}</dialog>;
 }

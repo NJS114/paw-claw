@@ -15,8 +15,9 @@ export function ProductionShell() {
     document.documentElement.lang = 'fr';
     document.documentElement.dataset.motion = gameStorage.getItem('paw-claw.motion') === 'reduced' ? 'reduced' : 'full';
     const click = (event: MouseEvent) => { if ((event.target as HTMLElement).closest('button:not(:disabled)')) tactileFeedback(); };
+    const openStories=()=>setStories(true);window.addEventListener('paw-stories',openStories);
     document.addEventListener('click', click);
-    return () => document.removeEventListener('click', click);
+    return () => {document.removeEventListener('click', click);window.removeEventListener('paw-stories',openStories)};
   }, []);
   function closeGuide() { gameStorage.setItem('paw-claw.guide.v1', 'seen'); setGuide(false); }
   return <div className="production-shell">
