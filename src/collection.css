@@ -1,1 +1,11 @@
 .catalog-card.locked{filter:saturate(.25) brightness(.55);opacity:.72}.catalog-card.locked .catalog-art img{filter:grayscale(1) blur(1px)}.owned-badge{position:absolute;right:8px;bottom:8px;min-width:34px;padding:5px 8px;border-radius:999px;background:rgba(5,12,28,.9);border:1px solid rgba(241,211,134,.75);color:#f5dda0;font-size:11px;font-weight:900;text-align:center}.visual-pack img{max-width:100%;max-height:390px;object-fit:contain;filter:drop-shadow(0 18px 25px rgba(0,0,0,.4))}.home-visual img{max-width:100%;max-height:68vh;object-fit:contain;filter:drop-shadow(0 25px 35px rgba(0,0,0,.35))}.card-art img{width:100%;height:100%;object-fit:cover;border-radius:6px}.asset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}.asset-tile{background:#0e1930;border:1px solid rgba(220,184,104,.2);border-radius:14px;overflow:hidden}.asset-tile img{width:100%;aspect-ratio:1.25;object-fit:cover;display:block}.asset-tile small{display:block;padding:8px;color:#8996b2;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.collection-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:12px 0;color:#ead8b6;font-size:13px}
+.collection-toolbar p{margin:0;flex:1 0 120px}
+.collection-toolbar label{display:flex;align-items:center;gap:8px}
+.collection-toolbar select,.collection-toolbar button,.collection-empty button{min-height:44px;border:1px solid #bc965b;border-radius:8px;background:#0b1628;color:#ffe8b5;padding:8px 10px;font:inherit}
+.collection-empty{text-align:center;padding:32px 16px;border:1px solid #bc965b77;border-radius:14px;background:#0b1628e8;color:#ead8b6}
+.collection-modal-backdrop{position:fixed;inset:0;z-index:210;background:#020817b8}
+.collection-modal-backdrop .collection-card-sheet{max-height:calc(100dvh - 100px - env(safe-area-inset-bottom));overflow:auto}
+.collection-modal-backdrop .card-sheet-close{width:44px;min-height:44px}
+.collection-toolbar :focus-visible,.collection-empty button:focus-visible,.card-sheet-close:focus-visible{outline:3px solid #ffe8b5;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.collection-modal-backdrop .collection-card-sheet{animation:none}}
