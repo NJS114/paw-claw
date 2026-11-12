@@ -4,7 +4,7 @@ import type {CardData} from './data/gameCards';
 import type {OwnedCards} from './data/collection';
 import {GameAsset} from './GameAsset';
 import {GameCard} from './GameCard';
-import {BOOSTER_PACKS} from './data/boosterPacks';
+import {BOOSTER_PACKS,loadSelectedBoosterPackIndex,saveSelectedBoosterPackIndex} from './data/boosterPacks';
 
 type Phase='idle'|'charge'|'tear'|'reveal'|'complete';
 type Props={owned:OwnedCards;available:number;onOpen:(cards:CardData[])=>boolean;onShop:()=>void};
@@ -15,7 +15,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  const[cards,setCards]=useState<CardData[]>([]);
  const[revealed,setRevealed]=useState(0);
  const[newIds,setNewIds]=useState<Set<string>>(new Set());
- const[selectedPack,setSelectedPack]=useState(0);
+ const[selectedPack,setSelectedPack]=useState(loadSelectedBoosterPackIndex);
  const legendary=useMemo(()=>cards.some(c=>c.rarity==='Légendaire'),[cards]);
  const pack=BOOSTER_PACKS[selectedPack];
 
@@ -27,7 +27,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
 
  function start(){
   if(available<=0){onShop();return}
-  const pull=generateStandardBooster();
+  const pull=generateStandardBooster(pack.id);
   if(!onOpen(pull.cards))return;
   setCards(sortBoosterForPresentation(pull.cards));
   setNewIds(new Set(pull.cards.filter(c=>(owned[c.id]??0)===0).map(c=>c.id)));
@@ -43,8 +43,8 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
  }
 
  function reset(){setCards([]);setRevealed(0);setNewIds(new Set());setPhase('idle')}
- function prevPack(){if(phase!=='idle')return;setSelectedPack(i=>(i-1+BOOSTER_PACKS.length)%BOOSTER_PACKS.length)}
- function nextPack(){if(phase!=='idle')return;setSelectedPack(i=>(i+1)%BOOSTER_PACKS.length)}
+ function prevPack(){if(phase!=='idle')return;const next=(selectedPack-1+BOOSTER_PACKS.length)%BOOSTER_PACKS.length;setSelectedPack(next);saveSelectedBoosterPackIndex(next)}
+ function nextPack(){if(phase!=='idle')return;const next=(selectedPack+1)%BOOSTER_PACKS.length;setSelectedPack(next);saveSelectedBoosterPackIndex(next)}
 
  return <section className={`booster-opening-v2 phase-${phase} ${legendary?'has-legendary':''}`} aria-label="Ouverture de booster">
   <div className="booster-stage" onClick={phase==='reveal'?revealNext:undefined}>

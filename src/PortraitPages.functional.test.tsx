@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import {describe,it,expect,vi} from 'vitest';
 import {GameNavigation} from './GameNavigation';
 import {PortraitShop} from './PortraitShop';
+import {BoosterOpening} from './BoosterOpening';
 import {CardArtwork} from './CardArtwork';
 import {cards} from './data/gameCards';
 import {loadMonetization} from './data/monetization';
@@ -36,4 +37,12 @@ describe('Portrait pages',()=>{
   fireEvent.error(screen.getByRole('img',{name:card.name}));
   expect(screen.getByRole('img',{name:`Illustration à venir : ${card.name}`})).toBeInTheDocument();
  });
+ it('keeps the chosen shop edition when navigating to the booster screen',()=>{
+  const {unmount}=render(<PortraitShop progress={progress} onBuy={()=>true} onOpen={()=>{}} monetization={loadMonetization()}/>);
+  fireEvent.click(screen.getByRole('button',{name:/Guérisseurs Émeraude/}));
+  unmount();
+  render(<BoosterOpening owned={{}} available={1} onOpen={()=>true} onShop={()=>{}}/>);
+  expect(screen.getByText('Guérisseurs Émeraude')).toBeInTheDocument();
+ });
+
 });
