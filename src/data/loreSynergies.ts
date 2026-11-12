@@ -10,7 +10,7 @@ type LoreBoardCard=BoardCard&{loreMarks?:string[]};
 const SPECIES_BY_ID:Record<string,Species>={
  'omb-005':'Chien','hea-004':'Chat','nob-007':'Chat','nob-008':'Chien','rob-005':'Chien','rob-006':'Chat'
 };
-const DOG_HINTS=['chien','canaille','protecteur','gardien','paladin','éclaireur'];
+const DOG_HINTS=['chien','chiot','canaille','protecteur','gardien','paladin','éclaireur'];
 export function speciesOf(card:Pick<CardData,'id'|'name'|'species'>):Species{
  if(card.species)return card.species;
  const explicit=SPECIES_BY_ID[card.id];
