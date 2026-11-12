@@ -1,0 +1,102 @@
+/* Paw & Claw — warm storybook game UI. Loaded after the legacy screen styles. */
+:root{--wood:#805333;--wood-dark:#573823;--parchment:#fff0cf;--ink:#553b2a;--honey:#e9b758;--sage:#5b8273;--mobile-dock-h:98px;color-scheme:light}
+html,body,#root{min-height:100%;background:#233b3e;overscroll-behavior:none}
+body{margin:0;-webkit-tap-highlight-color:transparent}
+button,select,a{touch-action:manipulation}
+button{cursor:pointer}
+button:disabled{cursor:default}
+input,select,textarea{font-size:16px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid #327c7c;outline-offset:3px}
+.production-shell{background:radial-gradient(ellipse at 50% 0,#597c76,#203c40 70%);font-family:ui-rounded,'Trebuchet MS',sans-serif}
+.portrait-app:not(.battle-mode){padding-bottom:calc(104px + env(safe-area-inset-bottom));background:#d9dfc3;color:var(--ink);box-shadow:0 0 70px #102b2e99}
+.portrait-app .game-page-header{min-height:66px;padding-top:calc(8px + env(safe-area-inset-top));background:linear-gradient(#fff5dbee,#f0ddb5f2);border-bottom:3px solid #997147;color:var(--ink);box-shadow:0 4px 14px #4c352333}
+.game-page-header h1{font-family:Georgia,serif;text-shadow:0 1px #fff8e3;font-size:23px;color:var(--ink)}
+.game-page-header .game-header-wallet{color:var(--ink)}
+.game-page-header .game-back{display:grid;place-items:center;width:44px;height:44px;border:2px solid #9b6e43;border-radius:12px;background:#fff0cf;box-shadow:0 3px #6d492e}
+.game-back .paw-ui-icon{width:26px;height:26px}
+.kingdom-settings{position:fixed;z-index:180;top:calc(10px + env(safe-area-inset-top));right:max(10px,calc((100vw - 520px)/2 + 10px));width:44px;height:44px;display:grid;place-items:center;padding:6px;border:2px solid #edd4a4;border-radius:13px;background:#916540;box-shadow:0 3px #5d3b27}
+.kingdom-settings .paw-ui-icon{width:29px;height:29px}
+.production-shell:has(.battle-mode) .kingdom-settings{right:10px}
+.depth-lobby .depth-topbar{padding-right:60px;padding-top:env(safe-area-inset-top)}
+.depth-lobby .depth-wallet{gap:4px}
+.depth-lobby .depth-wallet span{min-width:0}
+.depth-lobby .depth-brand>span{color:#fff1ce;text-shadow:0 2px 4px #4c3523}
+.depth-lobby .depth-side button{border:2px solid #b58a53;border-radius:16px;background:linear-gradient(#fff7dd,#ecd8ae);color:var(--ink);box-shadow:0 4px #69472f,inset 0 1px #fff8e8}
+.depth-side button .depth-icon{object-fit:contain;filter:drop-shadow(0 2px 1px #69472f55)}
+.portrait-app .game-navigation.cozy-navigation{height:calc(98px + env(safe-area-inset-bottom));width:min(100%,520px);grid-template-columns:1fr 1fr 1.2fr 1fr 1fr;gap:3px;padding:8px 5px calc(6px + env(safe-area-inset-bottom));border:0;border-top:3px solid #91653f;border-radius:22px 22px 0 0;background:linear-gradient(#d4b480,#a67948);box-shadow:0 -8px 24px #3f2d2340;overflow:visible}
+.portrait-app .game-navigation.cozy-navigation>button.paw-nav-button{height:78px;padding:8px 2px 12px;color:#65442b}
+.portrait-app .game-navigation.cozy-navigation>button[aria-current=page]{filter:brightness(1.06);transform:translateY(-4px)}
+.portrait-app .game-navigation .paw-nav-label{font-family:inherit;font-size:12px;text-shadow:0 1px #fff6df}
+.portrait-app .screen-background-scrim{background:linear-gradient(#19374705,#263e3c12 25%,#c5b588b8 65%,#e1d3adf2)}
+.portrait-app .collection-screen{padding:16px 12px 24px;background:transparent;border:0}
+.portrait-app .collection-head h2{font:700 26px Georgia,serif;color:#68482f;text-shadow:0 1px #fff5d4}
+.portrait-app .collection-head{padding:12px;background:#fff0cfe8;border:2px solid #a37c50;border-radius:18px;box-shadow:0 4px #765336}
+.portrait-app .collection-head .eyebrow{color:#856447;font-size:10px;letter-spacing:.12em}
+.portrait-app .collection-progress{color:#74563c}.portrait-app .collection-progress small{color:#74563c}
+.portrait-app .collection-progress i{background:#d8c4a0}.portrait-app .collection-progress i b{background:linear-gradient(90deg,#70a58b,#bad8a6)}
+.portrait-app .search{min-height:44px;width:100%;border:2px solid #b28b5b;border-radius:12px;background:#fff9e9;color:var(--ink);box-shadow:inset 0 2px 4px #7d5b3020}
+.portrait-app .family-strip,.portrait-app .filter-row{border:0;background:transparent;padding-block:12px;gap:6px}
+.portrait-app .family-strip button,.portrait-app .filter-row button,.collection-toolbar select,.collection-toolbar button,.collection-empty button{min-height:44px;border:2px solid #a27a4e;border-radius:12px;background:#fff0cf;color:var(--ink);box-shadow:0 3px #775133;font:700 13px ui-rounded,'Trebuchet MS',sans-serif}
+.portrait-app .family-strip button.active,.portrait-app .filter-row button.active{background:#719785;color:#fff9e6;border-color:#466d60;box-shadow:0 3px #345549}
+.portrait-app .family-strip button span{color:inherit}
+.collection-toolbar{padding:10px;background:#fff0cfe8;border:2px solid #b18b5c;border-radius:14px;color:var(--ink)}
+.collection-empty{border:2px solid #a27a4e;background:#fff0cf;color:var(--ink);box-shadow:0 4px #775133}
+.collection-toolbar label{flex-wrap:wrap}
+.portrait-app .collection-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding-block:8px}
+.portrait-app .catalog-card{border:0;border-radius:12px;background:transparent;box-shadow:0 4px 8px #4d342540}
+.game-card{box-shadow:0 4px 9px #3a291f50}
+.collection-modal-backdrop{background:#26382bc2}
+.collection-modal-backdrop .collection-card-sheet{border:3px solid #9b7148;background:linear-gradient(#fff5dd,#ebd4aa);box-shadow:0 -12px 40px #2e302b66}
+.collection-card-sheet .card-sheet-copy h3{color:#67452e;text-shadow:0 1px #fff8df}
+.collection-card-sheet .card-sheet-copy>span,.collection-card-sheet .card-sheet-copy>small,.collection-card-sheet .card-sheet-copy p{color:#6d513a;font-size:13px}
+.collection-card-sheet .card-sheet-close{background:#946440;border:2px solid #f4dbae;color:#fff4d7}
+.portrait-app .portrait-shop{padding:14px 12px 20px}
+.portrait-app .shop-tabs button,.portrait-app .shop-pack-picker button,.portrait-app .shop-owned-packs{min-height:48px;border:2px solid #9d7449;border-radius:14px;background:#fff0cfe8;color:var(--ink);box-shadow:0 3px #725034}
+.portrait-app .shop-tabs button[aria-pressed=true],.portrait-app .shop-pack-picker button[aria-pressed=true]{background:#719785;color:#fff6de;border-color:#466d60}
+.portrait-app .portrait-shop-description{padding:16px;border:2px solid #a47a4d;border-radius:18px;background:#fff0cfee;color:var(--ink);box-shadow:0 4px #785234}
+.portrait-app .portrait-shop-description h2{font-family:Georgia,serif;color:#68482f;font-size:25px}
+.portrait-app .portrait-shop-description p,.portrait-app .portrait-shop-description small{color:#73563c;font-size:13px;line-height:1.5}
+.portrait-app .shop-buy{min-height:58px;border:3px solid #a47538;border-radius:18px;background:linear-gradient(#ffe3a1,#e7b456);color:#68432a;box-shadow:inset 0 2px #fff3cf,0 5px #78512d;font-size:17px}
+.portrait-app .shop-budget-note{color:#753f2e;background:#fff0cf;padding:10px;border-radius:12px}
+.portrait-app .progression-hub{padding:14px 12px 24px;color:var(--ink)}
+.portrait-app .progression-hero,.portrait-app .mission-panel,.portrait-app .pass-head,.portrait-app .pass-tier,.portrait-app .profile-card,.portrait-app .profile-stats>div{border:2px solid #a47a4d;border-radius:18px;background:#fff0cfed;color:var(--ink);box-shadow:0 4px #785234}
+.portrait-app .progression-hero h2,.portrait-app .mission-panel h3,.portrait-app .pass-head h3,.portrait-app .profile-card h2{color:#68482f;font-family:Georgia,serif}
+.portrait-app .progression-hero p,.portrait-app .pass-summary,.portrait-app .mission-row span,.portrait-app .mission-row small,.portrait-app .pass-head p,.portrait-app .reward-cell small,.portrait-app .reward-cell strong,.portrait-app .tier-level,.portrait-app .profile-stats span{color:#73563c}
+.portrait-app .mission-progress>div{background:#d8c6a4}.portrait-app .mission-progress i{background:#76a48d}
+.portrait-app .progression-tabs button,.portrait-app .mission-progress button,.portrait-app .reward-cell button{min-height:44px;border:2px solid #a57c4d;border-radius:12px;background:#f5dfa9;color:var(--ink);box-shadow:0 3px #785234}
+.portrait-app .progression-tabs button[aria-selected=true]{background:#719785;color:#fff6de;border-color:#466d60}
+.portrait-app .reward-cell{background:#fff8e2;border-color:#b49467}
+.portrait-app .profile-stats strong{color:#68482f}
+.royal-dialog{position:fixed;inset:0;width:min(430px,calc(100% - 28px));max-height:calc(100dvh - 40px - env(safe-area-inset-top) - env(safe-area-inset-bottom));box-sizing:border-box;margin:auto;padding:20px;border:4px solid #956841;border-radius:26px;background:linear-gradient(145deg,#fff7e2,#efdbb5);color:var(--ink);box-shadow:inset 0 0 0 2px #fff9e9,0 20px 70px #19382b80;font:16px ui-rounded,'Trebuchet MS',sans-serif;overflow:auto}
+.royal-dialog::backdrop{background:#19392bc4;backdrop-filter:blur(4px)}
+.royal-dialog-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:2px solid #b49162;margin-bottom:14px;padding-bottom:12px}
+.royal-dialog-heading h2{font:700 25px Georgia,serif;margin:0;color:#67472d;text-shadow:0 1px #fff9e5}
+.royal-dialog button{min-height:48px;padding:10px 14px;border:2px solid #9d7449;border-radius:14px;background:#fff0cf;color:var(--ink);box-shadow:0 3px #765033;font:700 15px inherit;margin:5px 4px 5px 0}
+.royal-dialog button.primary{background:linear-gradient(#ffe3a1,#e7b456)}
+.royal-dialog-heading button{width:44px;flex:none;margin:0;padding:0;font-size:26px;background:#a4754e;color:#fff5dd}
+.royal-dialog p{line-height:1.55;color:#70543a}
+.game-setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0;border-bottom:1px solid #b5966b}
+.game-setting-row span{font-weight:700}.game-setting-row small{display:block;font-size:12px;font-weight:400;margin-top:4px}.game-setting-row input{width:25px;height:25px;accent-color:#5d8d76}
+.settings-edition{font-size:11px;letter-spacing:.12em}.settings-footnote{font-size:12px}
+.kingdom-guide-art{height:min(30dvh,220px);display:grid;place-items:center;background:radial-gradient(ellipse,#d9e4b8,transparent 70%);overflow:hidden}
+.kingdom-guide-art img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 8px 6px #5c472b44)}
+.kingdom-guide-copy{min-height:105px}.guide-steps{display:flex;justify-content:center;gap:8px;margin:12px}.guide-steps span{width:10px;height:10px;border:2px solid #97734e;border-radius:50%;background:#dec69d}.guide-steps span.active{background:#719785;border-color:#527563}
+.save-warning{position:fixed;z-index:1000;bottom:calc(110px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(420px,calc(100% - 28px));padding:14px;border:2px solid #b05c42;background:#fff2d5;border-radius:16px;color:#743a28;font-size:14px;box-shadow:0 4px 20px #3f2e2644}
+.game-recovery{max-width:440px;margin:10dvh auto;padding:28px;border:4px solid #956841;border-radius:26px;background:#fff0cf;color:var(--ink);text-align:center}
+.game-recovery button{min-height:48px;padding:12px;border:2px solid #a27a4e;background:#f5d790;border-radius:12px;color:var(--ink)}
+.stories-return{position:sticky;top:8px;z-index:100;min-height:48px;margin:12px;padding:12px;border:2px solid #a27a4e;border-radius:12px;background:#fff0cf;color:var(--ink)}
+.royal-resume-panel{position:relative;z-index:2;margin:12vh auto;padding:24px;width:min(90%,400px);border:4px solid #956841;border-radius:24px;background:#fff0cf;color:var(--ink);box-sizing:border-box}
+.royal-resume-panel button{display:block;width:100%;min-height:48px;margin-top:12px;border:2px solid #a27a4e;border-radius:12px;background:#f5d790;color:var(--ink)}
+.matchmaking-screen .game-panel-v2,.battle-modal{background:linear-gradient(#fff2d7f5,#ebd4acf5);border:3px solid #9b7148;color:var(--ink);box-shadow:inset 0 0 0 2px #fff8df,0 10px 30px #2b312a70}
+.matchmaking-screen .game-panel-v2 h1,.matchmaking-screen .game-panel-v2 h2,.matchmaking-screen .game-panel-v2 p,.matchmaking-screen .game-panel-v2 small,.battle-modal h2,.battle-modal>p{color:var(--ink)}
+.matchmaking-screen .game-panel-v2 button,.battle-modal .primary{min-height:48px;border:2px solid #9b7148;border-radius:14px;background:#f5d790;color:var(--ink);box-shadow:0 3px #765033}
+.matchmaking-screen .combat-guide>div{border:1px solid #af8b5b;background:#fff8e5}.matchmaking-screen .combat-guide strong,.matchmaking-screen .combat-guide span{color:#6b4c32}
+.portrait-app.battle-mode{padding-bottom:env(safe-area-inset-bottom);background:#304a42}
+.battle-mode .battle-screen{padding-bottom:calc(16px + env(safe-area-inset-bottom))}
+.battle-mode .arena-slot.target{outline:3px solid #ffe2a1;outline-offset:1px;box-shadow:0 0 15px #e8b96488}
+@media(max-width:600px){.battle-mode .battle-row{gap:3px;grid-template-columns:repeat(7,minmax(0,1fr))}.battle-mode .battle-screen{padding-inline:5px}.battle-mode .battle-log-panel{display:none}.battle-mode .cinematic-center{min-height:44px}.battle-mode .battle-command-bar{padding:10px 5px}.battle-mode .hand{gap:5px;justify-content:center}.battle-mode .hand-card{min-width:0;width:calc((100vw - 42px)/5);max-width:86px}.battle-mode .result-stats.detailed{grid-template-columns:repeat(2,minmax(0,1fr))}.battle-modal{max-height:calc(100dvh - 40px);overflow:auto}.portrait-app .game-card--compact .game-card__description{display:none}}
+@media(max-width:350px){.portrait-app .collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.depth-lobby .depth-wallet small{display:none}.depth-lobby .depth-profile strong{font-size:10px}.collection-toolbar{font-size:12px}}
+@media(orientation:landscape) and (max-height:500px){.kingdom-guide-art{height:110px}.royal-dialog{max-height:calc(100dvh - 20px)}.kingdom-guide-copy{min-height:0}.game-page-header{min-height:50px}.battle-mode .game-page-header{position:relative}.kingdom-settings{top:6px}}
+html[data-motion=reduced] *,html[data-motion=reduced] *::before,html[data-motion=reduced] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+.shop-kingdom-note{padding:22px;border:3px solid #a47a4d;border-radius:20px;background:#fff0cfed;color:#68482f;text-align:center;box-shadow:0 4px #785234}
+.shop-kingdom-note>.game-asset{width:150px;height:140px;object-fit:contain}.shop-kingdom-note h2{font:700 25px Georgia,serif}.shop-kingdom-note p{color:#73563c;line-height:1.5}.shop-kingdom-note strong{display:block;margin:12px}.shop-kingdom-note button{min-height:48px}

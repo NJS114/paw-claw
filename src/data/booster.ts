@@ -12,7 +12,8 @@ function byRarity(pool:CardData[],rarity:Rarity){return pool.filter(c=>c.rarity=
 export type BoosterPull={cards:CardData[];legendary:boolean};
 export function generateStandardBooster(packId:string=BOOSTER_PACKS[0].id):BoosterPull{
  const pack=BOOSTER_PACKS.find(choice=>choice.id===packId);
- const pool=pack?.family?cards.filter(card=>card.family===pack.family):cards;
+ // Only award cards supported by the current battle/deck rules.
+ const pool=cards.filter(card=>card.type==='Héros'&&(!pack?.family||card.family===pack.family));
  const result=[
   ...sample(byRarity(pool,'Commune'),8),
   ...sample(byRarity(pool,'Rare'),3),

@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 export type BoosterPackChoice={
  id:string;
  label:string;
@@ -15,9 +16,9 @@ export const BOOSTER_PACKS:BoosterPackChoice[]=[
 // Purchased boosters are universal tokens; players select their edition when opening.
 const SELECTED_PACK_KEY='paw-claw.booster.selected.v1';
 export function loadSelectedBoosterPackIndex():number{
- try{const id=localStorage.getItem(SELECTED_PACK_KEY);const index=BOOSTER_PACKS.findIndex(pack=>pack.id===id);return index<0?0:index}catch{return 0}
+ try{const id=gameStorage.getItem(SELECTED_PACK_KEY);const index=BOOSTER_PACKS.findIndex(pack=>pack.id===id);return index<0?0:index}catch{return 0}
 }
 export function saveSelectedBoosterPackIndex(index:number):void{
  if(!Number.isInteger(index)||index<0||index>=BOOSTER_PACKS.length)return;
- try{localStorage.setItem(SELECTED_PACK_KEY,BOOSTER_PACKS[index].id)}catch{}
+ try{gameStorage.setItem(SELECTED_PACK_KEY,BOOSTER_PACKS[index].id)}catch{}
 }

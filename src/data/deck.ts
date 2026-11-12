@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 import type { CardData } from './gameCards';
 import type { OwnedCards } from './collection';
 import { rarityCopyLimit } from './rarityBalance';
@@ -10,14 +11,14 @@ export type SavedDeck={version:1;name:string;cardIds:string[];updatedAt:number};
 
 export function loadDeck():SavedDeck|null{
   try{
-    const raw=localStorage.getItem(DECK_KEY);
+    const raw=gameStorage.getItem(DECK_KEY);
     if(!raw)return null;
     const parsed=JSON.parse(raw) as SavedDeck;
-    return parsed.version===1?parsed:null;
+    return parsed&&parsed.version===1&&typeof parsed.name==='string'&&Array.isArray(parsed.cardIds)&&parsed.cardIds.every(id=>typeof id==='string')&&Number.isFinite(parsed.updatedAt)?parsed:null;
   }catch{return null}
 }
 
-export function saveDeck(deck:SavedDeck){localStorage.setItem(DECK_KEY,JSON.stringify({...deck,updatedAt:Date.now()}))}
+export function saveDeck(deck:SavedDeck){gameStorage.setItem(DECK_KEY,JSON.stringify({...deck,updatedAt:Date.now()}))}
 
 export function starterDeck(cards:CardData[],owned:OwnedCards):SavedDeck{
   const ownedHeroes=cards.filter(c=>c.type==='Héros'&&(owned[c.id]??0)>0);

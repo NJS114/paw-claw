@@ -9,6 +9,7 @@ describe('booster edition pulls',()=>{
   vi.spyOn(Math,'random').mockReturnValue(0.5);
   const pull=generateStandardBooster();
   expect(pull.cards).toHaveLength(12);
+  expect(pull.cards.every(card=>card.type==='Héros')).toBe(true);
   expect(pull.cards.filter(card=>card.rarity==='Commune')).toHaveLength(8);
   expect(pull.cards.filter(card=>card.rarity==='Rare')).toHaveLength(3);
   expect(pull.cards.filter(card=>card.rarity==='Épique')).toHaveLength(1);

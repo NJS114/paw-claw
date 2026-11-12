@@ -1,0 +1,2431 @@
+{
+  "summary": {
+    "zipImages": 119,
+    "catalogEntries": 78,
+    "missingPrimary": 10,
+    "requiredMissing": 0,
+    "cardEntries": 116,
+    "presentCardFiles": 58,
+    "missingCardFiles": 58
+  },
+  "catalog": [
+    {
+      "id": "brand.hero-duo",
+      "kind": "character",
+      "required": true,
+      "usage": [
+        "splash",
+        "home",
+        "loading",
+        "empty-state",
+        "matchmaking"
+      ],
+      "path": "heros-duo-removebg-preview.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "character.welcome-cat",
+      "kind": "character",
+      "required": true,
+      "usage": [
+        "home",
+        "profile",
+        "reward"
+      ],
+      "path": "chat-bienvenue.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "world.throne-arena",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "home",
+        "matchmaking",
+        "battle-transition",
+        "booster-opening"
+      ],
+      "path": "/assets/generated/plateau-salle-du-trone.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.standard-violet",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-room",
+        "booster-opening"
+      ],
+      "path": "booster.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/booster-violet.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "booster.magicians",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "booster_magician.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.pirates",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "booster_pirate.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.healers",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "booster_sante.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.royal-legends",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "home",
+        "shop",
+        "booster-opening"
+      ],
+      "path": "/assets/boosters/booster-royal-legends-v2.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.healers-emerald",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "/assets/boosters/booster-healers-emerald-v2.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "booster_sante.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.healers-light",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "/assets/boosters/booster-healers-light-v2.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "booster_sante.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "booster.royal-gold",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "shop",
+        "booster-opening"
+      ],
+      "path": "booster.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/booster-violet.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "booster.card-back",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "booster-opening",
+        "battle-hand",
+        "deck",
+        "collection-hidden"
+      ],
+      "path": "/assets/card-backs/paw-claw-royal-v2.webp",
+      "present": true,
+      "source": "public",
+      "fallback": null
+    },
+    {
+      "id": "family.magiciens",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "magiciens"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_03_35.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.ombres",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "ombres"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_03_31.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.nobles",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "nobles"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_07_01.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.robots",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "robots"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_01_47.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.nature",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "nature"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-22_07_59.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.guerisseurs",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "guerisseurs"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_03_15.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.creatures",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "creatures"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_04_45.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.pirates",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "pirates"
+      ],
+      "path": "/assets/generated/chatgpt-image-5-sept.-2026-23_17_33.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "family.elements",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection-fallback",
+        "elements"
+      ],
+      "path": "/assets/generated/chatgpt-image-7-sept.-2026-15_04_34.webp",
+      "present": true,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "loading.portal",
+      "kind": "loading",
+      "required": false,
+      "usage": [
+        "startup",
+        "screen-transition",
+        "reconnect"
+      ],
+      "path": "/assets/generated/ui-loading-portal.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "/assets/generated/plateau-salle-du-trone.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "world.lobby-day",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "home"
+      ],
+      "path": "/assets/backgrounds/bg-lobby-royal-v3.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-lobby-day-v2.webp",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.lobby-day-approved",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "home",
+        "startup"
+      ],
+      "path": "/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-lobby-day-v2.webp",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.lobby-night-approved",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "home",
+        "startup"
+      ],
+      "path": "/assets/backgrounds/bg-lobby-night-back-v7.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-lobby-portrait-v4.webp",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.lobby-portrait",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "home",
+        "startup"
+      ],
+      "path": "/assets/backgrounds/bg-lobby-night-back-v7.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-lobby-portrait-v4.webp",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "lobby.hero-cat",
+      "kind": "character",
+      "required": true,
+      "usage": [
+        "home"
+      ],
+      "path": "/assets/characters/lobby-cat-v3.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/generated/chaton-mage.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "lobby.hero-dog",
+      "kind": "character",
+      "required": true,
+      "usage": [
+        "home"
+      ],
+      "path": "/assets/characters/lobby-dog-v3.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/generated/chien-chevalier.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "lobby.booster",
+      "kind": "booster",
+      "required": true,
+      "usage": [
+        "home"
+      ],
+      "path": "/assets/boosters/booster-royal-legends-v2.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/generated/booster-violet.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "lobby.logo",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home"
+      ],
+      "path": "/assets/ui/paw-claw-logo-v3.webp",
+      "present": true,
+      "source": "public",
+      "fallback": null
+    },
+    {
+      "id": "world.collection-hall",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "collection"
+      ],
+      "path": "/assets/backgrounds/bg-collection-gallery-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-collection-hall.svg",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.deck-forge",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "deck"
+      ],
+      "path": "/assets/backgrounds/bg-deck-forge-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-deck-forge.svg",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.shop",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "shop"
+      ],
+      "path": "/assets/backgrounds/bg-shop-market-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-shop.svg",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.events",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "missions",
+        "battle-pass",
+        "events"
+      ],
+      "path": "/assets/backgrounds/bg-events-festival-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-lobby-night-back-v7.webp",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "world.matchmaking",
+      "kind": "background",
+      "required": true,
+      "usage": [
+        "matchmaking"
+      ],
+      "path": "/assets/backgrounds/bg-matchmaking-plaza-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-matchmaking.svg",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "character.royal-cat",
+      "kind": "character",
+      "required": false,
+      "usage": [
+        "home",
+        "victory",
+        "profile"
+      ],
+      "path": "heros-duo-removebg-preview.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/heros-duo.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "character.pirate-dog",
+      "kind": "character",
+      "required": false,
+      "usage": [
+        "home",
+        "shop",
+        "matchmaking"
+      ],
+      "path": "heros-duo-removebg-preview.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/heros-duo.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "character.shadow-dog",
+      "kind": "character",
+      "required": false,
+      "usage": [
+        "matchmaking",
+        "defeat",
+        "lore"
+      ],
+      "path": "heros-duo-removebg-preview.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/heros-duo.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "character.healer-cat",
+      "kind": "character",
+      "required": false,
+      "usage": [
+        "missions",
+        "battle-pass",
+        "lore"
+      ],
+      "path": "heros-duo-removebg-preview.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "/assets/generated/heros-duo.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "fx.booster-glow",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "booster-opening"
+      ],
+      "path": "/assets/generated/fx-booster-glow.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "fx.legendary-burst",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "booster-opening",
+        "legendary-reveal"
+      ],
+      "path": "/assets/generated/fx-legendary-burst.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.arena-main",
+      "kind": "battle",
+      "required": true,
+      "usage": [
+        "battle"
+      ],
+      "path": "/assets/backgrounds/bg-battle-courtyard-2d-v9.webp",
+      "present": true,
+      "source": "public",
+      "fallback": {
+        "path": "/assets/backgrounds/bg-battle-arena.svg",
+        "present": true,
+        "source": "public"
+      }
+    },
+    {
+      "id": "battle.victory",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "victory"
+      ],
+      "path": "/assets/generated/ui-victory.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.defeat",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "defeat"
+      ],
+      "path": "/assets/generated/ui-defeat.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.draw",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "draw"
+      ],
+      "path": "/assets/generated/ui-draw.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "fx.attack",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "attack"
+      ],
+      "path": "/assets/generated/fx-attack.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.heal",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "heal"
+      ],
+      "path": "/assets/generated/fx-heal.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.buff",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "buff"
+      ],
+      "path": "/assets/generated/fx-buff.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.lore",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "lore"
+      ],
+      "path": "/assets/generated/fx-lore.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "icon.coins",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "currency",
+        "shop",
+        "reward",
+        "home"
+      ],
+      "path": "icone-piece.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.gems",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "currency",
+        "shop",
+        "reward",
+        "home"
+      ],
+      "path": "icone-gemme.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.profile",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "profile",
+        "home"
+      ],
+      "path": "chat-bienvenue.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "icon.settings",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "settings"
+      ],
+      "path": "icone-boussole.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.messages",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "messages"
+      ],
+      "path": "icone-lettre.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.missions",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "missions",
+        "home"
+      ],
+      "path": "icone-parchemin.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.pass",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "battle-pass",
+        "home"
+      ],
+      "path": "icone-couronne.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.shop",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "shop",
+        "home"
+      ],
+      "path": "coffre-bleu.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.decks",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "deck",
+        "home"
+      ],
+      "path": "icone-livre.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.ranking",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "ranking"
+      ],
+      "path": "icone-banniere.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.collection",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "nav",
+        "collection",
+        "home"
+      ],
+      "path": "icone-carte-tresor.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.energy",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "battle",
+        "energy"
+      ],
+      "path": "icone-eclair.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.health",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "battle",
+        "health"
+      ],
+      "path": "icone-coeur.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.key",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "reward",
+        "unlock"
+      ],
+      "path": "icone-cle.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "icon.potion",
+      "kind": "icon",
+      "required": true,
+      "usage": [
+        "reward",
+        "heal"
+      ],
+      "path": "icone-potion.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "reward.chest-blue",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "reward",
+        "daily",
+        "shop"
+      ],
+      "path": "coffre-bleu.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "reward.chest-wood",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "reward",
+        "daily"
+      ],
+      "path": "coffre-bois.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "reward.chest-red",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "reward",
+        "event"
+      ],
+      "path": "coffre-rouge.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.play",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "battle-cta"
+      ],
+      "path": "btn-jouer.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.arena",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "battle-cta"
+      ],
+      "path": "btn-arene.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.battle",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "battle-cta"
+      ],
+      "path": "btn-combattre.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.collection",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "collection"
+      ],
+      "path": "btn-collection.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.shop",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "shop"
+      ],
+      "path": "btn-boutique.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.missions",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "missions"
+      ],
+      "path": "btn-missions.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "button.events",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "home",
+        "events"
+      ],
+      "path": "btn-evenements.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "rarity.common-badge",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "collection",
+        "card",
+        "rarity"
+      ],
+      "path": "rarete-commune.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "rarity.rare-badge",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "collection",
+        "card",
+        "rarity"
+      ],
+      "path": "rarete-rare.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "rarity.epic-badge",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "collection",
+        "card",
+        "rarity"
+      ],
+      "path": "rarete-epique.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    },
+    {
+      "id": "rarity.legendary-badge",
+      "kind": "ui",
+      "required": true,
+      "usage": [
+        "collection",
+        "card",
+        "rarity"
+      ],
+      "path": "rarete-legendaire.png",
+      "present": true,
+      "source": "committed-root",
+      "fallback": null
+    }
+  ],
+  "missingPrimary": [
+    {
+      "id": "loading.portal",
+      "kind": "loading",
+      "required": false,
+      "usage": [
+        "startup",
+        "screen-transition",
+        "reconnect"
+      ],
+      "path": "/assets/generated/ui-loading-portal.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "/assets/generated/plateau-salle-du-trone.webp",
+        "present": true,
+        "source": "zip"
+      }
+    },
+    {
+      "id": "fx.booster-glow",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "booster-opening"
+      ],
+      "path": "/assets/generated/fx-booster-glow.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "fx.legendary-burst",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "booster-opening",
+        "legendary-reveal"
+      ],
+      "path": "/assets/generated/fx-legendary-burst.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "booster.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.victory",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "victory"
+      ],
+      "path": "/assets/generated/ui-victory.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.defeat",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "defeat"
+      ],
+      "path": "/assets/generated/ui-defeat.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "battle.draw",
+      "kind": "result",
+      "required": false,
+      "usage": [
+        "draw"
+      ],
+      "path": "/assets/generated/ui-draw.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": {
+        "path": "heros-duo-removebg-preview.png",
+        "present": true,
+        "source": "committed-root"
+      }
+    },
+    {
+      "id": "fx.attack",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "attack"
+      ],
+      "path": "/assets/generated/fx-attack.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.heal",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "heal"
+      ],
+      "path": "/assets/generated/fx-heal.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.buff",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "buff"
+      ],
+      "path": "/assets/generated/fx-buff.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    },
+    {
+      "id": "fx.lore",
+      "kind": "fx",
+      "required": false,
+      "usage": [
+        "battle",
+        "lore"
+      ],
+      "path": "/assets/generated/fx-lore.webp",
+      "present": false,
+      "source": "zip",
+      "fallback": null
+    }
+  ],
+  "cardImages": [
+    {
+      "id": "mag-001",
+      "name": "Apprenti Sorcier",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-002",
+      "name": "Étudiant Curieux",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/mag-002-etudiant-beagle.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-003",
+      "name": "Arcaniste Élémentaire",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-004",
+      "name": "Bibliothécaire",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-005",
+      "name": "Mage des Glaces",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-006",
+      "name": "Grand Invocateur",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-007",
+      "name": "Archimage Céleste",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/mag-007-archimage-persan.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "mag-008",
+      "name": "Maître des Arcanes",
+      "family": "Magiciens",
+      "type": "Héros",
+      "path": "/assets/cards/magiciens/mag-008.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-001",
+      "name": "Apprenti de l’Ombre",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-002",
+      "name": "Espion Discret",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-003",
+      "name": "Voleur Agile",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-004",
+      "name": "Messager Nocturne",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-005",
+      "name": "Lame Silencieuse",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/omb-005-lame-dobermann.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-006",
+      "name": "Ninja des Toits",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-007",
+      "name": "Danseur de l’Ombre",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-007.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-008",
+      "name": "Marionnettiste",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-008.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "omb-009",
+      "name": "Seigneur des Ravens",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-009.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-010",
+      "name": "Reine des Ombres",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-011",
+      "name": "Faucheur Masqué",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-012",
+      "name": "Esprit Vengeur",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-012.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-013",
+      "name": "Maîtresse du Néant",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-013.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-014",
+      "name": "Karhl l’Ombre",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-014.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-015",
+      "name": "Le Voile Éternel",
+      "family": "Ombres",
+      "type": "Héros",
+      "path": "/assets/cards/ombres/omb-015.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u01",
+      "name": "Énergie d’Ombre",
+      "family": "Ombres",
+      "type": "Énergie",
+      "path": "/assets/cards/ombres/omb-u01.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u02",
+      "name": "Âmes Errantes",
+      "family": "Ombres",
+      "type": "Énergie",
+      "path": "/assets/cards/ombres/omb-u02.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u03",
+      "name": "Château des Ombres",
+      "family": "Ombres",
+      "type": "Zone",
+      "path": "/assets/cards/ombres/omb-u03.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u04",
+      "name": "Toits de Minuit",
+      "family": "Ombres",
+      "type": "Zone",
+      "path": "/assets/cards/ombres/omb-u04.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u05",
+      "name": "Disparition",
+      "family": "Ombres",
+      "type": "Événement",
+      "path": "/assets/cards/ombres/omb-u05.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u06",
+      "name": "Lames Jumelles",
+      "family": "Ombres",
+      "type": "Objet",
+      "path": "/assets/cards/ombres/omb-u06.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u07",
+      "name": "Amulette des Âmes",
+      "family": "Ombres",
+      "type": "Objet",
+      "path": "/assets/cards/ombres/omb-u07.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "omb-u08",
+      "name": "Pacte des Ombres",
+      "family": "Ombres",
+      "type": "Événement",
+      "path": "/assets/cards/ombres/omb-u08.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nob-001",
+      "name": "Jeune Noble",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-002",
+      "name": "Écuyer Royal",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-003",
+      "name": "Apprentie Courtisane",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-004",
+      "name": "Chambellan",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-005",
+      "name": "Comtesse Élégante",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-006",
+      "name": "Chevalier Royal",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-007",
+      "name": "Roi Karhl",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-007.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-008",
+      "name": "Reine Bienveillante",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/nob-008-reine-cavalier.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-009",
+      "name": "Régent Impérial",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-009.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nob-010",
+      "name": "Héritier des Lumières",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nob-011",
+      "name": "Champion du Royaume",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nob-012",
+      "name": "Impératrice Éternelle",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-012.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nob-013",
+      "name": "Karhl le Sage",
+      "family": "Nobles",
+      "type": "Héros",
+      "path": "/assets/cards/nobles/nob-013.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "rob-001",
+      "name": "Apprenti Ingénieur",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-002",
+      "name": "Mécanicien Novice",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-003",
+      "name": "Chien Éclaireur",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-004",
+      "name": "Chat Arcaniste",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-005",
+      "name": "Chien Paladin",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-006",
+      "name": "Chat Assassin",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-007",
+      "name": "Chat Ingénieur",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-007.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-008",
+      "name": "Reine Mécanique",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-008.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-009",
+      "name": "Chevalier Automate",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/rob-009-chevalier-shiba.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "rob-010",
+      "name": "Oracle Robotique",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "rob-011",
+      "name": "Ange Mécanique",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "rob-012",
+      "name": "Roi Automate",
+      "family": "Robots",
+      "type": "Héros",
+      "path": "/assets/cards/robots/rob-012.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-001",
+      "name": "Apprenti des Forêts",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-002",
+      "name": "Éclaireur Verdoyant",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-003",
+      "name": "Cueilleuse de Fleurs",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-004",
+      "name": "Promeneur des Bois",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-005",
+      "name": "Archer Feuillu",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-006",
+      "name": "Druide en Herbe",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-007",
+      "name": "Sage de la Nature",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/card-art/v1/nat-007-sage-maine-coon.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-008",
+      "name": "Garde des Clairières",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-008.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "nat-009",
+      "name": "Chanteuse des Vents",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-009.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-010",
+      "name": "Soigneur des Plantes",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-011",
+      "name": "Druide des Saisons",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-012",
+      "name": "Floraison Éternelle",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-012.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-013",
+      "name": "Ancien Ent",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-013.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-014",
+      "name": "Colosse de la Nature",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-014.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-015",
+      "name": "Dragon de Gaïa",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-015.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-016",
+      "name": "Esprit du Monde",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-016.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-017",
+      "name": "Phénix Végétal",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-017.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "nat-018",
+      "name": "Titan des Forêts",
+      "family": "Nature",
+      "type": "Héros",
+      "path": "/assets/cards/nature/nat-018.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-001",
+      "name": "Chaton Dragon",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-002",
+      "name": "Chiot Cerf",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-003",
+      "name": "Chat Sorcier",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-004",
+      "name": "Chiot Angélique",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-005",
+      "name": "Chat Chauve-souris",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-006",
+      "name": "Chat Renard",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-007",
+      "name": "Chat Sirène",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-007.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-008",
+      "name": "Chiot Chevalier",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-008.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "cre-009",
+      "name": "Chiot Démon",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-009.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-010",
+      "name": "Chat Griffon",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-011",
+      "name": "Chat Kitsune",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-012",
+      "name": "Chiot Golem",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-012.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-013",
+      "name": "Chat Phénix",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-013.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-014",
+      "name": "Chat Céleste",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-014.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-015",
+      "name": "Chat Dragon Astral",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-015.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-016",
+      "name": "Chiot Ancestral",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-016.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-017",
+      "name": "Chat Léviathan",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-017.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-018",
+      "name": "Chat Gardien du Temps",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-018.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-019",
+      "name": "Chiot Titan",
+      "family": "Créatures",
+      "type": "Héros",
+      "path": "/assets/cards/créatures/cre-019.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-u01",
+      "name": "Œuf Mystérieux",
+      "family": "Créatures",
+      "type": "Objet",
+      "path": "/assets/cards/créatures/cre-u01.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-u02",
+      "name": "Friandise",
+      "family": "Créatures",
+      "type": "Objet",
+      "path": "/assets/cards/créatures/cre-u02.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-u03",
+      "name": "Appel des Créatures",
+      "family": "Créatures",
+      "type": "Événement",
+      "path": "/assets/cards/créatures/cre-u03.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "cre-u04",
+      "name": "Clairière Féérique",
+      "family": "Créatures",
+      "type": "Zone",
+      "path": "/assets/cards/créatures/cre-u04.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-001",
+      "name": "Sirène Polaire",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-001.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-002",
+      "name": "Titan de Pierre",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-002.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-003",
+      "name": "Aile Céleste",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-003.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-004",
+      "name": "Phénix des Flammes",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-004.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-005",
+      "name": "Dragon des Flots",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-005.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-006",
+      "name": "Ancien des Forêts",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-006.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-007",
+      "name": "Seigneur des Tempêtes",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-007.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-008",
+      "name": "Solaire Éternel",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-008.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-009",
+      "name": "Souverain des Océans",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-009.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-010",
+      "name": "Esprit du Monde",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-010.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "elm-011",
+      "name": "Dragon du Zéphyr",
+      "family": "Éléments",
+      "type": "Héros",
+      "path": "/assets/cards/éléments/elm-011.webp",
+      "present": false,
+      "source": "public"
+    },
+    {
+      "id": "hea-001",
+      "name": "Apprentie Soigneuse",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-001.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-002",
+      "name": "Aide-Sanctuaire",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-002.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-003",
+      "name": "Prêtresse Lumière",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-003.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-004",
+      "name": "Frère Protecteur",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-004.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-005",
+      "name": "Oracle Bienveillante",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-005.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-006",
+      "name": "Grand Guérisseur",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-006.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-007",
+      "name": "Ange Gardien",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-007.webp",
+      "present": true,
+      "source": "public"
+    },
+    {
+      "id": "hea-008",
+      "name": "Saint Protecteur",
+      "family": "Guérisseurs",
+      "type": "Héros",
+      "path": "/assets/cards/guérisseurs/hea-008.webp",
+      "present": true,
+      "source": "public"
+    }
+  ],
+  "aliases": [
+    {
+      "path": "heros-duo-removebg-preview.png",
+      "ids": [
+        "brand.hero-duo",
+        "character.royal-cat",
+        "character.pirate-dog",
+        "character.shadow-dog",
+        "character.healer-cat"
+      ]
+    },
+    {
+      "path": "chat-bienvenue.png",
+      "ids": [
+        "character.welcome-cat",
+        "icon.profile"
+      ]
+    },
+    {
+      "path": "booster.png",
+      "ids": [
+        "booster.standard-violet",
+        "booster.royal-gold"
+      ]
+    },
+    {
+      "path": "/assets/boosters/booster-royal-legends-v2.webp",
+      "ids": [
+        "booster.royal-legends",
+        "lobby.booster"
+      ]
+    },
+    {
+      "path": "/assets/backgrounds/bg-lobby-night-back-v7.webp",
+      "ids": [
+        "world.lobby-night-approved",
+        "world.lobby-portrait"
+      ]
+    },
+    {
+      "path": "coffre-bleu.png",
+      "ids": [
+        "icon.shop",
+        "reward.chest-blue"
+      ]
+    }
+  ],
+  "limitations": [
+    "Presence is not visual approval: an existing image can still be incorrectly cropped or represent the wrong card.",
+    "Run npm run assets:import before auditing individual card outputs.",
+    "Shared paths are informational: currency/reward reuse is legitimate, character aliases need review.",
+    "This audit does not prove that a declared asset is rendered by a screen, nor validate runtime CSS and responsive layouts."
+  ]
+}

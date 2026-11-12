@@ -66,7 +66,9 @@ function CardDetails({ card, copies, onClose }: { card: CardData; copies: number
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     closeButton.current?.focus();
-    return () => { document.body.style.overflow = previousOverflow; trigger?.focus(); };
+    const back = (event: Event) => { event.preventDefault(); onClose(); };
+    window.addEventListener('paw-back', back);
+    return () => { window.removeEventListener('paw-back', back); document.body.style.overflow = previousOverflow; trigger?.focus(); };
   }, []);
   return <div className="collection-modal-backdrop" onClick={event => { if (event.target === event.currentTarget) onClose(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.stopPropagation(); onClose(); }

@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 import type { SavedDeck } from './deck';
 import type { Species } from './loreSynergies';
 
@@ -14,14 +15,14 @@ export function createDeckProfile(species:Species,name?:string):DeckProfile{
 
 export function loadDeckLibrary():DeckLibrary{
  try{
-  const raw=localStorage.getItem(KEY);
-  if(raw){const parsed=JSON.parse(raw) as DeckLibrary;if(parsed.version===1&&Array.isArray(parsed.decks))return parsed}
+  const raw=gameStorage.getItem(KEY);
+  if(raw){const parsed=JSON.parse(raw) as DeckLibrary;if(parsed.version===1&&Array.isArray(parsed.decks))return{version:1,decks:parsed.decks.filter(d=>d&&typeof d.id==='string'&&typeof d.name==='string'&&(d.species==='Chat'||d.species==='Chien')&&Array.isArray(d.cardIds)&&d.cardIds.every(id=>typeof id==='string')&&Number.isFinite(d.createdAt)&&Number.isFinite(d.updatedAt))}}
  }catch{}
  return {version:1,decks:[]};
 }
-export function saveDeckLibrary(lib:DeckLibrary){try{localStorage.setItem(KEY,JSON.stringify(lib))}catch{}}
-export function loadActiveDeckId(){try{return localStorage.getItem(ACTIVE_KEY)}catch{return null}}
-export function saveActiveDeckId(id:string){try{localStorage.setItem(ACTIVE_KEY,id)}catch{}}
+export function saveDeckLibrary(lib:DeckLibrary){try{gameStorage.setItem(KEY,JSON.stringify(lib))}catch{}}
+export function loadActiveDeckId(){try{return gameStorage.getItem(ACTIVE_KEY)}catch{return null}}
+export function saveActiveDeckId(id:string){try{gameStorage.setItem(ACTIVE_KEY,id)}catch{}}
 export function upsertDeck(lib:DeckLibrary,deck:DeckProfile):DeckLibrary{
  const exists=lib.decks.some(d=>d.id===deck.id);
  return {version:1,decks:exists?lib.decks.map(d=>d.id===deck.id?{...deck,updatedAt:Date.now()}:d):[...lib.decks,{...deck,updatedAt:Date.now()}]};

@@ -1,5 +1,5 @@
 import { describe,expect,it } from 'vitest';
-import { drawCard, resolveCombat, resolveLoreSides, type BattleSideState } from './battleEngine';
+import { beginTurn, drawCard, playUnit, resolveCombat, resolveLoreSides, type BattleSideState } from './battleEngine';
 import type { CardData } from './gameCards';
 
 const card=(id:string,name:string,family='Nature',atk=2,hp=2):CardData=>({id,name,family,rarity:'Commune',type:'Héros',cost:1,atk,hp});
@@ -10,6 +10,18 @@ const side=(overrides:Partial<BattleSideState>={}):BattleSideState=>({
 });
 
 describe('drawCard',()=>{
+  it('does not resurrect a hero killed by fatigue at turn start',()=>{
+    const exhausted=drawCard(side({heroHp:1,deck:[]}),'player').side;
+    expect(exhausted.heroHp).toBe(0);
+    expect(beginTurn(exhausted,side()).heroHp).toBe(0);
+  });
+  it('rejects cards outside the hand and fractional lanes',()=>{
+    const hero=card('owned','Hero'),forged={...hero,atk:100};
+    const player=side({hand:[hero]});
+    expect(playUnit(player,side(),forged,0)).toBe(player);
+    expect(playUnit(player,side(),hero,0.5)).toBe(player);
+    expect(playUnit(player,side(),hero,0).hand).toHaveLength(0);
+  });
   it('draws the top card when hand has room',()=>{
     const c=card('x','Test');
     const result=drawCard(side({deck:[c]}),'player');

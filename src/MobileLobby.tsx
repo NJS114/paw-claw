@@ -1,4 +1,5 @@
 import {useEffect,useRef,useState} from 'react';
+import { gameStorage } from './data/storage';
 import {GameAsset} from './GameAsset';
 import {GameCard} from './GameCard';
 import {CozyIcon,CozyNavContent} from './CozyUi';
@@ -10,10 +11,9 @@ import './layered-home.css';
 type LobbyTarget='battle'|'collection'|'deck'|'progression'|'shop'|'boosters'|'profile';
 type Props={progress:Progression;ownedCount:number;missions?:MissionProgress;onNavigate:(target:LobbyTarget)=>void};
 const art='/assets/layered-home/';
-const iconArt='/assets/home-icons-v2/';
 const pirates=cards.filter(c=>c.family==='Pirates').slice(0,3);
 type HomeIconName='missions'|'collection'|'pass'|'home'|'decks'|'combat'|'shop'|'boosters';
-function HomeIcon({name}:{name:HomeIconName}){return <img className="depth-icon" src={`${iconArt}${name}.webp`} alt="" aria-hidden="true"/>}
+function HomeIcon({name}:{name:HomeIconName}){return <GameAsset assetId={`icon.${name==='pass'?'pass':name==='missions'?'missions':'collection'}`} className="depth-icon" decorative/>}
 
 function PiratePreview({onClose,onNavigate}:{onClose:()=>void;onNavigate:Props['onNavigate']}){
  const dialog=useRef<HTMLDialogElement>(null);
@@ -41,8 +41,8 @@ export function MobileLobby({progress,ownedCount,missions,onNavigate}:Props){
  const claimed=missions?.claimed.includes(quest.id)??false;
  useEffect(()=>{
   const media=typeof matchMedia==='function'?matchMedia('(prefers-reduced-motion: reduce)'):null;
-  const change=()=>setPaused(media?.matches??false);media?.addEventListener('change',change);
-  return()=>media?.removeEventListener('change',change);
+  const change=()=>setPaused((media?.matches??false)||gameStorage.getItem('paw-claw.motion')==='reduced');media?.addEventListener('change',change);window.addEventListener('paw-motion',change);change();
+  return()=>{media?.removeEventListener('change',change);window.removeEventListener('paw-motion',change)};
  },[]);
  const reset=()=>{scene.current?.style.setProperty('--mx','0');scene.current?.style.setProperty('--my','0')};
  useEffect(()=>{if(paused)reset()},[paused]);

@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 export type PassReward={type:'coins'|'gems'|'booster';amount:number;label:string};
 export type PassTier={level:number;xp:number;free:PassReward;premium:PassReward};
 export type BattlePassState={version:1;season:string;xp:number;premium:boolean;claimedFree:number[];claimedPremium:number[]};
@@ -16,9 +17,13 @@ export const PASS_TIERS:PassTier[]=[
 ];
 function currentSeason(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`}
 function fresh():BattlePassState{return{version:1,season:currentSeason(),xp:0,premium:false,claimedFree:[],claimedPremium:[]}}
-function normalize(s:BattlePassState){return s.season===currentSeason()?s:fresh()}
-export function loadBattlePass():BattlePassState{try{return normalize(JSON.parse(localStorage.getItem(KEY)||'null')||fresh())}catch{return fresh()}}
-export function saveBattlePass(s:BattlePassState){try{localStorage.setItem(KEY,JSON.stringify(normalize(s)))}catch{}}
+function normalize(s:BattlePassState):BattlePassState{
+ if(!s||s.season!==currentSeason())return fresh();
+ const claimed=(value:unknown)=>Array.isArray(value)?[...new Set(value.filter((level):level is number=>typeof level==='number'&&PASS_TIERS.some(t=>t.level===level)))]:[];
+ return{version:1,season:currentSeason(),xp:Number.isSafeInteger(s.xp)&&s.xp>=0?s.xp:0,premium:s.premium===true,claimedFree:claimed(s.claimedFree),claimedPremium:claimed(s.claimedPremium)};
+}
+export function loadBattlePass():BattlePassState{try{return normalize(JSON.parse(gameStorage.getItem(KEY)||'null')||fresh())}catch{return fresh()}}
+export function saveBattlePass(s:BattlePassState){try{gameStorage.setItem(KEY,JSON.stringify(normalize(s)))}catch{}}
 export function addBattlePassXp(s:BattlePassState,amount:number){const state=normalize(s);return{...state,xp:Math.max(0,state.xp+Math.max(0,amount))}}
 export function unlockPremium(s:BattlePassState){return{...normalize(s),premium:true}}
 export function claimPassReward(s:BattlePassState,level:number,lane:'free'|'premium'){
