@@ -34,10 +34,21 @@ import './booster-opening.css';
 import './screen-backgrounds.css';
 import './portrait-pages.css';
 import './game-card.css';
-import './cozy-decks.css';
 import { ProductionShell } from './ProductionShell';
-import './cozy-controls.css';
+import './kingdom-ui.css';
+import './immersive-mobile.css';
+import { GameBoundary } from './GameBoundary';
+import { initializeStorage } from './data/storage';
+import { initializeNative } from './native';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
- <React.StrictMode><ProductionShell /></React.StrictMode>,
-);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+async function boot() {
+  try {
+    await initializeStorage();
+    await initializeNative();
+    root.render(<React.StrictMode><GameBoundary><ProductionShell /></GameBoundary></React.StrictMode>);
+  } catch {
+    root.render(<section className="game-recovery" role="alert"><h1>Ta sauvegarde doit être vérifiée</h1><p>Le jeu n’a pas pu charger les données de cet appareil. Elles n’ont pas été réinitialisées.</p><button onClick={() => window.location.reload()}>Réessayer</button></section>);
+  }
+}
+void boot();

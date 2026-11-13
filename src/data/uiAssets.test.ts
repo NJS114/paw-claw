@@ -24,18 +24,20 @@ describe('Paw & Claw asset catalog',()=>{
   expect(asset('button.events').src).toContain('btn-evenements.png');
   expect(asset('rarity.legendary-badge').src).toContain('rarete-legendaire.png');
  });
- it('uses a dedicated background for each major game screen',()=>{
+ it('uses the approved restrained kingdom scene across the main game journey',()=>{
   expect(asset('world.lobby-day').src).toBe('/assets/backgrounds/bg-lobby-royal-v3.webp');
-  expect(asset('world.lobby-day-approved').src).toBe('/assets/backgrounds/bg-lobby-day-royal-activity-v7.webp');
-  expect(asset('world.lobby-night-approved').src).toBe('/assets/backgrounds/bg-lobby-night-back-v7.webp');
-  expect(asset('world.collection-hall').src).toBe('/assets/backgrounds/bg-collection-gallery-2d-v9.webp');
-  expect(asset('world.deck-forge').src).toBe('/assets/backgrounds/bg-deck-forge-2d-v9.webp');
-  expect(asset('world.shop').src).toBe('/assets/backgrounds/bg-shop-market-2d-v9.webp');
-  expect(asset('world.events').src).toBe('/assets/backgrounds/bg-events-festival-2d-v9.webp');
-  expect(asset('world.matchmaking').src).toBe('/assets/backgrounds/bg-matchmaking-plaza-2d-v9.webp');
-  expect(asset('battle.arena-main').src).toBe('/assets/backgrounds/bg-battle-courtyard-2d-v9.webp');
+  expect(asset('world.lobby-day-approved').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.lobby-night-approved').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.collection-hall').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.deck-forge').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.shop').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.events').src).toBe('/assets/refined/city.webp');
+  expect(asset('world.matchmaking').src).toBe('/assets/refined/city.webp');
+  expect(asset('battle.arena-main').src).toBe('/assets/refined/city.webp');
  });
- it('uses two distinct restored hero sprites in the lobby',()=>{
+ it('retains legacy hero references while registering the new production layers',()=>{
+  expect(asset('realm.heroes').src).toBe('/assets/refined/heroes.webp');
+  expect(asset('realm.lore').src).toBe('/assets/refined/lore.webp');
   expect(asset('lobby.hero-cat').src).toBe('/assets/characters/lobby-cat-v3.webp');
   expect(asset('lobby.hero-dog').src).toBe('/assets/characters/lobby-dog-v3.webp');
   expect(asset('lobby.hero-cat').src).not.toBe(asset('lobby.hero-dog').src);

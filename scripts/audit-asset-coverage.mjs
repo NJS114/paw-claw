@@ -18,7 +18,10 @@ function moduleUrl(relative, replacements={}) {
   return `data:text/javascript;base64,${Buffer.from(outputText).toString('base64')}`;
 }
 const {GAME_ASSETS}=await import(moduleUrl('src/data/uiAssets.ts'));
-const {cards}=await import(moduleUrl('src/data/gameCards.ts',{'./cards':moduleUrl('src/data/cards.ts')}));
+const {cards}=await import(moduleUrl('src/data/gameCards.ts',{
+  './cards':moduleUrl('src/data/cards.ts'),
+  './cardVisuals':moduleUrl('src/data/cardVisuals.ts'),
+}));
 const zip=new AdmZip(path.join(root,'paw-claw-assets-optimized.zip'));
 const packaged=new Set(zip.getEntries().filter(e=>!e.isDirectory).map(e=>e.entryName));
 function locate(src) {
@@ -34,7 +37,7 @@ function locate(src) {
   return {path:src,present:fs.existsSync(path.join(root,'public',src)),source:'public'};
 }
 const catalog=GAME_ASSETS.map(a=>({id:a.id,kind:a.kind,required:a.required,usage:a.usage,...locate(a.src),fallback:a.fallback?locate(a.fallback):null}));
-const cardImages=cards.map(c=>({id:c.id,name:c.name,family:c.family,...locate(c.assetPath??'')}));
+const cardImages=cards.map(c=>({id:c.id,name:c.name,family:c.family,type:c.type,...locate(c.assetPath??'')}));
 const missingPrimary=catalog.filter(a=>!a.present);
 const missingCards=cardImages.filter(a=>!a.present);
 const aliases=[...new Set(catalog.map(a=>a.path))].map(src=>({path:src,ids:catalog.filter(a=>a.path===src).map(a=>a.id)})).filter(a=>a.ids.length>1);
@@ -55,3 +58,5 @@ else {
 const lobbyMissing=catalog.filter(a=>a.usage.includes('home')&&!a.present);
 if(summary.requiredMissing>0 || (process.argv.includes('--lobby')&&lobbyMissing.length>0)) process.exitCode=1;
 if(process.argv.includes('--strict')&&(missingPrimary.length>0||missingCards.length>0)) process.exitCode=1;
+
+if(process.argv.includes('--cards')&&missingCards.length>0)process.exitCode=1;

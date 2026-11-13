@@ -33,9 +33,9 @@ export function DeckStudio({owned,activeDeck,onActiveDeckChange,onPlay}:{owned:O
  function chooseDeck(offset:number){const next=(orderedDecks.findIndex(d=>d.id===active.id)+offset+orderedDecks.length)%orderedDecks.length;setActiveId(orderedDecks[next].id);setFamily('Toutes');setConfirmed(false);setPanel(orderedDecks[next].cardIds.length?'deck':'collection')}
  const familyOptions=[...new Set(cards.filter(c=>(owned[c.id]??0)>0&&speciesOf(c)===active.species).map(c=>c.family))];
  return <section className="deck-studio cozy-decks">
- <header className="deck-studio-head"><img src="/assets/decks-illustrated/wooden-sign.png" alt=""/><h2>Mes decks</h2></header>
+ <header className="deck-studio-head"><p className="eyebrow">ATELIER DU ROYAUME</p><h2>Mes decks</h2></header>
  <div className="cozy-feature" aria-label="Deck sélectionné">
-  <div className="cozy-deck-preview"><img src="/assets/decks-illustrated/pirate-crew.png" alt="Deux capitaines pirates, chat et chien, devant des cartes"/></div>
+  <div className="cozy-deck-preview" aria-label="Cartes de ce deck">{[...new Set(active.cardIds)].slice(0,3).map(id=>{const card=cards.find(c=>c.id===id);return card?<GameCard key={id} card={card} variant="compact"/>:null})}{!active.cardIds.length&&<CozyIcon name="decks"/>}</div>
   <div className="cozy-deck-caption"><strong>{active.name}</strong><span>{active.cardIds.length}/{DECK_SIZE} cartes</span><button className="paw-deck-menu" aria-label="Gérer ce deck" aria-controls="deck-options" onClick={()=>{const el=optionsRef.current;if(el){el.open=true;el.scrollIntoView({block:"center"})}}}><CozyIcon name="more"/></button></div>
  </div>
  <div className="deck-carousel-controls" aria-label="Choisir un deck"><button type="button" onClick={()=>chooseDeck(-1)} disabled={orderedDecks.length<2} aria-label="Deck précédent"><CozyIcon name="chevron-left"/></button><div className="deck-carousel-dots">{orderedDecks.map((d,i)=><button key={d.id} type="button" className={d.id===active.id?'active':''} aria-label={`Afficher ${d.name}`} aria-pressed={d.id===active.id} onClick={()=>{setActiveId(d.id);setFamily('Toutes');setConfirmed(false);setPanel(d.cardIds.length?'deck':'collection')}}>{i+1}</button>)}</div><button type="button" onClick={()=>chooseDeck(1)} disabled={orderedDecks.length<2} aria-label="Deck suivant"><CozyIcon name="chevron-right"/></button></div>

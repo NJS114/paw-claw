@@ -30,6 +30,7 @@ export function drawCard(side:BattleSideState,target:'player'|'enemy',reason='Pi
  return{side:{...side,fatigue,heroHp:clampHp(side.heroHp-fatigue)},event:{id:eventId('fatigue',-1),lane:-1,type:'fatigue',source:target,target,value:fatigue,text:`Pioche vide : ${fatigue} dégât${fatigue>1?'s':''} de fatigue.`},drew:false};
 }
 export function beginTurn(side:BattleSideState,enemy:BattleSideState):BattleSideState{
+ if(side.heroHp<=0)return side;
  let next={...side,energy:turnEnergy(side),firstPlayDone:false,pirateDrawUsed:false,healerSaveUsed:false,fatigue:side.fatigue??0};
  if(next.heroHp<=5&&!next.survivalUsed){
   next={...next,heroHp:clampHp(next.heroHp+3),survivalUsed:true,momentum:Math.min(5,next.momentum+2)};
@@ -46,7 +47,7 @@ function buffBoardOnThreshold(before:(BoardCard|null)[],after:(BoardCard|null)[]
  return board;
 }
 export function playUnit(side:BattleSideState,enemy:BattleSideState,card:CardData,slot:number):BattleSideState{
- if(card.type!=='Héros'||slot<0||slot>6||side.board[slot])return side;
+ if(card.type!=='Héros'||!Number.isInteger(slot)||slot<0||slot>6||side.board[slot]||!side.hand.some(c=>c===card))return side;
  let cost=card.cost;if(count(side.board,'Magiciens')>=5&&!side.firstPlayDone)cost=Math.max(0,cost-1);if(side.energy<cost)return side;
  const before=[...side.board],board=[...side.board];const comeback=side.heroHp<=10&&!side.firstPlayDone,robot3=card.family==='Robots'&&count(side.board,'Robots')>=2;
  const boost=(comeback?1:0)+(robot3?1:0);board[slot]={...card,atk:(card.atk??0)+boost,hp:(card.hp??1)+boost,currentHp:(card.hp??1)+boost};

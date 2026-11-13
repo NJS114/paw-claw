@@ -1,13 +1,30 @@
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import { App } from './App';
 import { Stories } from './Stories';
 import { GameStartup } from './GameStartup';
-import { loadLocale,saveLocale,type Locale } from './i18n';
-import {LobbyIcon} from './LobbyIcon';
+import { CozyIcon } from './CozyUi';
+import { GameSettings, KingdomGuide, SaveWarning } from './GameSettings';
+import { gameStorage } from './data/storage';
+import { tactileFeedback } from './native';
 
-export function ProductionShell(){
- const[locale,setLocale]=useState<Locale>(()=>loadLocale());
- const[stories,setStories]=useState(false);
- useEffect(()=>{saveLocale(locale);document.documentElement.lang=locale},[locale]);
- return <div className="production-shell"><details className="production-tools"><summary aria-label={locale==='fr'?'Options du jeu':'Game options'}><LobbyIcon name="settings"/></summary><div className="production-tools-panel"><button className={stories?'active':''} onClick={()=>setStories(v=>!v)}>{stories?(locale==='fr'?'Retour au jeu':'Back to game'):(locale==='fr'?'Histoires':'Stories')}</button><div className="locale-switch" aria-label={locale==='fr'?'Langue':'Language'}><button className={locale==='fr'?'active':''} onClick={()=>setLocale('fr')}>FR</button><button className={locale==='en'?'active':''} onClick={()=>setLocale('en')}>EN</button></div></div></details>{stories?<Stories locale={locale}/>:<GameStartup><App/></GameStartup>}</div>
+export function ProductionShell() {
+  const [settings, setSettings] = useState(false);
+  const [stories, setStories] = useState(false);
+  const [guide, setGuide] = useState(() => gameStorage.getItem('paw-claw.guide.v1') !== 'seen');
+  useEffect(() => {
+    document.documentElement.lang = 'fr';
+    document.documentElement.dataset.motion = gameStorage.getItem('paw-claw.motion') === 'reduced' ? 'reduced' : 'full';
+    const click = (event: MouseEvent) => { if ((event.target as HTMLElement).closest('button:not(:disabled)')) tactileFeedback(); };
+    const openStories=()=>setStories(true);window.addEventListener('paw-stories',openStories);
+    document.addEventListener('click', click);
+    return () => {document.removeEventListener('click', click);window.removeEventListener('paw-stories',openStories)};
+  }, []);
+  function closeGuide() { gameStorage.setItem('paw-claw.guide.v1', 'seen'); setGuide(false); }
+  return <div className="production-shell">
+    <GameStartup>{stories ? <><button className="stories-return" onClick={() => setStories(false)}>Retour au royaume</button><Stories locale="fr" /></> : <App />}
+      <button className="kingdom-settings" aria-label="Réglages du jeu" onClick={() => setSettings(true)}><CozyIcon name="settings" /></button>
+      {settings && <GameSettings onClose={() => setSettings(false)} onGuide={() => { setSettings(false); setGuide(true); }} onStories={() => { setSettings(false); setStories(true); }} />}
+      {guide && <KingdomGuide onClose={closeGuide} />}
+    </GameStartup><SaveWarning />
+  </div>;
 }

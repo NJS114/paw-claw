@@ -7,19 +7,19 @@ describe('Portrait app integration',()=>{
  it('keeps the four portrait destinations reachable and saves a real booster purchase',async()=>{
   const hours=vi.spyOn(Date.prototype,'getHours').mockReturnValue(12);
   localStorage.clear();const user=userEvent.setup();const{container}=render(<App/>);
-  expect(container.querySelector('.depth-world img')).toHaveAttribute('src','/assets/layered-home/village.webp');
+  expect(container.querySelector('.depth-world img')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(screen.getByRole('button',{name:/Collection/}));
   const nav=within(screen.getByRole('navigation',{name:'Navigation principale'}));
-  expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-collection-gallery-2d-v9.webp');
+  expect(screen.getByRole('heading',{name:'Collection',level:2})).toBeInTheDocument();
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(screen.getAllByRole('button',{name:/^Voir /})[0]);
   expect(screen.getByRole('dialog')).toBeInTheDocument();
   await user.click(screen.getByRole('button',{name:'Fermer'}));
   await user.click(nav.getByRole('button',{name:'Decks'}));
   expect(screen.getByRole('heading',{name:'Mes decks'})).toBeInTheDocument();
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-deck-forge-2d-v9.webp');
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(nav.getByRole('button',{name:'Boutique'}));
-  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/backgrounds/bg-shop-market-2d-v9.webp');
+  expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(screen.getByRole('button',{name:'Acheter · 100 pièces'}));
   expect(screen.getByRole('region',{name:'Ouverture de booster'})).toBeInTheDocument();
   const saved=JSON.parse(localStorage.getItem('paw-claw.progression.v1')!);

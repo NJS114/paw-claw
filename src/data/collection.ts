@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 import { cards, type CardData } from './gameCards';
 import { DECK_SIZE } from './deck';
 import { speciesOf } from './loreSynergies';
@@ -27,12 +28,16 @@ export function starterCollection(): OwnedCards {
 
 export function loadCollection(): OwnedCards {
   try {
-    const raw = localStorage.getItem(KEY);
-    return raw ? JSON.parse(raw) : starterCollection();
+    const raw = gameStorage.getItem(KEY);
+    if(!raw)return starterCollection();
+    const parsed=JSON.parse(raw);
+    if(!parsed||typeof parsed!=='object'||Array.isArray(parsed))return starterCollection();
+    const known=new Set(cards.map(card=>card.id));
+    return Object.fromEntries(Object.entries(parsed).filter(([id,count])=>known.has(id)&&typeof count==='number'&&Number.isSafeInteger(count)&&count>0)) as OwnedCards;
   } catch { return starterCollection(); }
 }
 
-export function saveCollection(value: OwnedCards) { localStorage.setItem(KEY, JSON.stringify(value)); }
+export function saveCollection(value: OwnedCards) { gameStorage.setItem(KEY, JSON.stringify(value)); }
 export function addCards(owned: OwnedCards, pulled: CardData[]): OwnedCards {
   const next = { ...owned };
   for (const card of pulled) next[card.id] = (next[card.id] ?? 0) + 1;

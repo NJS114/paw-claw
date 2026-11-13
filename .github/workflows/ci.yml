@@ -15,14 +15,49 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 24
       - name: Install dependencies
-        run: npm install
+        run: npm ci
       - name: Validate assets
         run: npm run assets:validate
-      - name: Unit tests
-        run: npm run test:unit
-      - name: Functional tests
-        run: npm run test:functional
+      - name: All tests
+        run: npm test
       - name: Build
         run: npm run build
+  android-debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+      - run: npm ci
+      - run: npm run mobile:sync
+      - name: Build Android test application
+        working-directory: android
+        run: bash gradlew assembleDebug --no-daemon
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paw-claw-android-debug
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+  ios-simulator:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run mobile:sync
+      - name: Build unsigned iOS simulator app
+        run: xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug -sdk iphonesimulator -derivedDataPath output/ios CODE_SIGNING_ALLOWED=NO build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paw-claw-ios-simulator
+          path: output/ios/Build/Products/Debug-iphonesimulator/App.app

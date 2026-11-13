@@ -77,7 +77,7 @@ export function BoosterOpening({owned,available,onOpen,onShop}:Props){
     {phase==='reveal'&&<button className="reveal-next" onClick={e=>{e.stopPropagation();revealNext()}}>Révéler la carte {Math.min(revealed+1,cards.length)}/{cards.length}</button>}
    </div>}
   </div>
-  {phase==='complete'&&<div className="booster-complete-panel"><div><small>{legendary?'OUVERTURE LÉGENDAIRE':'BOOSTER OUVERT'}</small><h3>{newIds.size} nouvelle{newIds.size>1?'s':''} carte{newIds.size>1?'s':''}</h3><p>Les cartes ont été ajoutées immédiatement à ta collection.</p></div><div className="booster-complete-actions"><button onClick={reset}>Voir le booster</button><button className="game-cta" onClick={start} disabled={available<=0}>{available>0?'Ouvrir le suivant':'Plus de booster'}</button></div></div>}
+  {phase==='complete'&&<div className="booster-complete-panel"><div><small>{legendary?'OUVERTURE LÉGENDAIRE':'BOOSTER OUVERT'}</small><h3>{newIds.size} nouvelle{newIds.size>1?'s':''} carte{newIds.size>1?'s':''}</h3><p>Les cartes ont été ajoutées immédiatement à ta collection.</p></div><div className="booster-complete-grid">{cards.map((card,index)=><GameCard key={`${card.id}-${index}`} card={card} variant="compact" statusBadge={newIds.has(card.id)?'NOUVELLE':undefined}/>)}</div><div className="booster-complete-actions"><button onClick={reset}>Voir le booster</button><button className="game-cta" onClick={start} disabled={available<=0}>{available>0?'Ouvrir le suivant':'Plus de booster'}</button></div></div>}
  </section>
 }
 

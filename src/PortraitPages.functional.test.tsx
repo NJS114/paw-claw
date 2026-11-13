@@ -29,7 +29,7 @@ describe('Portrait pages',()=>{
  it('disables purchases with insufficient currency and keeps unpaid offers explicit',async()=>{
   const buy=vi.fn(()=>false);render(<PortraitShop progress={{...progress,coins:80}} onBuy={buy} onOpen={()=>{}} monetization={loadMonetization()}/>);
   expect(screen.getByRole('button',{name:/Acheter/})).toBeDisabled();expect(screen.getByText(/Il te manque 20/)).toBeInTheDocument();
-  await userEvent.click(screen.getByRole('button',{name:'Offres'}));
+  await userEvent.click(screen.getByRole('button',{name:'Le comptoir'}));
   expect(screen.getByText(/Aucun paiement/)).toBeInTheDocument();expect(buy).not.toHaveBeenCalled();
  });
  it('shows an honest placeholder rather than a wrong family sheet when card art fails',()=>{

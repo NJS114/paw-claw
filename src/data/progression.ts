@@ -1,3 +1,4 @@
+import { gameStorage } from './storage';
 export type Progression = {
   coins: number;
   gems: number;
@@ -11,8 +12,16 @@ export type Progression = {
 };
 const KEY='paw-claw.progression.v1';
 const initial:Progression={coins:1240,gems:120,xp:0,level:1,wins:0,losses:0,draws:0,boostersOpened:0,sealedBoosters:1};
-export function loadProgression():Progression{try{return{...initial,...JSON.parse(localStorage.getItem(KEY)||'{}')}}catch{return initial}}
-export function saveProgression(p:Progression){localStorage.setItem(KEY,JSON.stringify(p))}
+export function loadProgression():Progression{try{
+ const parsed=JSON.parse(gameStorage.getItem(KEY)||'{}');
+ const result={...initial};
+ if(parsed&&typeof parsed==='object')for(const key of Object.keys(initial) as (keyof Progression)[]){
+  const value=parsed[key];
+  if(typeof value==='number'&&Number.isSafeInteger(value)&&value>=(key==='level'?1:0))result[key]=value;
+ }
+ return result;
+}catch{return{...initial}}}
+export function saveProgression(p:Progression){gameStorage.setItem(KEY,JSON.stringify(p))}
 export function xpForLevel(level:number){return 100+(level-1)*50}
 export function addXp(p:Progression,amount:number):Progression{let xp=p.xp+amount,level=p.level;while(xp>=xpForLevel(level)){xp-=xpForLevel(level);level++}return{...p,xp,level}}
 export function battleVictory(p:Progression):Progression{return addXp({...p,coins:p.coins+80,gems:p.gems+2,wins:p.wins+1},60)}

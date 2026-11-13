@@ -1,0 +1,31 @@
+name: Paw & Claw Screenshots
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - src/**
+      - public/assets/refined/**
+      - scripts/capture-screens.mjs
+      - .github/workflows/screenshots.yml
+jobs:
+  mobile-screens:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Install capture browser
+        run: npm install --no-save --package-lock=false playwright && npx playwright install --with-deps chromium
+      - name: Capture actual game screens
+        run: node scripts/capture-screens.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: paw-claw-current-screens
+          path: output/screens/
+          if-no-files-found: error
