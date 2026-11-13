@@ -36,6 +36,7 @@ import './portrait-pages.css';
 import './game-card.css';
 import { ProductionShell } from './ProductionShell';
 import './kingdom-ui.css';
+import './immersive-mobile.css';
 import { GameBoundary } from './GameBoundary';
 import { initializeStorage } from './data/storage';
 import { initializeNative } from './native';

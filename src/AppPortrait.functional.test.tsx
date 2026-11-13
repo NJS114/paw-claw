@@ -10,7 +10,7 @@ describe('Portrait app integration',()=>{
   expect(container.querySelector('.depth-world img')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(screen.getByRole('button',{name:/Collection/}));
   const nav=within(screen.getByRole('navigation',{name:'Navigation principale'}));
-  expect(screen.getByRole('heading',{name:'Galerie royale'})).toBeInTheDocument();
+  expect(screen.getByRole('heading',{name:'Collection',level:2})).toBeInTheDocument();
   expect(container.querySelector('.screen-background-art')).toHaveAttribute('src','/assets/refined/city.webp');
   await user.click(screen.getAllByRole('button',{name:/^Voir /})[0]);
   expect(screen.getByRole('dialog')).toBeInTheDocument();

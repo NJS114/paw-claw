@@ -47,3 +47,8 @@ Cette refonte ne change ni les règles, ni les quantités de récompenses, ni le
 Conserver les parcours fonctionnels et vérifier le rendu sur les captures CI au format 390 × 844, puis sur appareils Android et iPhone. Une compilation ou un test DOM ne vaut pas validation de fidélité visuelle. Réviser les écarts observés avant d’annoncer une correspondance complète avec la maquette.
 
 Les problèmes de contenu déjà identifiés restent distincts : illustrations de cartes manquantes, audio et équilibrage, sauvegarde cloud absente et finalisation de la publication en boutique.
+
+
+## Rapprochement de la référence mobile — 13 novembre 2026
+
+La composition suit désormais les quatre vues fournies : accueil illustré avec quête haute et bouton Jouer facetté, collection à deux colonnes sans filtres permanents, plateau en pierre bleutée et main en éventail, chapitre de lore illustré avec lecture à la demande. Le nouveau décor slate-court.webp est un asset sans interface ni texte. Les commandes restent de vrais boutons et les valeurs proviennent du jeu. Les sept lignes du combat sont conservées pour respecter les règles existantes. Les illustrations existantes des cartes sont conservées ; la référence ne remplace pas leur identité.

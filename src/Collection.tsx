@@ -8,6 +8,7 @@ const rarityRank = ['Commune', 'Rare', 'Épique', 'Légendaire'];
 const normalize = (value: string) => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleLowerCase('fr').trim();
 
 export function Collection({ owned }: { owned: OwnedCards }) {
+  const [filtersOpen, setFiltersOpen] = useState(false);
   const [family, setFamily] = useState('Tous');
   const [rarity, setRarity] = useState('Toutes');
   const [query, setQuery] = useState('');
@@ -33,10 +34,9 @@ export function Collection({ owned }: { owned: OwnedCards }) {
 
   return <section className="collection-screen">
     <div className="collection-head">
-      <div><p className="eyebrow">GRIMOIRE ROYAL</p><h2>Galerie royale</h2></div>
+      <div><h2>Collection</h2></div><button className="collection-search-toggle" aria-label="Rechercher et filtrer les cartes" aria-expanded={filtersOpen} onClick={() => setFiltersOpen(!filtersOpen)}>⌕</button>
       <div className="collection-progress"><span><b>{discovered}</b>/{cards.length} découvertes</span><i><b style={{ width: `${discovered / cards.length * 100}%` }} /></i><small>{legendary} légendaires · {ownedCount(owned)} cartes</small></div>
-      <input className="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="Rechercher une carte" placeholder="Rechercher…" />
-    </div>
+      </div><div className="collection-tools" hidden={!filtersOpen}><input className="search" value={query} onChange={event => setQuery(event.target.value)} aria-label="Rechercher une carte" placeholder="Rechercher…" />
     <div className="family-strip" aria-label="Familles de cartes">
       <button onClick={() => setFamily('Tous')} aria-pressed={family === 'Tous'} className={family === 'Tous' ? 'active' : ''}>Toutes</button>
       {families.slice(1).map(name => <button key={name} onClick={() => setFamily(name)} aria-pressed={family === name} className={family === name ? 'active' : ''}>{name}<span>{cards.filter(card => card.family === name).length}</span></button>)}
@@ -52,6 +52,7 @@ export function Collection({ owned }: { owned: OwnedCards }) {
         <option value="catalogue">Catalogue</option><option value="name">Nom</option><option value="cost">Coût croissant</option><option value="rarity">Rareté décroissante</option>
       </select></label>
       {hasFilters && <button onClick={reset}>Réinitialiser les filtres</button>}
+    </div>
     </div>
     {filtered.length === 0 ? <div className="collection-empty"><h3>Aucune carte trouvée</h3><p>Essaie une autre recherche ou élargis tes filtres.</p><button onClick={reset}>Afficher toutes les cartes</button></div> :
       <div className="collection-grid">{filtered.map(card => <article className="catalog-card game-card-host" key={card.id}><button className="catalog-card-button" onClick={() => setSelected(card)} aria-label={`Voir ${card.name}`}><GameCard card={card} variant="standard" copies={owned[card.id] ?? 0} locked={(owned[card.id] ?? 0) === 0} /></button></article>)}</div>}

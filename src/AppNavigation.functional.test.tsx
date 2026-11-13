@@ -13,7 +13,7 @@ describe('Android back navigation', () => {
     fireEvent(window, closeCard);
     expect(closeCard.defaultPrevented).toBe(true);
     expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: 'Galerie royale' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: 'Collection', level: 2 })).toBeInTheDocument();
     const returnHome = new Event('paw-back', { cancelable: true });
     fireEvent(window, returnHome);
     expect(returnHome.defaultPrevented).toBe(true);

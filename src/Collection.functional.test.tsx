@@ -9,6 +9,7 @@ describe('Collection browsing', () => {
     const user = userEvent.setup();
     const owned = { [cards[0].id]: 2 };
     render(<Collection owned={owned} />);
+    await user.click(screen.getByRole('button', { name: 'Rechercher et filtrer les cartes' }));
     await user.click(screen.getByRole('button', { name: 'Possédées' }));
     expect(screen.getAllByRole('button', { name: /^Voir / })).toHaveLength(1);
     await user.type(screen.getByRole('textbox', { name: 'Rechercher une carte' }), 'introuvable');
@@ -22,6 +23,7 @@ describe('Collection browsing', () => {
   it('searches without accents and sorts by cost and rarity', async () => {
     const user = userEvent.setup();
     render(<Collection owned={{}} />);
+    await user.click(screen.getByRole('button', { name: 'Rechercher et filtrer les cartes' }));
     const search = screen.getByRole('textbox', { name: 'Rechercher une carte' });
     await user.type(search, '  arcaniste elementaire  ');
     expect(screen.getByRole('button', { name: 'Voir Arcaniste Élémentaire' })).toBeInTheDocument();

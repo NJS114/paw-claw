@@ -70,6 +70,7 @@ try {
     await shot('02-collection','Collection');
     await page.getByRole('button',{name:/^Voir /}).first().click();await shot('03-fiche-carte','Fiche de carte');
     await page.getByRole('button',{name:'Fermer',exact:true}).click();
+    await page.getByRole('button',{name:'Rechercher et filtrer les cartes'}).click();
     await page.getByRole('textbox',{name:'Rechercher une carte'}).fill('aucun-resultat-012');
     await shot('24-collection-vide','Collection · recherche vide');
   });
